@@ -88,11 +88,15 @@ public class LevelNodeGenerator {
 
         // TODO: Fix disjointed angles
         if (MathUtils.randomBoolean()) {
-            rects.add(RectangleUtil.normalize(new Rectangle(start.x, start.y, diff.x, thickness)));
-            rects.add(RectangleUtil.normalize(new Rectangle(start.x + diff.x, start.y, thickness, diff.y)));
+            rects.add(RectangleUtil.normalize(new Rectangle(start.x, start.y - 0.5f * thickness, diff.x, thickness)));
+            rects.add(RectangleUtil.normalize(new Rectangle(start.x + diff.x - 0.5f * thickness, start.y, thickness, diff.y)));
+            //rects.add(RectangleUtil.normalize(new Rectangle(start.x, start.y, diff.x, thickness)));
+            //rects.add(RectangleUtil.normalize(new Rectangle(start.x + diff.x, start.y, thickness, diff.y)));
         } else {
-            rects.add(RectangleUtil.normalize(new Rectangle(start.x, start.y, thickness, diff.y)));
-            rects.add(RectangleUtil.normalize(new Rectangle(start.x, start.y + diff.y, diff.x, thickness)));
+            rects.add(RectangleUtil.normalize(new Rectangle(start.x - 0.5f * thickness, start.y, thickness, diff.y)));
+            rects.add(RectangleUtil.normalize(new Rectangle(start.x, start.y + diff.y - 0.5f * thickness, diff.x, thickness)));
+            //rects.add(RectangleUtil.normalize(new Rectangle(start.x, start.y, thickness, diff.y)));
+            //rects.add(RectangleUtil.normalize(new Rectangle(start.x, start.y + diff.y, diff.x, thickness)));
         }
 
         return rects;

@@ -6,12 +6,14 @@ public class LevelNodeGenerationRules {
     private final int minNodeSize;
     private final int maxNodeSize;
     private final float splitChance;
+    private final int roomGap;
 
-    public LevelNodeGenerationRules(int minRoomSize, int minNodeSize, int maxNodeSize, float splitChance) {
+    public LevelNodeGenerationRules(int minRoomSize, int minNodeSize, int maxNodeSize, float splitChance, int roomGap) {
         this.minRoomSize = minRoomSize;
         this.minNodeSize = minNodeSize;
         this.maxNodeSize = maxNodeSize;
         this.splitChance = splitChance;
+        this.roomGap = roomGap;
     }
 
     public int getMinRoomSize() {
@@ -28,5 +30,9 @@ public class LevelNodeGenerationRules {
 
     public float getSplitChance() {
         return splitChance;
+    }
+
+    public int getRoomGap() {
+        return roomGap;
     }
 }

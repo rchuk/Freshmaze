@@ -49,8 +49,8 @@ public class TestScreen implements Screen {
     private void generateLevelNodes() {
         levelNodeGenerator.generate(
                 new Vector2(64, 64),
-                2, //1
-                new LevelNodeGenerationRules(10, 16, 40, 0.75f)
+                1,
+                new LevelNodeGenerationRules(10, 16, 40, 0.75f, 2)
         );
 
         leafColors = Stream
@@ -83,46 +83,61 @@ public class TestScreen implements Screen {
         debugRenderLevelNodes();
         debugRenderLevelGraph();
         debugRenderHalls();
+
+        debugRenderLevelGrid();
+    }
+    private void debugRenderLevelGrid() {
+        final Vector2 levelSize = levelNodeGenerator.getLevelSize();
+
+        game.shape.begin(ShapeRenderer.ShapeType.Filled);
+        game.shape.setColor(Color.BLACK);
+
+        for (int xi = 0; xi <= levelSize.x; ++xi)
+            game.shape.rectLine(xi, 0.0f, xi, levelSize.y, 0.1f);
+
+        for (int yi = 0; yi <= levelSize.y; ++yi)
+            game.shape.rectLine(0.0f, yi, levelSize.x, yi, 0.1f);
+
+        game.shape.end();
     }
 
     private void debugRenderLevelNodes() {
         int index = 0;
 
+        game.shape.setProjectionMatrix(camera.combined);
+        game.shape.begin(ShapeRenderer.ShapeType.Filled);
         for (LevelNode leaf : levelNodeGenerator.getLeaves()) {
-            game.shape.setProjectionMatrix(camera.combined);
-
-            game.shape.begin(ShapeRenderer.ShapeType.Filled);
             game.shape.setColor(leafColors.get(index++));
             game.shape.rect(leaf.getBounds().x, leaf.getBounds().y, leaf.getBounds().width, leaf.getBounds().height);
 
             game.shape.setColor(Color.WHITE);
             game.shape.rect(leaf.getRoomBounds().x, leaf.getRoomBounds().y, leaf.getRoomBounds().width, leaf.getRoomBounds().height);
-            game.shape.end();
         }
+        game.shape.end();
     }
 
     private void debugRenderLevelGraph() {
         for (Map.Entry<LevelNode, HashMap<LevelNode, LevelGraph.Edge>> entry : levelNodeGenerator.getGraph().entrySet()) {
             final LevelNode firstNode = entry.getKey();
 
+            game.shape.begin(ShapeRenderer.ShapeType.Filled);
             for (Map.Entry<LevelNode, LevelGraph.Edge> connection : entry.getValue().entrySet()) {
                 final LevelNode secondNode = connection.getKey();
 
-                game.shape.begin(ShapeRenderer.ShapeType.Filled);
                 game.shape.setColor(Color.BLACK);
                 game.shape.line(firstNode.getRoomBounds().getCenter(new Vector2()), secondNode.getRoomBounds().getCenter(new Vector2()));
-                game.shape.end();
             }
+            game.shape.end();
         }
     }
 
     private void debugRenderHalls() {
+        game.shape.begin(ShapeRenderer.ShapeType.Filled);
         for (Rectangle hall : levelNodeGenerator.getHalls()) {
-            game.shape.begin(ShapeRenderer.ShapeType.Filled);
             game.shape.setColor(Color.ORANGE);
             game.shape.rect(hall.x, hall.y, hall.width, hall.height);
-            game.shape.end();
         }
+        game.shape.end();
     }
 
     private void handleInput(float dt) {

@@ -73,11 +73,11 @@ public class LevelNode {
         if (!isLeaf())
             return;
 
-        final float width = MathUtils.random(rules.getMinRoomSize(), (int)bounds.width - 2);
-        final float height = MathUtils.random(rules.getMinRoomSize(), (int)bounds.height - 2);
+        final float width = MathUtils.random(rules.getMinRoomSize(), (int)bounds.width - 2 * rules.getRoomGap());
+        final float height = MathUtils.random(rules.getMinRoomSize(), (int)bounds.height - 2 * rules.getRoomGap());
 
-        final float x = MathUtils.random(1, (int)bounds.width - width - 1);
-        final float y = MathUtils.random(1, (int)bounds.height - height - 1);
+        final float x = MathUtils.random(rules.getRoomGap(), (int)(bounds.width - width - rules.getRoomGap()));
+        final float y = MathUtils.random(rules.getRoomGap(), (int)(bounds.height - height - rules.getRoomGap()));
 
         roomBounds = new Rectangle(bounds.x + x, bounds.y + y, width, height);
     }
