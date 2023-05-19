@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -17,6 +18,7 @@ import com.dar.freshmaze.level.graph.LevelGraph;
 import com.dar.freshmaze.level.graph.LevelNode;
 import com.dar.freshmaze.level.graph.LevelNodeGenerationRules;
 import com.dar.freshmaze.level.graph.LevelNodeGenerator;
+import com.dar.freshmaze.level.tilemap.LevelTilemap;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,24 +27,28 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TestScreen implements Screen {
-    private static final float cameraSpeed = 75.0f;
+    private static final float cameraSpeed = 512.0f;
 
     private final FreshmazeGame game;
 
     private final OrthographicCamera camera;
     private final FitViewport viewport;
+    private IsometricTiledMapRenderer tilemapRenderer;
 
     private final LevelNodeGenerator levelNodeGenerator;
     private List<Color> leafColors;
+    private final LevelTilemap levelTilemap;
 
     public TestScreen(FreshmazeGame game) {
         this.game = game;
 
         camera = new OrthographicCamera();
-        camera.zoom = 0.2f;
+        camera.zoom = 10.0f;
         viewport = new FitViewport(FreshmazeGame.WIDTH, FreshmazeGame.HEIGHT, camera);
 
         levelNodeGenerator = new LevelNodeGenerator();
+        levelTilemap = new LevelTilemap("level/tiles/tiles.png", 128);
+
         generateLevelNodes();
     }
 
@@ -53,7 +59,11 @@ public class TestScreen implements Screen {
                 new LevelNodeGenerationRules(10, 16, 40, 0.75f, 2)
         );
 
-        new LevelBitmap().generate(levelNodeGenerator); // Test
+        final LevelBitmap levelBitmap = new LevelBitmap();
+        levelBitmap.generate(levelNodeGenerator);
+
+        levelTilemap.generate(levelBitmap);
+        tilemapRenderer = new IsometricTiledMapRenderer(levelTilemap.getTilemap());
 
         leafColors = Stream
                 .generate(() -> new Color(MathUtils.random(0, 0xFFFFFF)))
@@ -73,20 +83,16 @@ public class TestScreen implements Screen {
         ScreenUtils.clear(0.1f, 0.1f, 0.25f, 1.0f);
 
         camera.update();
-        game.shape.setProjectionMatrix(camera.combined);
 
-        game.shape.begin(ShapeRenderer.ShapeType.Filled);
-        game.shape.setColor(Color.BLACK);
-
-        game.shape.rect(0.0f, 0.0f, 100.0f, 100.0f);
-
-        game.shape.end();
-
+        tilemapRenderer.setView(camera);
+        tilemapRenderer.render();
+        /*
         debugRenderLevelNodes();
         debugRenderLevelGraph();
         debugRenderHalls();
 
         debugRenderLevelGrid();
+        */
     }
     private void debugRenderLevelGrid() {
         final Vector2 levelSize = levelNodeGenerator.getLevelSize();
@@ -146,6 +152,13 @@ public class TestScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
             generateLevelNodes();
 
+        if (Gdx.input.isKeyPressed(Input.Keys.MINUS))
+            camera.zoom += 5.0 * dt;
+        else if (Gdx.input.isKeyPressed(Input.Keys.EQUALS))
+            camera.zoom -= 5.0 * dt;
+
+
+        final float cameraSpeedMult = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 2.0f : 1.0f;
 
         final float offsetX = Gdx.input.isKeyPressed(Input.Keys.A) ? -1.0f :
                               Gdx.input.isKeyPressed(Input.Keys.D) ? 1.0f :
@@ -155,7 +168,7 @@ public class TestScreen implements Screen {
                               Gdx.input.isKeyPressed(Input.Keys.W) ? 1.0f :
                               0.0f;
 
-        camera.translate(offsetX * cameraSpeed * dt, offsetY * cameraSpeed * dt);
+        camera.translate(offsetX * cameraSpeed * cameraSpeedMult * dt, offsetY * cameraSpeed * cameraSpeedMult * dt);
     }
 
     @Override
@@ -180,6 +193,6 @@ public class TestScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        tilemapRenderer.dispose();
     }
 }

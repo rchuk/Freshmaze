@@ -20,6 +20,14 @@ public class LevelBitmap {
 
     private LevelNodeGenerator generator;
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     public void generate(LevelNodeGenerator generator) {
         final Vector2 levelSize = generator.getLevelSize();
 
@@ -135,11 +143,11 @@ public class LevelBitmap {
         }
     }
 
-    private Cell getCell(int xi, int yi) {
+    public Cell getCell(int xi, int yi) {
         return getCell(xi + yi * width);
     }
 
-    private Cell getCell(int index) {
+    public Cell getCell(int index) {
         return cells.get(index);
     }
 

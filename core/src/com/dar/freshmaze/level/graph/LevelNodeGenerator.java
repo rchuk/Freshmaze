@@ -86,7 +86,6 @@ public class LevelNodeGenerator {
 
         final ArrayList<Rectangle> rects = new ArrayList<>();
 
-        // TODO: Fix disjointed angles
         if (MathUtils.randomBoolean()) {
             rects.add(RectangleUtil.normalize(new Rectangle(start.x, start.y - 0.5f * thickness, diff.x, thickness)));
             rects.add(RectangleUtil.normalize(new Rectangle(start.x + diff.x - 0.5f * thickness, start.y, thickness, diff.y)));
