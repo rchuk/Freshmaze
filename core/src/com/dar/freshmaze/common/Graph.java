@@ -14,12 +14,27 @@ public class Graph<VertexT, EdgeT> {
     }
 
     public Map<VertexT, EdgeT> getConnections(VertexT vertex) {
-        return Collections.unmodifiableMap(graph.get(vertex));
+        final Map<VertexT, EdgeT> connections = graph.get(vertex);
+        if (connections == null)
+            return null;
+
+        return Collections.unmodifiableMap(connections);
+    }
+
+    public boolean contains(VertexT first) {
+        return graph.containsKey(first);
     }
 
     public void add(VertexT first, VertexT second, EdgeT edge) {
-        addSingle(first, second, edge);
-        addSingle(second, first, edge);
+        addDirected(first, second, edge);
+        addDirected(second, first, edge);
+    }
+
+    public void addDirected(VertexT first, VertexT second, EdgeT edge) {
+        final HashMap<VertexT, EdgeT> connections = graph.getOrDefault(first, new HashMap<>());
+        connections.put(second, edge);
+
+        graph.put(first, connections);
     }
 
     public void remove(VertexT vertex) {
@@ -30,12 +45,5 @@ public class Graph<VertexT, EdgeT> {
             graph.get(connectedVertex).remove(vertex);
 
         graph.remove(vertex);
-    }
-
-    private void addSingle(VertexT first, VertexT second, EdgeT edge) {
-        final HashMap<VertexT, EdgeT> connections = graph.getOrDefault(first, new HashMap<>());
-        connections.put(second, edge);
-
-        graph.put(first, connections);
     }
 }

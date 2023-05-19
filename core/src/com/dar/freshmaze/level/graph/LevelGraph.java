@@ -34,7 +34,7 @@ public class LevelGraph {
                 if (edge == null)
                     continue;
 
-                graph.add(firstNode, secondNode, edge);
+                graph.addDirected(firstNode, secondNode, edge);
             }
         }
 

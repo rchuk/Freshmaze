@@ -49,6 +49,7 @@ public class TestScreen implements Screen {
     private void generateLevelNodes() {
         levelNodeGenerator.generate(
                 new Vector2(64, 64),
+                2, //1
                 new LevelNodeGenerationRules(10, 16, 40, 0.75f)
         );
 
@@ -81,6 +82,7 @@ public class TestScreen implements Screen {
 
         debugRenderLevelNodes();
         debugRenderLevelGraph();
+        debugRenderHalls();
     }
 
     private void debugRenderLevelNodes() {
@@ -111,6 +113,15 @@ public class TestScreen implements Screen {
                 game.shape.line(firstNode.getRoomBounds().getCenter(new Vector2()), secondNode.getRoomBounds().getCenter(new Vector2()));
                 game.shape.end();
             }
+        }
+    }
+
+    private void debugRenderHalls() {
+        for (Rectangle hall : levelNodeGenerator.getHalls()) {
+            game.shape.begin(ShapeRenderer.ShapeType.Filled);
+            game.shape.setColor(Color.ORANGE);
+            game.shape.rect(hall.x, hall.y, hall.width, hall.height);
+            game.shape.end();
         }
     }
 

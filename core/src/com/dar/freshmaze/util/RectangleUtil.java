@@ -28,7 +28,7 @@ public class RectangleUtil {
      * @param rect rectangle to normalize
      * @return rect
      */
-    Rectangle normalize(Rectangle rect) {
+    public static Rectangle normalize(Rectangle rect) {
         if (rect.width < 0) {
             rect.width = -rect.width;
             rect.x -= rect.width;
