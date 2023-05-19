@@ -19,7 +19,6 @@ import com.dar.freshmaze.level.graph.LevelNodeGenerationRules;
 import com.dar.freshmaze.level.graph.LevelNodeGenerator;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -50,7 +49,7 @@ public class TestScreen implements Screen {
     private void generateLevelNodes() {
         levelNodeGenerator.generate(
                 new Vector2(64, 64),
-                1,
+                2,
                 new LevelNodeGenerationRules(10, 16, 40, 0.75f, 2)
         );
 
