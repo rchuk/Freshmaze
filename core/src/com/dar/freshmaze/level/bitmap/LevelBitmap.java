@@ -70,51 +70,55 @@ public class LevelBitmap {
     }
 
     private void placeRooms() {
-        for (LevelNode leaf : generator.getLeaves()) {
-            processRectangleMap(leaf.getRoomBounds(), kind -> {
-                switch (kind) {
-                    case Empty:
-                    case Hall:
-                    case Wall:
-                        return Cell.Kind.Room;
-                    default:
-                        return kind;
-                }
-            });
+        generator.getLeaves().forEach(leaf ->
+                processRectangleMap(leaf.getRoomBounds(), kind -> {
+                    switch (kind) {
+                        case Empty:
+                        case Hall:
+                        case Wall:
+                            return Cell.Kind.Room;
+                        default:
+                            return kind;
+                    }
+                })
+        );
 
-            processRectangleMap(RectangleUtil.expand(leaf.getRoomBounds(), new Vector2(1, 1)), kind -> {
-                switch (kind) {
-                    case Empty:
-                        return Cell.Kind.Wall;
-                    case Hall:
-                        return Cell.Kind.HallEntrance;
-                    default:
-                        return kind;
-                }
-            });
-        }
+        generator.getLeaves().forEach(leaf ->
+                processRectangleMap(RectangleUtil.expand(leaf.getRoomBounds(), new Vector2(1, 1)), kind -> {
+                    switch (kind) {
+                        case Empty:
+                            return Cell.Kind.Wall;
+                        case Hall:
+                            return Cell.Kind.HallEntrance;
+                        default:
+                            return kind;
+                    }
+                })
+        );
     }
 
     private void placeHalls() {
-        for (Rectangle hall : generator.getHalls()) {
-            processRectangleMap(hall, kind -> {
-                switch (kind) {
-                    case Empty:
-                        return Cell.Kind.Hall;
-                    default:
-                        return kind;
-                }
-            });
+        generator.getHalls().forEach(hall ->
+                processRectangleMap(hall, kind -> {
+                    switch (kind) {
+                        case Empty:
+                            return Cell.Kind.Hall;
+                        default:
+                            return kind;
+                    }
+                })
+        );
 
-            processRectangleMap(RectangleUtil.expand(hall, new Vector2(1, 1)), kind -> {
-                switch (kind) {
-                    case Empty:
-                        return Cell.Kind.Wall;
-                    default:
-                        return kind;
-                }
-            });
-        }
+        generator.getHalls().forEach(hall ->
+                processRectangleMap(RectangleUtil.expand(hall, new Vector2(1, 1)), kind -> {
+                    switch (kind) {
+                        case Empty:
+                            return Cell.Kind.Wall;
+                        default:
+                            return kind;
+                    }
+                })
+        );
     }
 
     private void processRectangleMap(Rectangle rect, CellKindMapper cellKindMapper) {
