@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.dar.freshmaze.FreshmazeGame;
+import com.dar.freshmaze.level.bitmap.LevelBitmap;
 import com.dar.freshmaze.level.graph.LevelGraph;
 import com.dar.freshmaze.level.graph.LevelNode;
 import com.dar.freshmaze.level.graph.LevelNodeGenerationRules;
@@ -52,6 +53,8 @@ public class TestScreen implements Screen {
                 1,
                 new LevelNodeGenerationRules(10, 16, 40, 0.75f, 2)
         );
+
+        new LevelBitmap().generate(levelNodeGenerator); // Test
 
         leafColors = Stream
                 .generate(() -> new Color(MathUtils.random(0, 0xFFFFFF)))
