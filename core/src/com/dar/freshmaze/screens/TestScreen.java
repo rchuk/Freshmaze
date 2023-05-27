@@ -10,8 +10,10 @@ import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.dar.freshmaze.FreshmazeGame;
 import com.dar.freshmaze.level.bitmap.LevelBitmap;
 import com.dar.freshmaze.level.graph.LevelGraph;
@@ -78,6 +80,7 @@ public class TestScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
         handleInput(delta);
 
         ScreenUtils.clear(0.1f, 0.1f, 0.25f, 1.0f);
