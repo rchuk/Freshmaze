@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -29,7 +30,7 @@ public class FreshmazeGame extends Game {
 		batch = new SpriteBatch();
 		shape = new ShapeRenderer();
 		OrthographicCamera camera = new OrthographicCamera();
-		Viewport       viewport = new StretchViewport(WIDTH, HEIGHT, camera);
+		Viewport       viewport = new FitViewport(WIDTH, HEIGHT, camera);
 		stage = new Stage(viewport);
 		Actor actor = new Bob();
 		Actor enemy = new Enemy();
