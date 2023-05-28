@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dar.freshmaze.FreshmazeGame;
 import com.dar.freshmaze.level.bitmap.LevelBitmap;
 import com.dar.freshmaze.level.graph.LevelGraph;
@@ -24,7 +24,6 @@ import com.dar.freshmaze.level.graph.LevelNodeGenerator;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
 import com.dar.freshmaze.util.IsometricUtil;
 
-import java.security.Key;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +36,7 @@ public class TestScreen implements Screen {
     private final FreshmazeGame game;
 
     private final OrthographicCamera camera;
-    private final FitViewport viewport;
+    private final Viewport viewport;
     private IsometricTiledMapRenderer tilemapRenderer;
 
     private final World physWorld;
@@ -52,12 +51,12 @@ public class TestScreen implements Screen {
     private Body playerBody;
     private Texture isoCircleMarkerTexture;
 
-    public TestScreen(FreshmazeGame game) {
+    public TestScreen(FreshmazeGame game, OrthographicCamera camera, Viewport viewport) {
         this.game = game;
 
-        camera = new OrthographicCamera();
+        this.camera = camera;
         camera.zoom = 10.0f;
-        viewport = new FitViewport(FreshmazeGame.WIDTH, FreshmazeGame.HEIGHT, camera);
+        this.viewport = viewport;
 
         physWorld = new World(Vector2.Zero, true); //TODO: Change graphics scale to 1 unit = 1 meter
         physDebugRenderer = new Box2DDebugRenderer();
@@ -114,6 +113,7 @@ public class TestScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
         handleInput(delta);
 
         ScreenUtils.clear(0.1f, 0.1f, 0.25f, 1.0f);
