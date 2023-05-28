@@ -44,7 +44,7 @@ public class LevelBitmap {
         placeHalls();
         placeRooms();
 
-        debugPrint();
+        //debugPrint();
     }
 
     // TODO: Remove
