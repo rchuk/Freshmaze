@@ -5,11 +5,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.dar.freshmaze.FreshmazeGame;
@@ -19,7 +22,9 @@ import com.dar.freshmaze.level.graph.LevelNode;
 import com.dar.freshmaze.level.graph.LevelNodeGenerationRules;
 import com.dar.freshmaze.level.graph.LevelNodeGenerator;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
+import com.dar.freshmaze.util.IsometricUtil;
 
+import java.security.Key;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,9 +40,17 @@ public class TestScreen implements Screen {
     private final FitViewport viewport;
     private IsometricTiledMapRenderer tilemapRenderer;
 
+    private final World physWorld;
+    private final Box2DDebugRenderer physDebugRenderer;
+
     private final LevelNodeGenerator levelNodeGenerator;
     private List<Color> leafColors;
     private final LevelTilemap levelTilemap;
+    // TODO: Store it in the tilemap itself
+    private Array<Body> tilemapBodies;
+
+    private Body playerBody;
+    private Texture isoCircleMarkerTexture;
 
     public TestScreen(FreshmazeGame game) {
         this.game = game;
@@ -46,13 +59,33 @@ public class TestScreen implements Screen {
         camera.zoom = 10.0f;
         viewport = new FitViewport(FreshmazeGame.WIDTH, FreshmazeGame.HEIGHT, camera);
 
+        physWorld = new World(Vector2.Zero, true); //TODO: Change graphics scale to 1 unit = 1 meter
+        physDebugRenderer = new Box2DDebugRenderer();
+
         levelNodeGenerator = new LevelNodeGenerator();
         levelTilemap = new LevelTilemap("level/tiles/tiles.png", 128);
+
+        isoCircleMarkerTexture = new Texture(Gdx.files.internal("iso_circle_marker.png"));
+        final CircleShape circle = new CircleShape();
+        circle.setPosition(Vector2.Zero);
+        circle.setRadius(46.0f);
+
+        final BodyDef bd = new BodyDef();
+        bd.type = BodyDef.BodyType.DynamicBody;
+        bd.fixedRotation = true;
+        bd.position.set(Vector2.Zero);
+        playerBody = physWorld.createBody(bd);
+        playerBody.createFixture(circle, 1);
+
+        circle.dispose();
 
         generateLevelNodes();
     }
 
     private void generateLevelNodes() {
+        if (tilemapBodies != null)
+            tilemapBodies.forEach(physWorld::destroyBody);
+
         levelNodeGenerator.generate(
                 new Vector2(64, 64),
                 2,
@@ -63,7 +96,10 @@ public class TestScreen implements Screen {
         levelBitmap.generate(levelNodeGenerator);
 
         levelTilemap.generate(levelBitmap);
-        tilemapRenderer = new IsometricTiledMapRenderer(levelTilemap.getTilemap());
+        tilemapRenderer = new IsometricTiledMapRenderer(levelTilemap.getTilemap(), game.batch);
+
+        tilemapBodies = levelTilemap.createPhysObjects(physWorld);
+        System.out.println("Generated " + tilemapBodies.size + " physics bodies for the tilemap");
 
         leafColors = Stream
                 .generate(() -> new Color(MathUtils.random(0, 0xFFFFFF)))
@@ -86,6 +122,18 @@ public class TestScreen implements Screen {
 
         tilemapRenderer.setView(camera);
         tilemapRenderer.render();
+
+        debugRenderAxes();
+
+        game.batch.setProjectionMatrix(camera.combined);
+        game.batch.begin();
+
+        final Vector2 isoMarkerPos = IsometricUtil.cartToIso(playerBody.getPosition());
+        // TODO: Don't hardcode the values
+        game.batch.draw(isoCircleMarkerTexture, isoMarkerPos.x - 64.0f, isoMarkerPos.y - 32.0f, 128.0f, 128.0f);
+
+        game.batch.end();
+
         /*
         debugRenderLevelNodes();
         debugRenderLevelGraph();
@@ -93,6 +141,33 @@ public class TestScreen implements Screen {
 
         debugRenderLevelGrid();
         */
+
+        // Draw physics shapes in cartesian coordinates system (top-down view)
+        // physDebugRenderer.render(physWorld, camera.combined);
+
+        physDebugRenderer.render(physWorld, camera.combined.mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX));
+
+        physWorld.step(1/60f, 6, 2);
+    }
+
+    private void debugRenderAxes() {
+        final Vector2 xAxis = IsometricUtil.cartToIso(Vector2.X);
+        final Vector2 yAxis = IsometricUtil.cartToIso(Vector2.Y);
+
+        game.shape.setProjectionMatrix(camera.combined);
+        game.shape.begin(ShapeRenderer.ShapeType.Filled);
+
+        game.shape.setColor(Color.RED);
+        game.shape.line(Vector2.Zero, xAxis.scl(64.0f * 128.0f));
+        game.shape.setColor(Color.GREEN);
+        game.shape.line(Vector2.Zero, yAxis.scl(64.0f * 128.0f));
+
+        game.shape.setColor(Color.PURPLE);
+        game.shape.line(Vector2.Zero, new Vector2(Vector2.X).scl(64.0f * 128.0f));
+        game.shape.setColor(Color.YELLOW);
+        game.shape.line(Vector2.Zero, new Vector2(Vector2.Y).scl(64.0f * 128.0f));
+
+        game.shape.end();
     }
     private void debugRenderLevelGrid() {
         final Vector2 levelSize = levelNodeGenerator.getLevelSize();
@@ -160,15 +235,27 @@ public class TestScreen implements Screen {
 
         final float cameraSpeedMult = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 2.0f : 1.0f;
 
-        final float offsetX = Gdx.input.isKeyPressed(Input.Keys.A) ? -1.0f :
-                              Gdx.input.isKeyPressed(Input.Keys.D) ? 1.0f :
-                              0.0f;
+        final float playerSpeed = 1000.0f;
+        final Vector2 movementVec = IsometricUtil.isoToCart(getInputMovementVec(Input.Keys.A, Input.Keys.D, Input.Keys.S, Input.Keys.W, 1000.0f));
+        playerBody.setLinearVelocity(movementVec);
 
-        final float offsetY = Gdx.input.isKeyPressed(Input.Keys.S) ? -1.0f :
-                              Gdx.input.isKeyPressed(Input.Keys.W) ? 1.0f :
-                              0.0f;
+        final Vector2 cameraMovementVec = getInputMovementVec(Input.Keys.J, Input.Keys.L, Input.Keys.K, Input.Keys.I, cameraSpeed);
+        camera.translate(cameraMovementVec.x * cameraSpeedMult * dt, cameraMovementVec.y * cameraSpeedMult * dt);
+    }
 
-        camera.translate(offsetX * cameraSpeed * cameraSpeedMult * dt, offsetY * cameraSpeed * cameraSpeedMult * dt);
+    private Vector2 getInputMovementVec(int leftKey, int rightKey, int downKey, int upKey, float speed) {
+        final float valueX = getInputAxisValue(leftKey, rightKey);
+        final float valueY = getInputAxisValue(downKey, upKey);
+
+        return new Vector2(valueX, valueY)
+                .nor()
+                .scl(speed);
+    }
+
+    private float getInputAxisValue(int keyNegative, int keyPositive) {
+        return Gdx.input.isKeyPressed(keyNegative) ? -1.0f :
+               Gdx.input.isKeyPressed(keyPositive) ? 1.0f :
+               0.0f;
     }
 
     @Override
@@ -194,5 +281,6 @@ public class TestScreen implements Screen {
     @Override
     public void dispose() {
         tilemapRenderer.dispose();
+        isoCircleMarkerTexture.dispose();
     }
 }
