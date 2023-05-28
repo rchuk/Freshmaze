@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dar.freshmaze.FreshmazeGame;
 import com.dar.freshmaze.level.bitmap.LevelBitmap;
 import com.dar.freshmaze.level.graph.LevelGraph;
@@ -34,19 +35,21 @@ public class TestScreen implements Screen {
     private final FreshmazeGame game;
 
     private final OrthographicCamera camera;
-    private final FitViewport viewport;
+    private final Viewport viewport;
     private IsometricTiledMapRenderer tilemapRenderer;
 
     private final LevelNodeGenerator levelNodeGenerator;
     private List<Color> leafColors;
     private final LevelTilemap levelTilemap;
 
-    public TestScreen(FreshmazeGame game) {
+    public TestScreen(FreshmazeGame game, OrthographicCamera camera, Viewport viewport) {
         this.game = game;
 
-        camera = new OrthographicCamera();
+        //camera = new OrthographicCamera();
+        this.camera = camera;
         camera.zoom = 10.0f;
-        viewport = new FitViewport(FreshmazeGame.WIDTH, FreshmazeGame.HEIGHT, camera);
+        //viewport = new FitViewport(FreshmazeGame.WIDTH, FreshmazeGame.HEIGHT, camera);
+        this.viewport = viewport;
 
         levelNodeGenerator = new LevelNodeGenerator();
         levelTilemap = new LevelTilemap("level/tiles/tiles.png", 128);
