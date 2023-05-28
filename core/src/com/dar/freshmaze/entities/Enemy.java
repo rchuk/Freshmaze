@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
+import com.dar.freshmaze.util.IsometricUtil;
 
 public class Enemy extends Actor {
     Texture texture = new Texture(Gdx.files.internal("still.png"));
@@ -38,6 +39,7 @@ public class Enemy extends Actor {
 
     @Override
     public void draw(Batch batch, float alpha) {
+        batch.setTransformMatrix(IsometricUtil.ISO_TRANSFORMATION_MATRIX); // Not needed if the sprites is already drawn as isometric
         sprite.draw(batch);
         batch.setColor(getColor());
         batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),
