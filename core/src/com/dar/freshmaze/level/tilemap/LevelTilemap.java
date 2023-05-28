@@ -4,15 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayers;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.dar.freshmaze.level.bitmap.LevelBitmap;
 
 public class LevelTilemap implements Disposable {
-    private Texture tiles;
+    private final Texture tiles;
 
     private final StaticTiledMapTile wallTile;
     private final StaticTiledMapTile floorTile;
@@ -25,8 +33,14 @@ public class LevelTilemap implements Disposable {
         tiles = new Texture(Gdx.files.internal(tilesetPath));
         final TextureRegion[][] splitTiles = TextureRegion.split(tiles, tileSize, tileSize);
 
+        // TODO: Create tileset
         floorTile = new StaticTiledMapTile(splitTiles[0][0]);
         wallTile = new StaticTiledMapTile(splitTiles[0][1]);
+
+        // wallTile.getProperties().put("is_walkable", Boolean.FALSE);
+        // floorTile.getProperties().put("is_walkable", Boolean.TRUE);
+
+        wallTile.getObjects().add(new RectangleMapObject());
     }
 
     public TiledMap getTilemap() {
@@ -49,10 +63,56 @@ public class LevelTilemap implements Disposable {
                 final TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
                 cell.setTile(tile);
                 layer.setCell(xi, yi, cell);
+
+                final int finalXi = xi;
+                final int finalYi = yi;
+                tile.getObjects().getByType(RectangleMapObject.class).forEach(obj -> {
+                    final Rectangle rect = obj.getRectangle();
+
+                    layer.getObjects().add(new RectangleMapObject(
+                            rect.x + finalXi * tileSize - 0.5f * tileSize,
+                            rect.y + finalYi * tileSize + tileSize * 0.5f, rect.width * tileSize,
+                            rect.height * tileSize
+                    ));
+                });
             }
         }
 
         layers.add(layer);
+    }
+
+    public Array<Body> createPhysObjects(World physWorld) {
+        final Array<Body> bodies = new Array<Body>();
+
+        final TiledMapTileLayer layer = tilemap.getLayers().getByType(TiledMapTileLayer.class).get(0); //
+
+        layer.getObjects().getByType(RectangleMapObject.class).forEach(obj -> {
+            final Rectangle rect = obj.getRectangle();
+            final PolygonShape shape = rectangleToPhysPolygon(rect);
+
+            final BodyDef bd = new BodyDef();
+            bd.type = BodyDef.BodyType.StaticBody;
+            final Body body = physWorld.createBody(bd);
+            body.createFixture(shape, 1);
+
+            bodies.add(body);
+
+            shape.dispose();
+        });
+
+        return bodies;
+    }
+
+    private static PolygonShape rectangleToPhysPolygon(Rectangle rect) {
+        final PolygonShape polygon = new PolygonShape();
+        polygon.setAsBox(
+                rect.width * 0.5f,
+                rect.height * 0.5f,
+                rect.getCenter(new Vector2()),
+                0.0f
+        );
+
+        return polygon;
     }
 
     // TODO: Create more tiles
