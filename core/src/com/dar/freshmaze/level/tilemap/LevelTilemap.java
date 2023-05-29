@@ -43,6 +43,10 @@ public class LevelTilemap implements Disposable {
         wallTile.getObjects().add(new RectangleMapObject());
     }
 
+    public int getTileSize() {
+        return tileSize;
+    }
+
     public TiledMap getTilemap() {
         return tilemap;
     }
@@ -52,6 +56,7 @@ public class LevelTilemap implements Disposable {
 
         final MapLayers layers = tilemap.getLayers();
         final TiledMapTileLayer layer = new TiledMapTileLayer(bitmap.getWidth(), bitmap.getHeight(), tileSize, tileSize / 2);
+        layer.setOffsetY(0.25f * tileSize);
 
         for (int yi = 0; yi < bitmap.getWidth(); ++yi) {
             for (int xi = 0; xi < bitmap.getHeight(); ++xi) {
@@ -70,8 +75,9 @@ public class LevelTilemap implements Disposable {
                     final Rectangle rect = obj.getRectangle();
 
                     layer.getObjects().add(new RectangleMapObject(
-                            rect.x + finalXi * tileSize - 0.5f * tileSize,
-                            rect.y + finalYi * tileSize + tileSize * 0.5f, rect.width * tileSize,
+                            rect.x + finalXi * tileSize,
+                            rect.y + finalYi * tileSize,
+                            rect.width * tileSize,
                             rect.height * tileSize
                     ));
                 });

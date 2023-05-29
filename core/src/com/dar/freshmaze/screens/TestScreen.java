@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -51,6 +52,8 @@ public class TestScreen implements Screen {
     private Body playerBody;
     private Texture isoCircleMarkerTexture;
 
+    private Matrix4 debugLevelMatrix;
+
     public TestScreen(FreshmazeGame game, OrthographicCamera camera, Viewport viewport) {
         this.game = game;
 
@@ -63,6 +66,7 @@ public class TestScreen implements Screen {
 
         levelNodeGenerator = new LevelNodeGenerator();
         levelTilemap = new LevelTilemap("level/tiles/tiles.png", 128);
+        debugLevelMatrix = new Matrix4().idt().scl(levelTilemap.getTileSize(), levelTilemap.getTileSize(), 1.0f).mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX);
 
         isoCircleMarkerTexture = new Texture(Gdx.files.internal("iso_circle_marker.png"));
         final CircleShape circle = new CircleShape();
@@ -123,6 +127,9 @@ public class TestScreen implements Screen {
         tilemapRenderer.setView(camera);
         tilemapRenderer.render();
 
+        debugRenderLevelRooms();
+        debugRenderLevelGrid();
+
         debugRenderAxes();
 
         game.batch.setProjectionMatrix(camera.combined);
@@ -145,7 +152,7 @@ public class TestScreen implements Screen {
         // Draw physics shapes in cartesian coordinates system (top-down view)
         // physDebugRenderer.render(physWorld, camera.combined);
 
-        physDebugRenderer.render(physWorld, camera.combined.mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX));
+        physDebugRenderer.render(physWorld, new Matrix4(camera.combined).mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX));
 
         physWorld.step(1/60f, 6, 2);
     }
@@ -154,6 +161,7 @@ public class TestScreen implements Screen {
         final Vector2 xAxis = IsometricUtil.cartToIso(Vector2.X);
         final Vector2 yAxis = IsometricUtil.cartToIso(Vector2.Y);
 
+        game.shape.setTransformMatrix(new Matrix4().idt());
         game.shape.setProjectionMatrix(camera.combined);
         game.shape.begin(ShapeRenderer.ShapeType.Filled);
 
@@ -172,6 +180,8 @@ public class TestScreen implements Screen {
     private void debugRenderLevelGrid() {
         final Vector2 levelSize = levelNodeGenerator.getLevelSize();
 
+        game.shape.setTransformMatrix(debugLevelMatrix);
+        game.shape.setProjectionMatrix(camera.combined);
         game.shape.begin(ShapeRenderer.ShapeType.Filled);
         game.shape.setColor(Color.BLACK);
 
@@ -184,9 +194,23 @@ public class TestScreen implements Screen {
         game.shape.end();
     }
 
+    private void debugRenderLevelRooms() {
+        int index = 0;
+
+        game.shape.setTransformMatrix(debugLevelMatrix);
+        game.shape.setProjectionMatrix(camera.combined);
+        game.shape.begin(ShapeRenderer.ShapeType.Filled);
+        for (LevelNode leaf : levelNodeGenerator.getLeaves()) {
+            game.shape.setColor(leafColors.get(index++).cpy().mul(1.0f, 1.0f, 1.0f, 0.25f));
+            game.shape.rect(leaf.getRoomBounds().x, leaf.getRoomBounds().y, leaf.getRoomBounds().width, leaf.getRoomBounds().height);
+        }
+        game.shape.end();
+    }
+
     private void debugRenderLevelNodes() {
         int index = 0;
 
+        game.shape.setTransformMatrix(debugLevelMatrix);
         game.shape.setProjectionMatrix(camera.combined);
         game.shape.begin(ShapeRenderer.ShapeType.Filled);
         for (LevelNode leaf : levelNodeGenerator.getLeaves()) {
@@ -200,21 +224,27 @@ public class TestScreen implements Screen {
     }
 
     private void debugRenderLevelGraph() {
+        game.shape.setTransformMatrix(debugLevelMatrix);
+        game.shape.setProjectionMatrix(camera.combined);
+        game.shape.begin(ShapeRenderer.ShapeType.Filled);
+
         for (Map.Entry<LevelNode, HashMap<LevelNode, LevelGraph.Edge>> entry : levelNodeGenerator.getGraph().entrySet()) {
             final LevelNode firstNode = entry.getKey();
 
-            game.shape.begin(ShapeRenderer.ShapeType.Filled);
             for (Map.Entry<LevelNode, LevelGraph.Edge> connection : entry.getValue().entrySet()) {
                 final LevelNode secondNode = connection.getKey();
 
                 game.shape.setColor(Color.BLACK);
                 game.shape.line(firstNode.getRoomBounds().getCenter(new Vector2()), secondNode.getRoomBounds().getCenter(new Vector2()));
             }
-            game.shape.end();
         }
+
+        game.shape.end();
     }
 
     private void debugRenderHalls() {
+        game.shape.setTransformMatrix(debugLevelMatrix);
+        game.shape.setProjectionMatrix(camera.combined);
         game.shape.begin(ShapeRenderer.ShapeType.Filled);
         for (Rectangle hall : levelNodeGenerator.getHalls()) {
             game.shape.setColor(Color.ORANGE);
@@ -236,7 +266,7 @@ public class TestScreen implements Screen {
         final float cameraSpeedMult = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 2.0f : 1.0f;
 
         final float playerSpeed = 1000.0f;
-        final Vector2 movementVec = IsometricUtil.isoToCart(getInputMovementVec(Input.Keys.A, Input.Keys.D, Input.Keys.S, Input.Keys.W, 1000.0f));
+        final Vector2 movementVec = IsometricUtil.isoToCart(getInputMovementVec(Input.Keys.A, Input.Keys.D, Input.Keys.S, Input.Keys.W, playerSpeed));
         playerBody.setLinearVelocity(movementVec);
 
         final Vector2 cameraMovementVec = getInputMovementVec(Input.Keys.J, Input.Keys.L, Input.Keys.K, Input.Keys.I, cameraSpeed);
