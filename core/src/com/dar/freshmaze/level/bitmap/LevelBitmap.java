@@ -1,14 +1,11 @@
 package com.dar.freshmaze.level.bitmap;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.dar.freshmaze.level.graph.LevelNode;
 import com.dar.freshmaze.level.graph.LevelNodeGenerator;
 import com.dar.freshmaze.util.RectangleUtil;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

@@ -13,7 +13,6 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dar.freshmaze.FreshmazeGame;
@@ -46,8 +45,6 @@ public class TestScreen implements Screen {
     private final LevelNodeGenerator levelNodeGenerator;
     private List<Color> leafColors;
     private final LevelTilemap levelTilemap;
-    // TODO: Store it in the tilemap itself
-    private Array<Body> tilemapBodies;
 
     private Body playerBody;
     private Texture isoCircleMarkerTexture;
@@ -65,7 +62,7 @@ public class TestScreen implements Screen {
         physDebugRenderer = new Box2DDebugRenderer();
 
         levelNodeGenerator = new LevelNodeGenerator();
-        levelTilemap = new LevelTilemap("level/tiles/tiles.png", 128);
+        levelTilemap = new LevelTilemap(physWorld, "level/tiles/tiles.png", 128);
         debugLevelMatrix = new Matrix4().idt().scl(levelTilemap.getTileSize(), levelTilemap.getTileSize(), 1.0f).mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX);
 
         isoCircleMarkerTexture = new Texture(Gdx.files.internal("iso_circle_marker.png"));
@@ -86,9 +83,6 @@ public class TestScreen implements Screen {
     }
 
     private void generateLevelNodes() {
-        if (tilemapBodies != null)
-            tilemapBodies.forEach(physWorld::destroyBody);
-
         levelNodeGenerator.generate(
                 new Vector2(64, 64),
                 2,
@@ -100,9 +94,6 @@ public class TestScreen implements Screen {
 
         levelTilemap.generate(levelBitmap);
         tilemapRenderer = new IsometricTiledMapRenderer(levelTilemap.getTilemap(), game.batch);
-
-        tilemapBodies = levelTilemap.createPhysObjects(physWorld);
-        System.out.println("Generated " + tilemapBodies.size + " physics bodies for the tilemap");
 
         leafColors = Stream
                 .generate(() -> new Color(MathUtils.random(0, 0xFFFFFF)))

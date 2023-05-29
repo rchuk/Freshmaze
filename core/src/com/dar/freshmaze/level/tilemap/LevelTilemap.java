@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -27,8 +28,12 @@ public class LevelTilemap implements Disposable {
 
     private final int tileSize;
     private TiledMap tilemap;
+    private final Array<Body> physBodies = new Array<>();
 
-    public LevelTilemap(String tilesetPath, int tileSize) {
+    private final World physWorld;
+
+    public LevelTilemap(World physWorld, String tilesetPath, int tileSize) {
+        this.physWorld = physWorld;
         this.tileSize = tileSize;
         tiles = new Texture(Gdx.files.internal(tilesetPath));
         final TextureRegion[][] splitTiles = TextureRegion.split(tiles, tileSize, tileSize);
@@ -51,6 +56,24 @@ public class LevelTilemap implements Disposable {
         return tilemap;
     }
 
+    public Vector2 cellPosToVec(CellPos cellPos) {
+        return new Vector2(
+                cellPos.x * tileSize,
+                cellPos.y * tileSize
+        );
+    }
+
+    public CellPos vecToCellPos(Vector2 pos) {
+        return new CellPos(
+                MathUtils.floor(pos.x / tileSize),
+                MathUtils.floor(pos.y / tileSize)
+        );
+    }
+
+    public Array<Body> getPhysBodies() {
+        return physBodies;
+    }
+
     public void generate(LevelBitmap bitmap) {
         tilemap = new TiledMap();
 
@@ -69,14 +92,13 @@ public class LevelTilemap implements Disposable {
                 cell.setTile(tile);
                 layer.setCell(xi, yi, cell);
 
-                final int finalXi = xi;
-                final int finalYi = yi;
+                final Vector2 pos = cellPosToVec(new CellPos(xi, yi));
                 tile.getObjects().getByType(RectangleMapObject.class).forEach(obj -> {
                     final Rectangle rect = obj.getRectangle();
 
                     layer.getObjects().add(new RectangleMapObject(
-                            rect.x + finalXi * tileSize,
-                            rect.y + finalYi * tileSize,
+                            rect.x + pos.x,
+                            rect.y + pos.y,
                             rect.width * tileSize,
                             rect.height * tileSize
                     ));
@@ -85,10 +107,13 @@ public class LevelTilemap implements Disposable {
         }
 
         layers.add(layer);
+
+        createPhysObjects();
     }
 
-    public Array<Body> createPhysObjects(World physWorld) {
-        final Array<Body> bodies = new Array<Body>();
+    private void createPhysObjects() {
+        physBodies.forEach(physWorld::destroyBody);
+        physBodies.clear();
 
         final TiledMapTileLayer layer = tilemap.getLayers().getByType(TiledMapTileLayer.class).get(0); //
 
@@ -101,12 +126,12 @@ public class LevelTilemap implements Disposable {
             final Body body = physWorld.createBody(bd);
             body.createFixture(shape, 1);
 
-            bodies.add(body);
+            physBodies.add(body);
 
             shape.dispose();
         });
 
-        return bodies;
+        System.out.println("Generated " + physBodies.size + " physics bodies for the tilemap");
     }
 
     private static PolygonShape rectangleToPhysPolygon(Rectangle rect) {
@@ -138,5 +163,23 @@ public class LevelTilemap implements Disposable {
     @Override
     public void dispose() {
         tiles.dispose();
+    }
+
+    public static class CellPos {
+        private final int x;
+        private final int y;
+
+        public CellPos(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public int getY() {
+            return y;
+        }
     }
 }
