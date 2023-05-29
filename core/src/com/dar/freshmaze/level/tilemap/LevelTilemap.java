@@ -81,8 +81,8 @@ public class LevelTilemap implements Disposable {
         final TiledMapTileLayer layer = new TiledMapTileLayer(bitmap.getWidth(), bitmap.getHeight(), tileSize, tileSize / 2);
         layer.setOffsetY(0.25f * tileSize);
 
-        for (int yi = 0; yi < bitmap.getWidth(); ++yi) {
-            for (int xi = 0; xi < bitmap.getHeight(); ++xi) {
+        for (int yi = 0; yi < bitmap.getHeight(); ++yi) {
+            for (int xi = 0; xi < bitmap.getWidth(); ++xi) {
                 final LevelBitmap.Cell bitmapCell = bitmap.getCell(xi, yi);
                 final TiledMapTile tile = mapBitmapCellToTile(bitmapCell);
                 if (tile == null)
