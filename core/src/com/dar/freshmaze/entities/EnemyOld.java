@@ -1,8 +1,8 @@
 package com.dar.freshmaze.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -14,12 +14,15 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.dar.freshmaze.Closet;
 import com.dar.freshmaze.util.IsometricUtil;
 
-public class Bob extends Actor {
+public class EnemyOld extends Actor {
     Texture texture = new Texture(Gdx.files.internal("still.png"));
     Sprite sprite = new Sprite(new Texture(Gdx.files.internal("still.png")));
-    public static final float deltaPx = 128;
-    public static final float deltaPy = 128;
+    public static final float deltaPx = 2;
+    public static final float deltaPy = 2;
     public static final float deltaS = 0.00001f;
+    private static final int boxSize = 50;
+    private int boxIndex = 0;
+    private boolean boxForward = true;
     //    TextureRegion region;
     public boolean movingRight = false;
     public boolean movingLeft = false;
@@ -27,56 +30,28 @@ public class Bob extends Actor {
     public boolean movingDown = false;
     TextureRegion region;
     private Body body;
-    private  World physWorld;
+    private World physWorld;
 
-    public Bob() {
+    public EnemyOld(Rectangle r) {
         super();
         region = new TextureRegion(texture);
+        sprite.setPosition(r.getX() * 128 + r.getWidth() * 64,  r.getY() * 128 + r.getHeight() * 64);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         setTouchable(Touchable.enabled);
         this.physWorld = Closet.getWorld();;
         final CircleShape circle = new CircleShape();
-        circle.setPosition(IsometricUtil.isoToCart(new Vector2(sprite.getX() + 128, sprite.getY())));
+        circle.setPosition(IsometricUtil.isoToCart(new Vector2( 128, 0)));
         circle.setRadius(64);
         final BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.fixedRotation = true;
-        bd.position.set(Vector2.Zero);
+        bd.position.set(new Vector2(sprite.getX(), sprite.getY()));
         bd.linearDamping = 0.5f;
         bd.angularDamping = 0.5f;
         body = physWorld.createBody(bd);
         body.createFixture(circle, 1);
         body.setUserData(this);
-        addListener(new InputListener() {
 
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.RIGHT)
-                    movingRight = true;
-                if (keycode == Input.Keys.LEFT)
-                    movingLeft = true;
-                if (keycode == Input.Keys.UP)
-                    movingUp = true;
-                if (keycode == Input.Keys.DOWN)
-                    movingDown = true;
-
-                return true;
-            }
-
-            @Override
-            public boolean keyUp(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.RIGHT)
-                    movingRight = false;
-                if (keycode == Input.Keys.LEFT)
-                    movingLeft = false;
-                if (keycode == Input.Keys.UP)
-                    movingUp = false;
-                if (keycode == Input.Keys.DOWN)
-                    movingDown = false;
-                return true;
-
-            }
-        });
     }
 
     @Override
@@ -98,39 +73,21 @@ public class Bob extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        float dx = 0;
-        float dy = 0;
-        if (movingRight)
-            dx = deltaPx;
-        if (movingLeft)
-            dx = -deltaPx;
-        if (movingUp )
-            dy = deltaPy;
-        if (movingDown)
-            dy = -deltaPy;
-        body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(dx, dy).scl(10000)));
+        if (!boxForward) {
+            body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(-deltaPx, -deltaPy).scl(10000)));
+
+        }
+        if (boxForward) {
+            body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(deltaPx, deltaPy).scl(10000)));
+        }
+        if (++boxIndex == boxSize) {
+            boxForward = !boxForward;
+            boxIndex = 0;
+        }
         MoveToAction mta = new MoveToAction();
         mta.setPosition(body.getPosition().x, body.getPosition().y);
         mta.setDuration(0);
         addAction(mta);
-//        MoveByAction mba = new MoveByAction();
-//        mba.setAmount(dx, dy);
-//        mba.setDuration(deltaS);
-//        addAction(mba);
-
-
-
-//        SequenceAction sequenceAction = new SequenceAction();
-//        ColorAction ca = new ColorAction();
-//        ca.setEndColor(Color.RED);
-//        ca.setDuration(0.5f);
-//        ColorAction ca1 = new ColorAction();
-//        ca1.setEndColor(Color.CLEAR);
-//        ca1.setDuration(0.5f);
-//        sequenceAction.addAction(ca);
-//        sequenceAction.addAction(ca1);
-//        addAction(sequenceAction);
 
     }
-
-}
+   }

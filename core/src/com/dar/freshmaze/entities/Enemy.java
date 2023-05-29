@@ -1,67 +1,26 @@
 package com.dar.freshmaze.entities;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
+import com.dar.freshmaze.Closet;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
-import com.dar.freshmaze.util.IsometricUtil;
-
-public class Enemy extends Actor {
-    Texture texture = new Texture(Gdx.files.internal("still.png"));
-    Sprite sprite = new Sprite(new Texture(Gdx.files.internal("still.png")));
-    public static final float deltaPx = 2;
-    public static final float deltaPy = 2;
-    public static final float deltaS = 0.00001f;
-    private static final int boxSize = 50;
-    private int boxIndex = 0;
-    private boolean boxForward = true;
-    //    TextureRegion region;
-    public boolean movingRight = false;
-    public boolean movingLeft = false;
-    public boolean movingUp = false;
-    public boolean movingDown = false;
-    TextureRegion region;
+public class Enemy {
+    private final World physWorld;
+    private Body body;
 
     public Enemy() {
-        super();
-        region = new TextureRegion(texture);
-        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
-        setTouchable(Touchable.enabled);
+        final CircleShape circle = new CircleShape();
+        circle.setPosition(Vector2.Zero);
+        circle.setRadius(46.0f);
+        this.physWorld = Closet.getWorld();;
+        final BodyDef bd = new BodyDef();
+        bd.type = BodyDef.BodyType.DynamicBody;
+        bd.fixedRotation = true;
+        bd.position.set(Vector2.Zero);
+        bd.linearDamping = 0.5f;
+        bd.angularDamping = 0.5f;
+        body = physWorld.createBody(bd);
+        body.createFixture(circle, 1);
+
+        circle.dispose();
     }
-
-    @Override
-    protected void positionChanged() {
-        sprite.setPosition(getX(), getY());
-        super.positionChanged();
-    }
-
-    @Override
-    public void draw(Batch batch, float alpha) {
-        batch.setTransformMatrix(IsometricUtil.ISO_TRANSFORMATION_MATRIX); // Not needed if the sprites is already drawn as isometric
-        sprite.draw(batch);
-        batch.setColor(getColor());
-        batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),
-                getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-
-    }
-
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        MoveByAction mba = new MoveByAction();
-        if (!boxForward)
-            mba.setAmount(-deltaPx, -deltaPy);
-        if (boxForward)
-            mba.setAmount(deltaPx, deltaPy);
-        if (++boxIndex == boxSize) {
-            boxForward = !boxForward;
-            boxIndex = 0;
-        }
-        mba.setDuration(deltaS);
-        addAction(mba);
-
-    }
-
 }

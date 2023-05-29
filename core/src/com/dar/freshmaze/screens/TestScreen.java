@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dar.freshmaze.FreshmazeGame;
+import com.dar.freshmaze.Closet;
 import com.dar.freshmaze.level.bitmap.LevelBitmap;
 import com.dar.freshmaze.level.graph.LevelGraph;
 import com.dar.freshmaze.level.graph.LevelNode;
@@ -47,6 +48,8 @@ public class TestScreen implements Screen {
     private final LevelTilemap levelTilemap;
 
     private Body playerBody;
+
+    private Body enemyBody;
     private Texture isoCircleMarkerTexture;
 
     private Matrix4 debugLevelMatrix;
@@ -58,7 +61,7 @@ public class TestScreen implements Screen {
         camera.zoom = 10.0f;
         this.viewport = viewport;
 
-        physWorld = new World(Vector2.Zero, true); //TODO: Change graphics scale to 1 unit = 1 meter
+        physWorld = Closet.getWorld(); //TODO: Change graphics scale to 1 unit = 1 meter
         physDebugRenderer = new Box2DDebugRenderer();
 
         levelNodeGenerator = new LevelNodeGenerator();
@@ -76,7 +79,7 @@ public class TestScreen implements Screen {
         bd.position.set(Vector2.Zero);
         playerBody = physWorld.createBody(bd);
         playerBody.createFixture(circle, 1);
-
+       // new Enemy();
         circle.dispose();
 
         generateLevelNodes();
@@ -145,7 +148,7 @@ public class TestScreen implements Screen {
 
         physDebugRenderer.render(physWorld, new Matrix4(camera.combined).mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX));
 
-        physWorld.step(1/60f, 6, 2);
+        physWorld.step(1 / 60f, 6, 2);
     }
 
     private void debugRenderAxes() {
@@ -168,6 +171,7 @@ public class TestScreen implements Screen {
 
         game.shape.end();
     }
+
     private void debugRenderLevelGrid() {
         final Vector2 levelSize = levelNodeGenerator.getLevelSize();
 
@@ -259,7 +263,6 @@ public class TestScreen implements Screen {
         final float playerSpeed = 1000.0f;
         final Vector2 movementVec = IsometricUtil.isoToCart(getInputMovementVec(Input.Keys.A, Input.Keys.D, Input.Keys.S, Input.Keys.W, playerSpeed));
         playerBody.setLinearVelocity(movementVec);
-
         final Vector2 cameraMovementVec = getInputMovementVec(Input.Keys.J, Input.Keys.L, Input.Keys.K, Input.Keys.I, cameraSpeed);
         camera.translate(cameraMovementVec.x * cameraSpeedMult * dt, cameraMovementVec.y * cameraSpeedMult * dt);
     }
@@ -275,8 +278,8 @@ public class TestScreen implements Screen {
 
     private float getInputAxisValue(int keyNegative, int keyPositive) {
         return Gdx.input.isKeyPressed(keyNegative) ? -1.0f :
-               Gdx.input.isKeyPressed(keyPositive) ? 1.0f :
-               0.0f;
+                Gdx.input.isKeyPressed(keyPositive) ? 1.0f :
+                        0.0f;
     }
 
     @Override

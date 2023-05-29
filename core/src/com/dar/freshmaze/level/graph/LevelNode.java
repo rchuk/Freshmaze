@@ -2,6 +2,8 @@ package com.dar.freshmaze.level.graph;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.dar.freshmaze.Closet;
 
 import java.awt.*;
 
@@ -80,6 +82,8 @@ public class LevelNode {
         final float y = MathUtils.random(rules.getRoomGap(), (int)(bounds.height - height - rules.getRoomGap()));
 
         roomBounds = new Rectangle(bounds.x + x, bounds.y + y, width, height);
+        System.out.println(roomBounds);
+        Closet.addActor(roomBounds);
     }
 
     private boolean isSplitVertical() {

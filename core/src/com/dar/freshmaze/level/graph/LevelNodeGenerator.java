@@ -3,9 +3,9 @@ package com.dar.freshmaze.level.graph;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.dar.freshmaze.Closet;
 import com.dar.freshmaze.util.RectangleUtil;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class LevelNodeGenerator {
@@ -120,13 +120,14 @@ public class LevelNodeGenerator {
     private void generateNodes() {
         leaves = new ArrayList<>();
         root = new LevelNode(new Rectangle(0.0f, 0.0f, levelSize.x, levelSize.y), rules);
-
         generateNodeRecursive(root);
     }
 
     private void generateNodeRecursive(LevelNode node) {
         if (!node.split()) {
             leaves.add(node);
+//            Closet.addRoom(node.getBounds());
+//            System.out.println(node.getBounds());
             node.generateRoom();
 
             return;
