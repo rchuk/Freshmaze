@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.dar.freshmaze.Closet;
 import com.dar.freshmaze.util.IsometricUtil;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class EnemyOld extends Actor {
     Texture texture = new Texture(Gdx.files.internal("still.png"));
@@ -48,10 +49,12 @@ public class EnemyOld extends Actor {
         bd.position.set(new Vector2(sprite.getX(), sprite.getY()));
         bd.linearDamping = 0.5f;
         bd.angularDamping = 0.5f;
+        FixtureDef fdef = new FixtureDef();
+        fdef.shape = circle;
         body = physWorld.createBody(bd);
         body.createFixture(circle, 1);
         body.setUserData(this);
-
+        body.createFixture(fdef).setUserData(this);
     }
 
     @Override

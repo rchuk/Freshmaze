@@ -3,11 +3,9 @@ package com.dar.freshmaze.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
@@ -27,26 +25,34 @@ public class Bob extends Actor {
     public boolean movingDown = false;
     TextureRegion region;
     private Body body;
-    private  World physWorld;
+    private boolean toDelete = false;
+    private World physWorld;
+    private boolean isAttaking = false;
 
-    public Bob() {
+    public Bob(Rectangle r) {
         super();
         region = new TextureRegion(texture);
+        sprite.setPosition(r.getX() * 128 + r.getWidth() * 64,  r.getY() * 128 + r.getHeight() * 64);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         setTouchable(Touchable.enabled);
-        this.physWorld = Closet.getWorld();;
+        this.physWorld = Closet.getWorld();
+        ;
         final CircleShape circle = new CircleShape();
-        circle.setPosition(IsometricUtil.isoToCart(new Vector2(sprite.getX() + 128, sprite.getY())));
+        circle.setPosition(IsometricUtil.isoToCart(new Vector2( 128, 0)));
         circle.setRadius(64);
         final BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.fixedRotation = true;
-        bd.position.set(Vector2.Zero);
-        bd.linearDamping = 0.5f;
-        bd.angularDamping = 0.5f;
+        bd.position.set(new Vector2(sprite.getX(), sprite.getY()));
+        bd.linearDamping = 1f;
+        bd.angularDamping = 1f;
+        FixtureDef fdef = new FixtureDef();
+        fdef.shape = circle;
         body = physWorld.createBody(bd);
         body.createFixture(circle, 1);
         body.setUserData(this);
+        body.createFixture(fdef).setUserData(this);
+
         addListener(new InputListener() {
 
             @Override
@@ -59,7 +65,10 @@ public class Bob extends Actor {
                     movingUp = true;
                 if (keycode == Input.Keys.DOWN)
                     movingDown = true;
-
+                if (keycode == Input.Keys.B) {
+                    sprite.scale(1.25f);
+                    isAttaking = true;
+                }
                 return true;
             }
 
@@ -73,6 +82,11 @@ public class Bob extends Actor {
                     movingUp = false;
                 if (keycode == Input.Keys.DOWN)
                     movingDown = false;
+                if (keycode == Input.Keys.B) {
+                    sprite.setScale(1);
+                    isAttaking = false;
+
+                }
                 return true;
 
             }
@@ -104,11 +118,11 @@ public class Bob extends Actor {
             dx = deltaPx;
         if (movingLeft)
             dx = -deltaPx;
-        if (movingUp )
+        if (movingUp)
             dy = deltaPy;
         if (movingDown)
             dy = -deltaPy;
-        body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(dx, dy).scl(10000)));
+        body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(dx, dy).scl(1000000)));
         MoveToAction mta = new MoveToAction();
         mta.setPosition(body.getPosition().x, body.getPosition().y);
         mta.setDuration(0);
@@ -117,7 +131,6 @@ public class Bob extends Actor {
 //        mba.setAmount(dx, dy);
 //        mba.setDuration(deltaS);
 //        addAction(mba);
-
 
 
 //        SequenceAction sequenceAction = new SequenceAction();
@@ -133,4 +146,19 @@ public class Bob extends Actor {
 
     }
 
+    @Override
+    public boolean remove() {
+        toDelete = true;
+        return super.remove();
+    }
+
+    public void processContact(EnemyOld userData) {
+        if(userData == null)
+            return;
+        System.out.println("HELLP: " + userData);
+        if (isAttaking)
+            userData.remove();
+//        else
+//            remove();
+    }
 }

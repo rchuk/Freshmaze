@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -30,10 +31,11 @@ public class FreshmazeGame extends Game {
 		Viewport       viewport = new FitViewport(WIDTH, HEIGHT, camera);
 		setScreen(new TestScreen(this, camera, viewport));
 		stage = new Stage(viewport);
-		actor = new Bob();
-		stage.addActor(actor);
+		actor = (Bob) Closet.getActors().get(0);
+	//	stage.addActor(actor);
 		for(Actor a : Closet.getActors())
 		    stage.addActor(a);
+	//	stage.addActor(new EnemyOld(new Rectangle()));
 		Gdx.input.setInputProcessor(stage);
 		stage.setKeyboardFocus(actor);
 	}
