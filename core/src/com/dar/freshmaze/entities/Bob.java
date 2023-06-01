@@ -9,12 +9,11 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.dar.freshmaze.Closet;
 import com.dar.freshmaze.util.IsometricUtil;
 
 public class Bob extends Actor {
     Texture texture = new Texture(Gdx.files.internal("still.png"));
-    Sprite sprite = new Sprite(new Texture(Gdx.files.internal("still.png")));
+    Sprite sprite = new Sprite(texture);
     public static final float deltaPx = 128;
     public static final float deltaPy = 128;
     public static final float deltaS = 0.00001f;
@@ -26,16 +25,16 @@ public class Bob extends Actor {
     TextureRegion region;
     private Body body;
     private boolean toDelete = false;
-    private World physWorld;
+    private final World physWorld;
     private boolean isAttaking = false;
 
-    public Bob(Rectangle r) {
+    public Bob(World physWorld, Rectangle r) {
         super();
         region = new TextureRegion(texture);
         sprite.setPosition(r.getX() * 128 + r.getWidth() * 64,  r.getY() * 128 + r.getHeight() * 64);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         setTouchable(Touchable.enabled);
-        this.physWorld = Closet.getWorld();
+        this.physWorld = physWorld;
         ;
         final CircleShape circle = new CircleShape();
         circle.setPosition(IsometricUtil.isoToCart(new Vector2( 128, 0)));
@@ -91,6 +90,10 @@ public class Bob extends Actor {
 
             }
         });
+    }
+
+    public void teleport(Vector2 pos) {
+        body.setTransform(pos, 0.0f);
     }
 
     @Override

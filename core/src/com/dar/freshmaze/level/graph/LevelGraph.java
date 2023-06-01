@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.dar.freshmaze.common.Graph;
+import com.dar.freshmaze.level.LevelRoom;
 import com.dar.freshmaze.util.RectangleUtil;
 
 import java.util.HashMap;
@@ -16,9 +17,9 @@ public class LevelGraph {
     private static final Vector2 EXPAND_HORIZONTAL = new Vector2(EXPAND_DELTA, 0.0f);
     private static final Vector2 EXPAND_VERTICAL = new Vector2(0.0f, EXPAND_DELTA);
 
-    private Graph<LevelNode, Edge> graph;
+    private Graph<LevelRoom, Edge> graph;
 
-    public Set<Map.Entry<LevelNode, HashMap<LevelNode, Edge>>> entrySet() {
+    public Set<Map.Entry<LevelRoom, HashMap<LevelRoom, Edge>>> entrySet() {
         return graph.entrySet();
     }
 
@@ -34,7 +35,7 @@ public class LevelGraph {
                 if (edge == null)
                     continue;
 
-                graph.addDirected(firstNode, secondNode, edge);
+                graph.addDirected(firstNode.getRoom(), secondNode.getRoom(), edge);
             }
         }
 

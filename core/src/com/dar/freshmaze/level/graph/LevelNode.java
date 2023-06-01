@@ -2,18 +2,14 @@ package com.dar.freshmaze.level.graph;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.dar.freshmaze.Closet;
-
-import java.awt.*;
+import com.dar.freshmaze.level.LevelRoom;
 
 public class LevelNode {
     private final LevelNodeGenerationRules rules;
-
     private final Rectangle bounds;
-    private Rectangle roomBounds;
     private LevelNode leftChild;
     private LevelNode rightChild;
+    private LevelRoom room;
 
     public LevelNode(Rectangle bounds, LevelNodeGenerationRules rules) {
         this.bounds = bounds;
@@ -28,16 +24,16 @@ public class LevelNode {
         return bounds;
     }
 
-    public Rectangle getRoomBounds() {
-        return roomBounds;
-    }
-
     public LevelNode getLeftChild() {
         return leftChild;
     }
 
     public LevelNode getRightChild() {
         return rightChild;
+    }
+
+    public LevelRoom getRoom() {
+        return room;
     }
 
     public boolean split() {
@@ -81,9 +77,8 @@ public class LevelNode {
         final float x = MathUtils.random(rules.getRoomGap(), (int)(bounds.width - width - rules.getRoomGap()));
         final float y = MathUtils.random(rules.getRoomGap(), (int)(bounds.height - height - rules.getRoomGap()));
 
-        roomBounds = new Rectangle(bounds.x + x, bounds.y + y, width, height);
-        System.out.println(roomBounds);
-        Closet.addActor(roomBounds);
+        final Rectangle roomBounds = new Rectangle(bounds.x + x, bounds.y + y, width, height);
+        room = new LevelRoom(roomBounds);
     }
 
     private boolean isSplitVertical() {

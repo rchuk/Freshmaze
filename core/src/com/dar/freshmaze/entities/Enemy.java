@@ -1,17 +1,16 @@
 package com.dar.freshmaze.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.dar.freshmaze.Closet;
 
 public class Enemy {
     private final World physWorld;
     private Body body;
 
-    public Enemy() {
+    public Enemy(World physWorld) {
         final CircleShape circle = new CircleShape();
         circle.setPosition(Vector2.Zero);
         circle.setRadius(46.0f);
-        this.physWorld = Closet.getWorld();;
+        this.physWorld = physWorld;
         final BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.fixedRotation = true;

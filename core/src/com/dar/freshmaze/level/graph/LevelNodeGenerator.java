@@ -3,10 +3,13 @@ package com.dar.freshmaze.level.graph;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.dar.freshmaze.Closet;
+import com.dar.freshmaze.level.EnemyGenerator;
+import com.dar.freshmaze.level.LevelRoom;
 import com.dar.freshmaze.util.RectangleUtil;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class LevelNodeGenerator {
     private Vector2 levelSize;
@@ -15,11 +18,15 @@ public class LevelNodeGenerator {
 
     private LevelNode root;
     private ArrayList<LevelNode> leaves;
+    private ArrayList<LevelRoom> rooms;
     private LevelGraph graph;
     private ArrayList<Rectangle> halls;
 
+    private LevelRoom spawnRoom;
+    private LevelRoom finalRoom;
 
-    public void generate(Vector2 levelSize, int hallThickness, LevelNodeGenerationRules rules) {
+
+    public void generate(Vector2 levelSize, int hallThickness, LevelNodeGenerationRules rules, EnemyGenerator enemyGenerator) {
         this.levelSize = levelSize;
         this.hallThickness = hallThickness;
         this.rules = rules;
@@ -27,6 +34,7 @@ public class LevelNodeGenerator {
         generateNodes();
         generateGraph();
         generateHalls();
+        generateRoomContents(enemyGenerator);
     }
 
     public Vector2 getLevelSize() {
@@ -41,6 +49,10 @@ public class LevelNodeGenerator {
         return Collections.unmodifiableList(leaves);
     }
 
+    public List<LevelRoom> getRooms() {
+        return Collections.unmodifiableList(rooms);
+    }
+
     public LevelGraph getGraph() {
         return graph;
     }
@@ -49,16 +61,48 @@ public class LevelNodeGenerator {
         return halls;
     }
 
+    public LevelRoom getSpawnRoom() {
+        return spawnRoom;
+    }
+
+    public LevelRoom getFinalRoom() {
+        return finalRoom;
+    }
+
+    private void generateRoomContents(EnemyGenerator enemyGenerator) {
+        final ArrayList<Integer> indices = IntStream.range(0, rooms.size())
+                .boxed()
+                .collect(Collectors.toCollection(ArrayList::new));
+        Collections.shuffle(indices);
+
+        if (indices.size() < 2)
+            throw new RuntimeException("Can't generate dungeon with less than two rooms");
+
+        spawnRoom = rooms.get(indices.get(0));
+        finalRoom = rooms.get(indices.get(1));
+        spawnRoom.setKind(LevelRoom.Kind.Spawn);
+        finalRoom.setKind(LevelRoom.Kind.Final);
+
+        for (int i = 2; i < indices.size(); ++i) {
+            final LevelRoom room = rooms.get(indices.get(i));
+
+            room.setKind(LevelRoom.Kind.Battle);
+            enemyGenerator.generate(room);
+        }
+
+        // TODO: Generate contents
+    }
+
     private void generateHalls() {
         halls = new ArrayList<>();
 
         final HashMap<LevelGraph.Edge, Vector2> intersectionPoints = new HashMap<>();
 
-        for (Map.Entry<LevelNode, HashMap<LevelNode, LevelGraph.Edge>> entry : graph.entrySet()) {
-            final LevelNode firstNode = entry.getKey();
+        for (Map.Entry<LevelRoom, HashMap<LevelRoom, LevelGraph.Edge>> entry : graph.entrySet()) {
+            final LevelRoom firstNode = entry.getKey();
 
-            for (Map.Entry<LevelNode, LevelGraph.Edge> connection : entry.getValue().entrySet()) {
-                final LevelNode secondNode = connection.getKey();
+            for (Map.Entry<LevelRoom, LevelGraph.Edge> connection : entry.getValue().entrySet()) {
+                final LevelRoom secondNode = connection.getKey();
                 final LevelGraph.Edge edge = connection.getValue();
 
                 if (!intersectionPoints.containsKey(edge))
@@ -71,8 +115,8 @@ public class LevelNodeGenerator {
         }
     }
 
-    private ArrayList<Rectangle> joinRoomsWithHalls(LevelNode firstNode, LevelNode secondNode, Vector2 intersectionPoint) {
-        final Rectangle room = firstNode.getRoomBounds();
+    private ArrayList<Rectangle> joinRoomsWithHalls(LevelRoom firstNode, LevelRoom secondNode, Vector2 intersectionPoint) {
+        final Rectangle room = firstNode.getBounds();
 
         return joinPointsWithHalls(
                 new Vector2(room.x + (int)(0.5f * room.width), room.y + (int)(0.5f * room.height)),
@@ -119,16 +163,17 @@ public class LevelNodeGenerator {
 
     private void generateNodes() {
         leaves = new ArrayList<>();
+        rooms = new ArrayList<>();
         root = new LevelNode(new Rectangle(0.0f, 0.0f, levelSize.x, levelSize.y), rules);
         generateNodeRecursive(root);
     }
 
     private void generateNodeRecursive(LevelNode node) {
         if (!node.split()) {
-            leaves.add(node);
-//            Closet.addRoom(node.getBounds());
-//            System.out.println(node.getBounds());
             node.generateRoom();
+
+            leaves.add(node);
+            rooms.add(node.getRoom());
 
             return;
         }

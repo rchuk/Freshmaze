@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.dar.freshmaze.Closet;
 import com.dar.freshmaze.util.IsometricUtil;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
@@ -31,15 +30,15 @@ public class EnemyOld extends Actor {
     public boolean movingDown = false;
     TextureRegion region;
     private Body body;
-    private World physWorld;
+    private final World physWorld;
 
-    public EnemyOld(Rectangle r) {
+    public EnemyOld(World physWorld, Rectangle r) {
         super();
         region = new TextureRegion(texture);
         sprite.setPosition(r.getX() * 128 + r.getWidth() * 64,  r.getY() * 128 + r.getHeight() * 64);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         setTouchable(Touchable.enabled);
-        this.physWorld = Closet.getWorld();;
+        this.physWorld = physWorld;
         final CircleShape circle = new CircleShape();
         circle.setPosition(IsometricUtil.isoToCart(new Vector2( 128, 0)));
         circle.setRadius(64);

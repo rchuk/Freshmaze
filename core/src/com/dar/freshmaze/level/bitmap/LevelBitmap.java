@@ -41,7 +41,7 @@ public class LevelBitmap {
         placeHalls();
         placeRooms();
 
-        //debugPrint();
+        // debugPrint();
     }
 
     // TODO: Remove
@@ -75,8 +75,8 @@ public class LevelBitmap {
     }
 
     private void placeRooms() {
-        generator.getLeaves().forEach(leaf ->
-                processRectangleMap(leaf.getRoomBounds(), kind -> {
+        generator.getRooms().forEach(room ->
+                processRectangleMap(room.getBounds(), (kind, x, y) -> {
                     switch (kind) {
                         case Empty:
                         case Hall:
@@ -88,12 +88,14 @@ public class LevelBitmap {
                 })
         );
 
-        generator.getLeaves().forEach(leaf ->
-                processRectangleMap(RectangleUtil.expand(leaf.getRoomBounds(), new Vector2(1, 1)), kind -> {
+        generator.getRooms().forEach(room ->
+                processRectangleMap(RectangleUtil.expand(room.getBounds(), new Vector2(1, 1)), (kind, x, y) -> {
                     switch (kind) {
                         case Empty:
                             return Cell.Kind.Wall;
                         case Hall:
+                            room.addEntrance(new Vector2(x, y));
+
                             return Cell.Kind.HallEntrance;
                         default:
                             return kind;
@@ -104,7 +106,7 @@ public class LevelBitmap {
 
     private void placeHalls() {
         generator.getHalls().forEach(hall ->
-                processRectangleMap(hall, kind -> {
+                processRectangleMap(hall, (kind, x, y) -> {
                     switch (kind) {
                         case Empty:
                             return Cell.Kind.Hall;
@@ -115,7 +117,7 @@ public class LevelBitmap {
         );
 
         generator.getHalls().forEach(hall ->
-                processRectangleMap(RectangleUtil.expand(hall, new Vector2(1, 1)), kind -> {
+                processRectangleMap(RectangleUtil.expand(hall, new Vector2(1, 1)), (kind, x, y) -> {
                     switch (kind) {
                         case Empty:
                             return Cell.Kind.Wall;
@@ -127,15 +129,17 @@ public class LevelBitmap {
     }
 
     private void processRectangleMap(Rectangle rect, CellKindMapper cellKindMapper) {
-        processRectangle(rect, cell -> cell.setKind(cellKindMapper.processCell(cell.getKind())));
+        processRectangle(rect, (cell, x, y) -> cell.setKind(cellKindMapper.processCell(cell.getKind(), x, y)));
     }
 
     private void processRectangle(Rectangle rect, CellProcessor cellProcessor) {
         for (int yi = 0; yi < rect.height; ++yi) {
             for (int xi = 0; xi < rect.width; ++xi) {
-                final Cell cell = getCell((int)rect.x + xi, (int)rect.y + yi);
+                final int x = (int)rect.x + xi;
+                final int y = (int)rect.y + yi;
+                final Cell cell = getCell(x, y);
 
-                cellProcessor.processCell(cell);
+                cellProcessor.processCell(cell, x, y);
             }
         }
     }
@@ -149,11 +153,11 @@ public class LevelBitmap {
     }
 
     private interface CellKindMapper {
-        Cell.Kind processCell(Cell.Kind kind);
+        Cell.Kind processCell(Cell.Kind kind, int x, int y);
     }
 
     private interface CellProcessor {
-        void processCell(Cell cell);
+        void processCell(Cell cell, int x, int y);
     }
 
 
