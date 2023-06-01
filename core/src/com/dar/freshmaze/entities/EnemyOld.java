@@ -71,6 +71,9 @@ public class EnemyOld extends Actor {
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 
     }
+    public void teleport(Vector2 pos) {
+        body.setTransform(pos, 0.0f);
+    }
 
     @Override
     public void act(float delta) {

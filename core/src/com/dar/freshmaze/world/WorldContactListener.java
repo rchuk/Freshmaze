@@ -10,6 +10,8 @@ public class WorldContactListener implements ContactListener {
         // System.out.println(contact);
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
+        if(fixA.isSensor() == fixB.isSensor())
+            return;
         if (fixA.getUserData() != null) {
             // System.out.println("A: " + fixA.getUserData().getClass());
             if(fixA.getUserData().getClass() == Bob.class) {

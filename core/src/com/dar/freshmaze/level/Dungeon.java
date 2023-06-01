@@ -3,11 +3,11 @@ package com.dar.freshmaze.level;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.dar.freshmaze.entities.Bob;
+import com.dar.freshmaze.entities.EnemyOld;
 
 public class Dungeon implements Disposable {
     private final Level level;
     private final Bob bob;
-
     private LevelRoom currentRoom;
 
     private int levelIndex = 0;

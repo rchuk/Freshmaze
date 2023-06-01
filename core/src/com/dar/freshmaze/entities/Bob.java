@@ -27,7 +27,7 @@ public class Bob extends Actor {
     private boolean toDelete = false;
     private final World physWorld;
     private boolean isAttaking = false;
-
+    private final static float multiplier = 1.6f;
     public Bob(World physWorld, Rectangle r) {
         super();
         region = new TextureRegion(texture);
@@ -45,8 +45,12 @@ public class Bob extends Actor {
         bd.position.set(new Vector2(sprite.getX(), sprite.getY()));
         bd.linearDamping = 1f;
         bd.angularDamping = 1f;
+        final CircleShape circleSensor = new CircleShape();
+        circleSensor.setPosition(IsometricUtil.isoToCart(new Vector2( 128, 0)));
+        circleSensor.setRadius(64 * multiplier);
         FixtureDef fdef = new FixtureDef();
-        fdef.shape = circle;
+        fdef.shape = circleSensor;
+        fdef.isSensor = true;
         body = physWorld.createBody(bd);
         body.createFixture(circle, 1);
         body.setUserData(this);
@@ -65,7 +69,7 @@ public class Bob extends Actor {
                 if (keycode == Input.Keys.DOWN)
                     movingDown = true;
                 if (keycode == Input.Keys.B) {
-                    sprite.scale(1.25f);
+                    sprite.scale(multiplier - 1);
                     isAttaking = true;
                 }
                 return true;
