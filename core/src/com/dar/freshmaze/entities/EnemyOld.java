@@ -95,4 +95,4 @@ public class EnemyOld extends Actor {
         addAction(mta);
 
     }
-   }
+}

@@ -8,14 +8,15 @@ import com.dar.freshmaze.entities.EnemyOld;
 public class Dungeon implements Disposable {
     private final Level level;
     private final Bob bob;
+    private final EnemyOld enemy;
     private LevelRoom currentRoom;
 
     private int levelIndex = 0;
 
-    public Dungeon(Level level, Bob bob) {
+    public Dungeon(Level level, Bob bob, EnemyOld enemy) {
         this.level = level;
         this.bob = bob;
-
+        this.enemy = enemy;
         generateLevel();
     }
 
@@ -63,6 +64,7 @@ public class Dungeon implements Disposable {
         final Vector2 center = level.getTilemap().cellPosToVec(centerCell);
 
         bob.teleport(center);
+        enemy.teleport(center);
     }
 
     @Override

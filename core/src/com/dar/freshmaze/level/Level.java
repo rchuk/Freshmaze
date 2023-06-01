@@ -31,7 +31,7 @@ public class Level implements Disposable {
     private final ShapeRenderer shape;
     private List<Color> debugLeafColors;
     private Matrix4 debugRenderMatrix;
-
+    private int health = 100;
     public Level(World physWorld, Stage stage) {
         nodeGenerator = new LevelNodeGenerator();
         tilemap = new LevelTilemap(physWorld, "level/tiles/tiles.png", 128);
@@ -178,6 +178,12 @@ public class Level implements Disposable {
         public static final int HALLS = 1 << 2;
         public static final int ROOMS = 1 << 3;
         public static final int GRID = 1 << 4;
+    }
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    public int getHealth() {
+        return health;
     }
 
     @Override

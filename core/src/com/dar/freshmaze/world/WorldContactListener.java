@@ -12,11 +12,13 @@ public class WorldContactListener implements ContactListener {
         Fixture fixB = contact.getFixtureB();
         if(fixA.isSensor() == fixB.isSensor())
             return;
-        if (fixA.getUserData() != null) {
+        if (fixA.getUserData() != null && fixB.getUserData() != null) {
             // System.out.println("A: " + fixA.getUserData().getClass());
             if(fixA.getUserData().getClass() == Bob.class) {
                 ((Bob) fixA.getUserData()).processContact((EnemyOld) fixB.getUserData());
             }
+            else
+                ((Bob) fixB.getUserData()).processContact((EnemyOld) fixA.getUserData());
         }
         // if (fixB.getUserData() != null)
         //    System.out.println("B: " + fixB.getUserData().getClass());
