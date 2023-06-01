@@ -28,7 +28,9 @@ public class Bob extends Actor {
     private final World physWorld;
     private boolean isAttaking = false;
     private final static float multiplier = 1.6f;
-    public Bob(World physWorld, Rectangle r) {
+    private Level level;
+
+    public Bob(World physWorld, Rectangle r, Level level) {
         super();
         region = new TextureRegion(texture);
         sprite.setPosition(r.getX() * 128 + r.getWidth() * 64,  r.getY() * 128 + r.getHeight() * 64);
