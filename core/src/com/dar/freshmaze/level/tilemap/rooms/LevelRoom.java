@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.dar.freshmaze.entities.Bob;
 import com.dar.freshmaze.level.Level;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicEntranceTile;
@@ -58,4 +59,7 @@ public class LevelRoom {
     public void addEntrance(Vector2 entrance) {
         entrances.add(entrance);
     }
+
+    public void onPlayerEnter(Bob bob) {}
+    public void onPlayerExit(Bob bob) {}
 }

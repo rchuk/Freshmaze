@@ -118,9 +118,9 @@ public class TestScreen implements Screen {
         final Vector2 cellPos = tilemap.vecToCellPosVec(bobPos);
         final Vector2 worldPos = tilemap.cellPosToVec(cellPos);
 
-        game.shape.begin(ShapeRenderer.ShapeType.Filled);
         game.shape.setTransformMatrix(IsometricUtil.ISO_TRANSFORMATION_MATRIX);
         game.shape.setProjectionMatrix(camera.combined);
+        game.shape.begin(ShapeRenderer.ShapeType.Filled);
         game.shape.setColor(Color.YELLOW);
         game.shape.rect(worldPos.x, worldPos.y, tilemap.getTileSize(), tilemap.getTileSize());
         game.shape.end();

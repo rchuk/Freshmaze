@@ -2,6 +2,7 @@ package com.dar.freshmaze.level.tilemap.rooms;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.dar.freshmaze.entities.Bob;
 import com.dar.freshmaze.entities.EnemyOld;
 import com.dar.freshmaze.level.EnemyGenerator;
 
@@ -12,5 +13,10 @@ public class BattleLevelRoom extends LevelRoom {
         super(bounds);
 
         enemies = enemyGenerator.generate(this);
+    }
+
+    @Override
+    public void onPlayerEnter(Bob bob) {
+        setIsOpen(false);
     }
 }

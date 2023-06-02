@@ -6,6 +6,7 @@ import com.dar.freshmaze.entities.Bob;
 import com.dar.freshmaze.entities.EnemyOld;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
+import com.dar.freshmaze.util.RectangleUtil;
 
 public class Dungeon implements Disposable {
     private final Level level;
@@ -40,20 +41,21 @@ public class Dungeon implements Disposable {
         if (currentRoom == newRoom)
             return;
 
-        if (newRoom != null) {
-            if (newRoom instanceof BattleLevelRoom)
-                newRoom.setIsOpen(false);
-        }
+        if (currentRoom != null)
+            currentRoom.onPlayerExit(bob);
+
+        currentRoom = newRoom;
+
+        if (currentRoom != null)
+            currentRoom.onPlayerEnter(bob);
     }
 
     private LevelRoom findContainingRoom() {
-        // TODO: Fix so the player doesn't get stuck outside of the room.
-        //  Might have something to do with the coordinates conversion.
         final Vector2 bobWorldPos = new Vector2(bob.getX() + 0.5f * bob.getWidth(), bob.getY() + 0.5f * bob.getHeight());
         final Vector2 bobCellPos = level.getTilemap().vecToCellPosVec(bobWorldPos);
 
         for (LevelRoom room : level.getRooms()) {
-            if (room.getBounds().contains(bobCellPos))
+            if (RectangleUtil.containsExclusive(room.getBounds(), bobCellPos))
                 return room;
         }
 
