@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.dar.freshmaze.level.Level;
 import com.dar.freshmaze.util.IsometricUtil;
 
 public class Bob extends Actor {
@@ -28,7 +29,9 @@ public class Bob extends Actor {
     private final World physWorld;
     private boolean isAttaking = false;
     private final static float multiplier = 1.6f;
-    public Bob(World physWorld, Rectangle r) {
+    private Level level;
+
+    public Bob(World physWorld, Rectangle r, Level level) {
         super();
         region = new TextureRegion(texture);
         sprite.setPosition(r.getX() * 128 + r.getWidth() * 64,  r.getY() * 128 + r.getHeight() * 64);
@@ -94,6 +97,7 @@ public class Bob extends Actor {
 
             }
         });
+        this.level = level;
     }
 
     public void teleport(Vector2 pos) {
@@ -162,9 +166,11 @@ public class Bob extends Actor {
     public void processContact(EnemyOld userData) {
         if(userData == null)
             return;
-        System.out.println("HELLP: " + userData);
-        if (isAttaking)
+        if (isAttaking) {
             userData.remove();
+        } else {
+            level.setHealth(level.getHealth() - 7);
+        }
 //        else
 //            remove();
     }

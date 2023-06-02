@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dar.freshmaze.FreshmazeGame;
 import com.dar.freshmaze.entities.Bob;
 import com.dar.freshmaze.entities.EnemyOld;
+import com.dar.freshmaze.indicator.Indicator;
 import com.dar.freshmaze.level.Dungeon;
 import com.dar.freshmaze.level.Level;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
@@ -39,6 +42,9 @@ public class TestScreen implements Screen {
 
     private final Dungeon dungeon;
     private final Stage stage;
+    private SpriteBatch batch;
+    private Texture bg;
+    private Indicator indicator;
 
     public TestScreen(FreshmazeGame game, OrthographicCamera camera, Viewport viewport) {
         this.game = game;
@@ -52,14 +58,21 @@ public class TestScreen implements Screen {
         physDebugRenderer = new Box2DDebugRenderer();
 
         stage = new Stage(viewport);
-        final Bob bob = new Bob(physWorld, new Rectangle());
+        final Level level = new Level(physWorld, stage);
+
+        final Bob bob = new Bob(physWorld, new Rectangle(), level);
         stage.addActor(bob);
 
-        final Level level = new Level(physWorld, stage);
-        dungeon = new Dungeon(level, bob);
+        EnemyOld enemy = new EnemyOld(physWorld, new Rectangle());
+        dungeon = new Dungeon(level, bob, enemy);
 
         Gdx.input.setInputProcessor(stage);
         stage.setKeyboardFocus(bob);
+        stage.addActor(enemy);
+        batch = new SpriteBatch();
+        bg = new Texture("still.png");
+        indicator = new Indicator(level);
+
     }
 
     private void generateLevel() {
@@ -97,6 +110,8 @@ public class TestScreen implements Screen {
         physDebugRenderer.render(physWorld, new Matrix4(camera.combined).mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX));
 
         physWorld.step(1 / 60f, 6, 2);
+        indicator.begin();
+        indicator.end();
     }
 
     private void debugRenderAxes() {
