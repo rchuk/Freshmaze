@@ -9,7 +9,7 @@ public class Enemy {
     public Enemy(World physWorld) {
         final CircleShape circle = new CircleShape();
         circle.setPosition(Vector2.Zero);
-        circle.setRadius(46.0f);
+        circle.setRadius(1.0f);
         this.physWorld = physWorld;
         final BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;

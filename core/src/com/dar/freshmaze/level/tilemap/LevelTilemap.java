@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -34,18 +33,20 @@ public class LevelTilemap implements Disposable {
     public final StaticTiledMapTile entranceOpenTile;
     public final StaticTiledMapTile entranceClosedTile;
 
-    private final int tileSize;
+    private final float tileSize;
+    private final int textureTileSize;
     private TiledMap tilemap;
     private final Array<Body> physBodies = new Array<>();
     private final ObjectMap<CellPos, DynamicTile> dynamicTiles = new ObjectMap<>();
 
     private final World physWorld;
 
-    public LevelTilemap(World physWorld, String tilesetPath, int tileSize) {
+    public LevelTilemap(World physWorld, String tilesetPath, float tileSize, int textureTileSize) {
         this.physWorld = physWorld;
         this.tileSize = tileSize;
+        this.textureTileSize = textureTileSize;
         tiles = new Texture(Gdx.files.internal(tilesetPath));
-        final TextureRegion[][] splitTiles = TextureRegion.split(tiles, tileSize, tileSize);
+        final TextureRegion[][] splitTiles = TextureRegion.split(tiles, textureTileSize, textureTileSize);
 
         // TODO: Create tileset
         floorTile = new StaticTiledMapTile(splitTiles[0][0]);
@@ -60,8 +61,12 @@ public class LevelTilemap implements Disposable {
         entranceClosedTile.getObjects().add(new RectangleMapObject());
     }
 
-    public int getTileSize() {
+    public float getTileSize() {
         return tileSize;
+    }
+
+    public int getTextureTileSize() {
+        return textureTileSize;
     }
 
     public TiledMap getTilemap() {
@@ -147,8 +152,8 @@ public class LevelTilemap implements Disposable {
     }
 
     private TiledMapTileLayer createLayer(int width, int height) {
-        final TiledMapTileLayer layer = new TiledMapTileLayer(width, height, tileSize, tileSize / 2);
-        layer.setOffsetY(0.25f * tileSize);
+        final TiledMapTileLayer layer = new TiledMapTileLayer(width, height, textureTileSize, textureTileSize / 2);
+        layer.setOffsetY(0.25f * textureTileSize);
 
         return layer;
     }

@@ -15,8 +15,9 @@ import com.dar.freshmaze.util.IsometricUtil;
 public class Bob extends Actor {
     Texture texture = new Texture(Gdx.files.internal("still.png"));
     Sprite sprite = new Sprite(texture);
-    public static final float deltaPx = 128;
-    public static final float deltaPy = 128;
+    public static final float MOVEMENT_SPEED = 4.0f;
+    public static final float deltaPx = 1.0f;
+    public static final float deltaPy = 1.0f;
     public static final float deltaS = 0.00001f;
     //    TextureRegion region;
     public boolean movingRight = false;
@@ -34,14 +35,14 @@ public class Bob extends Actor {
     public Bob(World physWorld, Rectangle r, Level level) {
         super();
         region = new TextureRegion(texture);
-        sprite.setPosition(r.getX() * 128 + r.getWidth() * 64,  r.getY() * 128 + r.getHeight() * 64);
+        sprite.setPosition(r.getX() + r.getWidth() * 0.5f,  r.getY() + r.getHeight() * 0.5f);
+        sprite.setSize(1.0f, 1.0f);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         setTouchable(Touchable.enabled);
         this.physWorld = physWorld;
-        ;
         final CircleShape circle = new CircleShape();
-        circle.setPosition(IsometricUtil.isoToCart(new Vector2( 128, 0)));
-        circle.setRadius(64);
+        circle.setPosition(new Vector2(0.5f, 0.5f));
+        circle.setRadius(0.5f);
         final BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.fixedRotation = true;
@@ -49,8 +50,8 @@ public class Bob extends Actor {
         bd.linearDamping = 1f;
         bd.angularDamping = 1f;
         final CircleShape circleSensor = new CircleShape();
-        circleSensor.setPosition(IsometricUtil.isoToCart(new Vector2( 128, 0)));
-        circleSensor.setRadius(64 * multiplier);
+        circleSensor.setPosition(new Vector2(0.5f, 0.5f));
+        circleSensor.setRadius(0.5f * multiplier);
         FixtureDef fdef = new FixtureDef();
         fdef.shape = circleSensor;
         fdef.isSensor = true;
@@ -133,7 +134,8 @@ public class Bob extends Actor {
             dy = deltaPy;
         if (movingDown)
             dy = -deltaPy;
-        body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(dx, dy).scl(1000000)));
+
+        body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(dx, dy).nor().scl(MOVEMENT_SPEED)));
         MoveToAction mta = new MoveToAction();
         mta.setPosition(body.getPosition().x, body.getPosition().y);
         mta.setDuration(0);

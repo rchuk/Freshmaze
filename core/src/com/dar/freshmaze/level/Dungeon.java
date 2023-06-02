@@ -49,7 +49,7 @@ public class Dungeon implements Disposable {
     private LevelRoom findContainingRoom() {
         // TODO: Fix so the player doesn't get stuck outside of the room.
         //  Might have something to do with the coordinates conversion.
-        final Vector2 bobWorldPos = new Vector2(bob.getX(), bob.getY());
+        final Vector2 bobWorldPos = new Vector2(bob.getX() + 0.5f * bob.getWidth(), bob.getY() + 0.5f * bob.getHeight());
         final Vector2 bobCellPos = level.getTilemap().vecToCellPosVec(bobWorldPos);
 
         for (LevelRoom room : level.getRooms()) {

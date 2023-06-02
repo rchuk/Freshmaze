@@ -35,7 +35,7 @@ public class Level implements Disposable {
     private int health = 100;
     public Level(World physWorld, Stage stage) {
         nodeGenerator = new LevelNodeGenerator();
-        tilemap = new LevelTilemap(physWorld, "level/tiles/tiles.png", 128);
+        tilemap = new LevelTilemap(physWorld, "level/tiles/tiles.png", 1.0f, 128);
         enemyGenerator = new EnemyGenerator(physWorld, stage);
 
         shape = new ShapeRenderer();
@@ -49,7 +49,7 @@ public class Level implements Disposable {
 
         tilemap.generate(levelBitmap);
 
-        tilemapRenderer = new IsometricTiledMapRenderer(tilemap.getTilemap());
+        tilemapRenderer = new IsometricTiledMapRenderer(tilemap.getTilemap(), tilemap.getTileSize() / tilemap.getTextureTileSize());
         debugLeafColors = Stream
                 .generate(() -> new Color(MathUtils.random(0, 0xFFFFFF)))
                 .limit(nodeGenerator.getRooms().size())

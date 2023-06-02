@@ -6,11 +6,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -26,7 +23,8 @@ import com.dar.freshmaze.util.IsometricUtil;
 import com.dar.freshmaze.world.WorldContactListener;
 
 public class TestScreen implements Screen {
-    private static final float cameraSpeed = 512.0f;
+    private static final float CAMERA_SPEED = 5.0f;
+    private static final float CAMERA_ZOOM_SPEED = 0.25f;
 
     private final FreshmazeGame game;
 
@@ -42,15 +40,13 @@ public class TestScreen implements Screen {
 
     private final Dungeon dungeon;
     private final Stage stage;
-    private SpriteBatch batch;
-    private Texture bg;
     private Indicator indicator;
 
     public TestScreen(FreshmazeGame game, OrthographicCamera camera, Viewport viewport) {
         this.game = game;
 
         this.camera = camera;
-        camera.zoom = 10.0f;
+        camera.zoom = 8.0f / 128.0f;
         this.viewport = viewport;
 
         physWorld = new World(Vector2.Zero, true); //TODO: Change graphics scale to 1 unit = 1 meter
@@ -69,10 +65,11 @@ public class TestScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         stage.setKeyboardFocus(bob);
         stage.addActor(enemy);
-        batch = new SpriteBatch();
-        bg = new Texture("still.png");
         indicator = new Indicator(level);
 
+        //
+        camera.position.set(bob.getX(), bob.getY(), 0.0f);
+        //
     }
 
     private void generateLevel() {
@@ -98,6 +95,7 @@ public class TestScreen implements Screen {
         final Level level = dungeon.getLevel();
         level.render(camera, delta, TILEMAP_FLOOR_LAYER);
         level.debugRender(camera, delta, Level.DebugRender.ROOMS | Level.DebugRender.GRID);
+        debugRenderBobCell();
         level.render(camera, delta, TILEMAP_WALL_LAYER);
 
         debugRenderAxes();
@@ -109,9 +107,23 @@ public class TestScreen implements Screen {
 
         physDebugRenderer.render(physWorld, new Matrix4(camera.combined).mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX));
 
-        physWorld.step(1 / 60f, 6, 2);
+        physWorld.step(1.0f / 60.0f, 6, 2);
         indicator.begin();
         indicator.end();
+    }
+
+    private void debugRenderBobCell() {
+        final Vector2 bobPos = new Vector2(dungeon.getBob().getX() + dungeon.getBob().getWidth() / 2, dungeon.getBob().getY() + dungeon.getBob().getHeight() / 2);
+        final LevelTilemap tilemap = dungeon.getLevel().getTilemap();
+        final Vector2 cellPos = tilemap.vecToCellPosVec(bobPos);
+        final Vector2 worldPos = tilemap.cellPosToVec(cellPos);
+
+        game.shape.begin(ShapeRenderer.ShapeType.Filled);
+        game.shape.setTransformMatrix(IsometricUtil.ISO_TRANSFORMATION_MATRIX);
+        game.shape.setProjectionMatrix(camera.combined);
+        game.shape.setColor(Color.YELLOW);
+        game.shape.rect(worldPos.x, worldPos.y, tilemap.getTileSize(), tilemap.getTileSize());
+        game.shape.end();
     }
 
     private void debugRenderAxes() {
@@ -123,14 +135,14 @@ public class TestScreen implements Screen {
         game.shape.begin(ShapeRenderer.ShapeType.Filled);
 
         game.shape.setColor(Color.RED);
-        game.shape.rectLine(Vector2.Zero, xAxis.scl(64.0f * 128.0f), 0.1f);
+        game.shape.rectLine(Vector2.Zero, xAxis.scl(128.0f), 0.1f);
         game.shape.setColor(Color.GREEN);
-        game.shape.rectLine(Vector2.Zero, yAxis.scl(64.0f * 128.0f),  0.1f);
+        game.shape.rectLine(Vector2.Zero, yAxis.scl(128.0f),  0.1f);
 
         game.shape.setColor(Color.PURPLE);
-        game.shape.rectLine(Vector2.Zero, new Vector2(Vector2.X).scl(64.0f * 128.0f), 0.1f);
+        game.shape.rectLine(Vector2.Zero, new Vector2(Vector2.X).scl(128.0f), 0.1f);
         game.shape.setColor(Color.YELLOW);
-        game.shape.rectLine(Vector2.Zero, new Vector2(Vector2.Y).scl(64.0f * 128.0f), 0.1f);
+        game.shape.rectLine(Vector2.Zero, new Vector2(Vector2.Y).scl(128.0f), 0.1f);
 
         game.shape.end();
     }
@@ -140,13 +152,15 @@ public class TestScreen implements Screen {
             generateLevel();
 
         if (Gdx.input.isKeyPressed(Input.Keys.MINUS))
-            camera.zoom += 5.0 * dt;
+            camera.zoom += CAMERA_ZOOM_SPEED * dt;
         else if (Gdx.input.isKeyPressed(Input.Keys.EQUALS))
-            camera.zoom -= 5.0 * dt;
+            camera.zoom -= CAMERA_ZOOM_SPEED * dt;
+
+        camera.zoom = Math.max(0.01f, camera.zoom);
 
         final float cameraSpeedMult = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 2.0f : 1.0f;
 
-        final Vector2 cameraMovementVec = getInputMovementVec(Input.Keys.J, Input.Keys.L, Input.Keys.K, Input.Keys.I, cameraSpeed);
+        final Vector2 cameraMovementVec = getInputMovementVec(Input.Keys.J, Input.Keys.L, Input.Keys.K, Input.Keys.I, CAMERA_SPEED);
         camera.translate(cameraMovementVec.x * cameraSpeedMult * dt, cameraMovementVec.y * cameraSpeedMult * dt);
     }
 
