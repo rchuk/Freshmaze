@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.dar.freshmaze.level.bitmap.LevelBitmap;
 import com.dar.freshmaze.level.graph.*;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
+import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 import com.dar.freshmaze.util.IsometricUtil;
 
 import java.util.*;
@@ -148,14 +149,14 @@ public class Level implements Disposable {
     private void debugRenderGraph() {
         shape.begin(ShapeRenderer.ShapeType.Filled);
 
-        for (Map.Entry<LevelRoom, HashMap<LevelRoom, LevelGraph.Edge>> entry : nodeGenerator.getGraph().entrySet()) {
-            final LevelRoom firstNode = entry.getKey();
+        for (Map.Entry<LevelNode, HashMap<LevelNode, LevelGraph.Edge>> entry : nodeGenerator.getGraph().entrySet()) {
+            final LevelNode firstNode = entry.getKey();
 
-            for (Map.Entry<LevelRoom, LevelGraph.Edge> connection : entry.getValue().entrySet()) {
-                final LevelRoom secondNode = connection.getKey();
+            for (Map.Entry<LevelNode, LevelGraph.Edge> connection : entry.getValue().entrySet()) {
+                final LevelNode secondNode = connection.getKey();
 
                 shape.setColor(Color.BLACK);
-                shape.line(firstNode.getBounds().getCenter(new Vector2()), secondNode.getBounds().getCenter(new Vector2()));
+                shape.line(firstNode.getRoomBounds().getCenter(new Vector2()), secondNode.getRoomBounds().getCenter(new Vector2()));
             }
         }
 

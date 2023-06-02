@@ -1,10 +1,11 @@
-package com.dar.freshmaze.level;
+package com.dar.freshmaze.level.tilemap.rooms;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.dar.freshmaze.level.Level;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicEntranceTile;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicTile;
@@ -14,16 +15,10 @@ public class LevelRoom {
     private final Rectangle bounds;
     private final Array<Vector2> entrances = new Array<>();
 
-    // TODO: Store enemies here
-    private Kind kind = Kind.Default;
     private boolean isOpen = true;
 
     public LevelRoom(Rectangle bounds) {
         this.bounds = bounds;
-    }
-
-    public void setKind(Kind newKind) {
-        kind = newKind;
     }
 
     public void setLevel(Level newLevel) {
@@ -51,9 +46,6 @@ public class LevelRoom {
         return isOpen;
     }
 
-    public Kind getKind() {
-        return kind;
-    }
 
     public Rectangle getBounds() {
         return bounds;
@@ -65,13 +57,5 @@ public class LevelRoom {
 
     public void addEntrance(Vector2 entrance) {
         entrances.add(entrance);
-    }
-
-    public enum Kind {
-        Default,
-
-        Spawn,
-        Final,
-        Battle
     }
 }

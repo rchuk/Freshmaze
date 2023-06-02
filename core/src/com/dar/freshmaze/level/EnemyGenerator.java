@@ -3,8 +3,8 @@ package com.dar.freshmaze.level;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.dar.freshmaze.entities.Enemy;
 import com.dar.freshmaze.entities.EnemyOld;
+import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 
 public class EnemyGenerator {
     private final World physWorld;

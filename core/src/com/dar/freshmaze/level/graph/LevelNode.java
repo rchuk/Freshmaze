@@ -2,14 +2,14 @@ package com.dar.freshmaze.level.graph;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.dar.freshmaze.level.LevelRoom;
+import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 
 public class LevelNode {
     private final LevelNodeGenerationRules rules;
     private final Rectangle bounds;
     private LevelNode leftChild;
     private LevelNode rightChild;
-    private LevelRoom room;
+    private Rectangle roomBounds;
 
     public LevelNode(Rectangle bounds, LevelNodeGenerationRules rules) {
         this.bounds = bounds;
@@ -32,8 +32,8 @@ public class LevelNode {
         return rightChild;
     }
 
-    public LevelRoom getRoom() {
-        return room;
+    public Rectangle getRoomBounds() {
+        return roomBounds;
     }
 
     public boolean split() {
@@ -77,8 +77,7 @@ public class LevelNode {
         final float x = MathUtils.random(rules.getRoomGap(), (int)(bounds.width - width - rules.getRoomGap()));
         final float y = MathUtils.random(rules.getRoomGap(), (int)(bounds.height - height - rules.getRoomGap()));
 
-        final Rectangle roomBounds = new Rectangle(bounds.x + x, bounds.y + y, width, height);
-        room = new LevelRoom(roomBounds);
+        roomBounds = new Rectangle(bounds.x + x, bounds.y + y, width, height);
     }
 
     private boolean isSplitVertical() {

@@ -3,7 +3,8 @@ package com.dar.freshmaze.level;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.dar.freshmaze.entities.Bob;
-import com.dar.freshmaze.entities.EnemyOld;
+import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
+import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 
 public class Dungeon implements Disposable {
     private final Level level;
@@ -38,7 +39,7 @@ public class Dungeon implements Disposable {
             return;
 
         if (newRoom != null) {
-            if (newRoom.getKind() == LevelRoom.Kind.Battle)
+            if (newRoom instanceof BattleLevelRoom)
                 newRoom.setIsOpen(false);
         }
     }
