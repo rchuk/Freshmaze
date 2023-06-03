@@ -92,6 +92,7 @@ public class EnemyOld extends Actor {
 
     }
     public void teleport(Vector2 pos) {
+        setPosition(body.getPosition().x, body.getPosition().y);
         body.setTransform(pos, 0.0f);
     }
 
@@ -119,10 +120,10 @@ public class EnemyOld extends Actor {
             boxForward = !boxForward;
             boxIndex = 0;
         }
-        MoveToAction mta = new MoveToAction();
-        mta.setPosition(body.getPosition().x, body.getPosition().y);
-        mta.setDuration(0);
-        addAction(mta);
-
+        // MoveToAction mta = new MoveToAction();
+        // mta.setPosition(body.getPosition().x, body.getPosition().y);
+        // mta.setDuration(0);
+        // addAction(mta);
+        setPosition(body.getPosition().x, body.getPosition().y);
     }
 }

@@ -112,6 +112,7 @@ public class Bob extends Actor {
     }
 
     public void teleport(Vector2 pos) {
+        setPosition(pos.x, pos.y);
         body.setTransform(pos, 0.0f);
     }
 
@@ -149,10 +150,11 @@ public class Bob extends Actor {
             dy = -deltaPy;
 
         body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(dx, dy).nor().scl(MOVEMENT_SPEED)));
-        MoveToAction mta = new MoveToAction();
-        mta.setPosition(body.getPosition().x, body.getPosition().y);
-        mta.setDuration(0);
-        addAction(mta);
+        // MoveToAction mta = new MoveToAction();
+        // mta.setPosition(body.getPosition().x, body.getPosition().y);
+        // mta.setDuration(0);
+        // addAction(mta);
+        setPosition(body.getPosition().x, body.getPosition().y);
 //        MoveByAction mba = new MoveByAction();
 //        mba.setAmount(dx, dy);
 //        mba.setDuration(deltaS);

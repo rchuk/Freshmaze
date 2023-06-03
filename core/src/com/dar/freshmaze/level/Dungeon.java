@@ -38,7 +38,6 @@ public class Dungeon implements Disposable {
     }
 
     public void update(float dt) {
-        // TODO: Fix. Room at position where player was may become closed after the generation
         if (pendingTransition) {
             generateLevel();
 
