@@ -8,6 +8,8 @@ import com.dar.freshmaze.entities.EnemyOld;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 
+import java.util.Random;
+
 public class EnemyGenerator {
     private final World physWorld;
     private final Stage stage;
@@ -19,10 +21,15 @@ public class EnemyGenerator {
 
     public Array<EnemyOld> generate(BattleLevelRoom room) {
         final Array<EnemyOld> enemies = new Array<>();
+        Random rand = new Random();
+        if(rand.nextBoolean())
+            enemies.add(new EnemyOld(physWorld, room)); // TODO: Add ability to spawn enemies at arbitrary points
+        if(rand.nextBoolean())
+            enemies.add(new EnemyOld(physWorld, room)); // TODO: Add ability to spawn enemies at arbitrary points
+        if(rand.nextBoolean() && rand.nextBoolean())
+            enemies.add(new EnemyOld(physWorld, room)); // TODO: Add ability to spawn enemies at arbitrary points
 
-        final Vector2 spawnPos = room.getBounds().getCenter(new Vector2());
-        enemies.add(new EnemyOld(physWorld, room, spawnPos));
-
+        enemies.add(new EnemyOld(physWorld, room));
         enemies.forEach(stage::addActor);
 
         return enemies;

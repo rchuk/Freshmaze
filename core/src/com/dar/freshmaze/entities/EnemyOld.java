@@ -10,20 +10,21 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.dar.freshmaze.common.CommonHelper;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
-import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 import com.dar.freshmaze.util.IsometricUtil;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+
+import java.util.Random;
 
 public class EnemyOld extends Actor {
     Texture texture = new Texture(Gdx.files.internal("still.png"));
     Sprite sprite = new Sprite(new Texture(Gdx.files.internal("still.png")));
-    public static final float MOVEMENT_SPEED = 2.0f;
-    public static final float deltaPx = 1.0f;
-    public static final float deltaPy = 1.0f;
+    public final float movementSpeed;
+    public final float deltaPx;
+    public final float deltaPy;
     public static final float deltaS = 0.00001f;
-    private static final int boxSize = 50;
+    private final int boxSize;
     private int boxIndex = 0;
     private boolean boxForward = true;
     //    TextureRegion region;
@@ -39,11 +40,13 @@ public class EnemyOld extends Actor {
 
     private boolean pendingDestroy = false;
 
-    public EnemyOld(World physWorld, BattleLevelRoom room, Vector2 spawnPos) {
+    public EnemyOld(World physWorld, BattleLevelRoom room) {
         super();
         this.room = room;
         region = new TextureRegion(texture);
-        sprite.setPosition(spawnPos.x, spawnPos.y);
+        Random rand = new Random();
+        // sprite.setPosition(r.getX() + r.getWidth() * 0.5f,  r.getY() + r.getHeight() * 0.5f);
+        sprite.setPosition((int) CommonHelper.randomPoint(room.getBounds()).x, (int) CommonHelper.randomPoint(room.getBounds()).y);
         sprite.setSize(1.0f, 1.0f);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         setTouchable(Touchable.enabled);
@@ -55,14 +58,18 @@ public class EnemyOld extends Actor {
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.fixedRotation = true;
         bd.position.set(new Vector2(sprite.getX(), sprite.getY()));
-        bd.linearDamping = 0.5f;
-        bd.angularDamping = 0.5f;
+        bd.linearDamping = rand.nextFloat();
+        bd.angularDamping = rand.nextFloat();
         FixtureDef fdef = new FixtureDef();
         fdef.shape = circle;
         body = physWorld.createBody(bd);
         body.createFixture(circle, 1);
         body.setUserData(this);
         body.createFixture(fdef);
+        deltaPx = rand.nextFloat() * 2;
+        deltaPy = rand.nextFloat() * 2;
+        boxSize = rand.nextInt(500);
+        movementSpeed = (rand.nextFloat() + 0.5f) * 2;
     }
 
     public void destroy() {
@@ -109,11 +116,11 @@ public class EnemyOld extends Actor {
         }
 
         if (!boxForward) {
-            body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(-deltaPx, -deltaPy).scl(MOVEMENT_SPEED)));
+            body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(-deltaPx, -deltaPy).scl(movementSpeed)));
 
         }
         if (boxForward) {
-            body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(deltaPx, deltaPy).scl(MOVEMENT_SPEED)));
+            body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(deltaPx, deltaPy).scl(movementSpeed)));
         }
         if (++boxIndex == boxSize) {
             boxForward = !boxForward;
