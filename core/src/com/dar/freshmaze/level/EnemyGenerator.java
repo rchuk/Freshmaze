@@ -29,7 +29,7 @@ public class EnemyGenerator {
             enemies.add(new EnemyOld(physWorld, room)); // TODO: Add ability to spawn enemies at arbitrary points
         if(rand.nextBoolean() && rand.nextBoolean())
             enemies.add(new EnemyOld(physWorld, room)); // TODO: Add ability to spawn enemies at arbitrary points
-        if(rand.nextInt(3) == 0)
+        if(rand.nextInt(3) >= 0)
             stage.addActor(new HealthBonus(physWorld, room));
 
         enemies.add(new EnemyOld(physWorld, room));

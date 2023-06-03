@@ -44,11 +44,9 @@ public class HealthBonus extends Actor {
         circle.setPosition(new Vector2(0.5f, 0.5f));
         circle.setRadius(0.5f);
         final BodyDef bd = new BodyDef();
-        bd.type = BodyDef.BodyType.DynamicBody;
+        bd.type = BodyDef.BodyType.StaticBody;
         bd.fixedRotation = true;
         bd.position.set(new Vector2(sprite.getX(), sprite.getY()));
-//        bd.linearDamping = 5000000;
-//        bd.angularDamping = 500000;
         bd.gravityScale = 0;
         FixtureDef fdef = new FixtureDef();
         fdef.shape = circle;

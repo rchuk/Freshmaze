@@ -193,7 +193,6 @@ public class Bob extends Actor {
     public void addObjectInRadius(Object userData) {
         if (userData == null)
             return;
-
         processContact(userData);
 
         closeObjects.add(userData);
@@ -214,6 +213,10 @@ public class Bob extends Actor {
             } else if (obj instanceof DynamicInteractableTile) {
                 if (isInteracting)
                     ((DynamicInteractableTile) obj).interact(this);
+            } else if(obj instanceof HealthBonus) {
+                level.setHealth(Math.min(level.getHealth() + 10, 100));
+                ((HealthBonus) obj).remove();
+                ((HealthBonus) obj).teleport(new Vector2(1000, 1000));
             }
         }
     }
