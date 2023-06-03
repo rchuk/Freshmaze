@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.dar.freshmaze.level.graph.LevelNodeGenerator;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
+import com.dar.freshmaze.level.tilemap.rooms.FinalLevelRoom;
 import com.dar.freshmaze.util.RectangleUtil;
 
 import java.util.ArrayList;
@@ -70,24 +71,33 @@ public class LevelBitmap {
                 return '_';
             case Room:
                 return 'R';
+            case Teleport:
+                return 'T';
         };
 
         return '@';
     }
 
     private void placeRooms() {
-        generator.getRooms().forEach(room ->
-                processRectangleMap(room.getBounds(), (kind, x, y) -> {
-                    switch (kind) {
-                        case Empty:
-                        case Hall:
-                        case Wall:
-                            return Cell.Kind.Room;
-                        default:
-                            return kind;
-                    }
-                })
-        );
+        generator.getRooms().forEach(room -> {
+            processRectangleMap(room.getBounds(), (kind, x, y) -> {
+                switch (kind) {
+                    case Empty:
+                    case Hall:
+                    case Wall:
+                        return Cell.Kind.Room;
+                    default:
+                        return kind;
+                }
+            });
+
+            if (room instanceof FinalLevelRoom) {
+                final FinalLevelRoom finalRoom = (FinalLevelRoom)room;
+                final Vector2 teleportPos = finalRoom.getTeleportPos();
+
+                getCell((int)teleportPos.x, (int)teleportPos.y).setKind(Cell.Kind.Teleport);
+            }
+        });
 
         generator.getRooms().forEach(room ->
                 processRectangleMap(RectangleUtil.expand(room.getBounds(), new Vector2(1, 1)), (kind, x, y) -> {
@@ -173,6 +183,7 @@ public class LevelBitmap {
             Hall,
             Wall,
             HallEntrance,
+            Teleport
         }
 
         private Kind kind;

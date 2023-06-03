@@ -15,12 +15,14 @@ public class Dungeon implements Disposable {
     private LevelRoom currentRoom;
 
     private int levelIndex = 0;
+    private boolean pendingTransition = true;
 
     public Dungeon(Level level, Bob bob, EnemyOld enemy) {
         this.level = level;
         this.bob = bob;
         this.enemy = enemy;
-        generateLevel();
+
+        level.getTilemap().setDungeon(this);
     }
 
     public Level getLevel() {
@@ -31,7 +33,20 @@ public class Dungeon implements Disposable {
         return bob;
     }
 
+    public void moveToNextLevel() {
+        levelIndex++;
+
+        pendingTransition = true;
+    }
+
     public void update(float dt) {
+        // TODO: Fix. Room at position where player was may become closed after the generation
+        if (pendingTransition) {
+            generateLevel();
+
+            pendingTransition = false;
+        }
+
         updateRoom();
     }
 

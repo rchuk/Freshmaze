@@ -55,7 +55,7 @@ public class EnemyOld extends Actor {
         body = physWorld.createBody(bd);
         body.createFixture(circle, 1);
         body.setUserData(this);
-        body.createFixture(fdef).setUserData(this);
+        body.createFixture(fdef);
     }
 
     @Override

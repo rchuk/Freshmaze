@@ -15,7 +15,7 @@ public class DynamicEntranceTile extends DynamicTile {
         this.openTile = openTile;
         this.closedTile = closedTile;
 
-        physBody = tilemap.createTilePhysBody(getCellPos(), getDefaultTile());
+        setPhysBody(tilemap.createTilePhysBody(getCellPos(), getDefaultTile()));
     }
 
     public boolean isOpen() {
@@ -27,12 +27,9 @@ public class DynamicEntranceTile extends DynamicTile {
 
         final LevelTilemap tilemap = getTilemap();
 
-        if (physBody != null)
-            tilemap.getPhysWorld().destroyBody(physBody);
-
         final TiledMapTile tile = isOpen ? openTile : closedTile;
 
         tilemap.placeTile(getCellPos(), tile, LevelTilemap.Layer.Wall);
-        physBody = tilemap.createTilePhysBody(getCellPos(), tile);
+        setPhysBody(tilemap.createTilePhysBody(getCellPos(), tile));
     }
 }

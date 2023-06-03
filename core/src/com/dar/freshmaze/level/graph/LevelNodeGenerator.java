@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.dar.freshmaze.level.EnemyGenerator;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
+import com.dar.freshmaze.level.tilemap.rooms.FinalLevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.SpawnLevelRoom;
 import com.dar.freshmaze.util.RectangleUtil;
@@ -80,8 +81,8 @@ public class LevelNodeGenerator {
         if (indices.size() < 2)
             throw new RuntimeException("Can't generate dungeon with less than two rooms");
 
-        spawnRoom = new SpawnLevelRoom(leaves.get(indices.get(0)).getRoomBounds());
-        finalRoom = new SpawnLevelRoom(leaves.get(indices.get(1)).getRoomBounds());
+        spawnRoom = createSpawnRoom(leaves.get(indices.get(0)));
+        finalRoom = createFinalRoom(leaves.get(indices.get(1)));
 
         rooms.add(spawnRoom);
         rooms.add(finalRoom);
@@ -92,6 +93,17 @@ public class LevelNodeGenerator {
         }
 
         // TODO: Generate contents
+    }
+
+    private SpawnLevelRoom createSpawnRoom(LevelNode node) {
+        return new SpawnLevelRoom(node.getRoomBounds());
+    }
+
+    private FinalLevelRoom createFinalRoom(LevelNode node) {
+        final Rectangle bounds = node.getRoomBounds();
+        final Vector2 teleportPos = new Vector2(bounds.x + (int)(0.5f * bounds.width), bounds.y + (int)(0.5f * bounds.height));;
+
+        return new FinalLevelRoom(bounds, teleportPos);
     }
 
     private void generateHalls() {

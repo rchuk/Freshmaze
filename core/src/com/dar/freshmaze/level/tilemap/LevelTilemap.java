@@ -19,8 +19,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.dar.freshmaze.level.Dungeon;
 import com.dar.freshmaze.level.bitmap.LevelBitmap;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicEntranceTile;
+import com.dar.freshmaze.level.tilemap.tiles.DynamicTeleportTile;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicTile;
 
 import java.util.Objects;
@@ -32,6 +34,7 @@ public class LevelTilemap implements Disposable {
     public final StaticTiledMapTile wallTile;
     public final StaticTiledMapTile entranceOpenTile;
     public final StaticTiledMapTile entranceClosedTile;
+    public final StaticTiledMapTile teleportMonolithTile;
 
     private final float tileSize;
     private final int textureTileSize;
@@ -40,6 +43,7 @@ public class LevelTilemap implements Disposable {
     private final ObjectMap<CellPos, DynamicTile> dynamicTiles = new ObjectMap<>();
 
     private final World physWorld;
+    private Dungeon dungeon;
 
     public LevelTilemap(World physWorld, String tilesetPath, float tileSize, int textureTileSize) {
         this.physWorld = physWorld;
@@ -53,12 +57,14 @@ public class LevelTilemap implements Disposable {
         wallTile = new StaticTiledMapTile(splitTiles[0][1]);
         entranceOpenTile = new StaticTiledMapTile(splitTiles[0][2]);
         entranceClosedTile = new StaticTiledMapTile(splitTiles[0][3]);
+        teleportMonolithTile = new StaticTiledMapTile(splitTiles[0][4]);
 
         // wallTile.getProperties().put("is_walkable", Boolean.FALSE);
         // floorTile.getProperties().put("is_walkable", Boolean.TRUE);
 
         wallTile.getObjects().add(new RectangleMapObject());
         entranceClosedTile.getObjects().add(new RectangleMapObject());
+        teleportMonolithTile.getObjects().add(new RectangleMapObject());
     }
 
     public float getTileSize() {
@@ -109,6 +115,10 @@ public class LevelTilemap implements Disposable {
 
     public Array<Body> getPhysBodies() {
         return physBodies;
+    }
+
+    public void setDungeon(Dungeon newDungeon) {
+        dungeon = newDungeon;
     }
 
     public void generate(LevelBitmap bitmap) {
@@ -173,6 +183,11 @@ public class LevelTilemap implements Disposable {
             case HallEntrance:
                 placeStaticTile(pos, floorTile, Layer.Floor);
                 placeDynamicTile(new DynamicEntranceTile(this, pos, entranceOpenTile, entranceClosedTile), Layer.Wall);
+                break;
+
+            case Teleport:
+                placeStaticTile(pos, floorTile, Layer.Floor);
+                placeDynamicTile(new DynamicTeleportTile(this, pos, teleportMonolithTile, dungeon), Layer.Wall);
                 break;
 
             default:

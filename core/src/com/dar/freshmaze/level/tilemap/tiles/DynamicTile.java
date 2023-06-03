@@ -9,7 +9,7 @@ public abstract class DynamicTile {
     private final LevelTilemap.CellPos cellPos;
     private final TiledMapTile defaultTile;
 
-    protected Body physBody;
+    private Body physBody;
 
     public DynamicTile(LevelTilemap tilemap, LevelTilemap.CellPos cellPos, TiledMapTile defaultTile) {
         this.tilemap = tilemap;
@@ -31,5 +31,14 @@ public abstract class DynamicTile {
 
     public TiledMapTile getDefaultTile() {
         return defaultTile;
+    }
+
+    protected void setPhysBody(Body newPhysBody) {
+        if (physBody != null)
+            tilemap.getPhysWorld().destroyBody(physBody);
+
+        physBody = newPhysBody;
+        if (physBody != null)
+            physBody.setUserData(this);
     }
 }

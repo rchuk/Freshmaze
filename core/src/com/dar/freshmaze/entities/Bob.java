@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.dar.freshmaze.level.Level;
+import com.dar.freshmaze.level.tilemap.tiles.DynamicInteractableTile;
 import com.dar.freshmaze.util.IsometricUtil;
 
 public class Bob extends Actor {
@@ -29,6 +30,7 @@ public class Bob extends Actor {
     private boolean toDelete = false;
     private final World physWorld;
     private boolean isAttaking = false;
+    private boolean isInteracting = false;
     private final static float multiplier = 1.6f;
     private Level level;
 
@@ -58,7 +60,7 @@ public class Bob extends Actor {
         body = physWorld.createBody(bd);
         body.createFixture(circle, 1);
         body.setUserData(this);
-        body.createFixture(fdef).setUserData(this);
+        body.createFixture(fdef);
 
         addListener(new InputListener() {
 
@@ -76,6 +78,9 @@ public class Bob extends Actor {
                     sprite.scale(multiplier - 1);
                     isAttaking = true;
                 }
+                if (keycode == Input.Keys.E)
+                    isInteracting = true;
+
                 return true;
             }
 
@@ -92,8 +97,10 @@ public class Bob extends Actor {
                 if (keycode == Input.Keys.B) {
                     sprite.setScale(1);
                     isAttaking = false;
-
                 }
+                if (keycode == Input.Keys.E)
+                    isInteracting = false;
+
                 return true;
 
             }
@@ -165,13 +172,19 @@ public class Bob extends Actor {
         return super.remove();
     }
 
-    public void processContact(EnemyOld userData) {
+    public void processContact(Object userData) {
         if(userData == null)
             return;
-        if (isAttaking) {
-            userData.remove();
-        } else {
-            level.setHealth(level.getHealth() - 7);
+
+        if (userData instanceof EnemyOld) {
+            if (isAttaking) {
+                ((EnemyOld) userData).remove();
+            } else {
+                level.setHealth(level.getHealth() - 7);
+            }
+        } else if (userData instanceof DynamicInteractableTile) {
+            if (isInteracting)
+                ((DynamicInteractableTile)userData).interact(this);
         }
 //        else
 //            remove();
