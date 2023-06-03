@@ -18,9 +18,9 @@ public class WorldContactListener implements ContactListener {
         if (first != null && second != null) {
             // System.out.println("A: " + first.getClass());
             if (first instanceof Bob)
-                ((Bob)first).processContact(second);
+                ((Bob)first).addObjectInRadius(second);
             else if (second instanceof Bob)
-                ((Bob)second).processContact(first);
+                ((Bob)second).addObjectInRadius(first);
         }
         // if (fixB.getUserData() != null)
         //    System.out.println("B: " + second.getClass());
@@ -29,7 +29,20 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+        if(fixA.isSensor() == fixB.isSensor())
+            return;
 
+        final Object first = fixA.getBody().getUserData();
+        final Object second = fixB.getBody().getUserData();
+        if (first != null && second != null) {
+            // System.out.println("A: " + first.getClass());
+            if (first instanceof Bob)
+                ((Bob)first).removeObjectInRadius(second);
+            else if (second instanceof Bob)
+                ((Bob)second).removeObjectInRadius(first);
+        }
     }
 
     @Override

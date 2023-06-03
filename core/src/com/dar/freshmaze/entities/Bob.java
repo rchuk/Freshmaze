@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.utils.Array;
 import com.dar.freshmaze.level.Level;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicInteractableTile;
 import com.dar.freshmaze.util.IsometricUtil;
@@ -33,6 +34,8 @@ public class Bob extends Actor {
     private boolean isInteracting = false;
     private final static float multiplier = 1.6f;
     private Level level;
+
+    private Array<Object> closeObjects = new Array<>();
 
     public Bob(World physWorld, Rectangle r, Level level) {
         super();
@@ -131,6 +134,9 @@ public class Bob extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        processActions();
+
         float dx = 0;
         float dy = 0;
         if (movingRight)
@@ -172,19 +178,39 @@ public class Bob extends Actor {
         return super.remove();
     }
 
-    public void processContact(Object userData) {
-        if(userData == null)
+    public void addObjectInRadius(Object userData) {
+        if (userData == null)
             return;
 
-        if (userData instanceof EnemyOld) {
-            if (isAttaking) {
-                ((EnemyOld) userData).remove();
-            } else {
+        processContact(userData);
+
+        closeObjects.add(userData);
+    }
+
+    public void removeObjectInRadius(Object userData) {
+        if (userData == null)
+            return;
+
+        closeObjects.removeValue(userData, true);
+    }
+
+    private void processActions() {
+        for (Object obj : closeObjects) {
+            if (obj instanceof EnemyOld) {
+                if (isAttaking)
+                    ((EnemyOld)obj).remove();
+            } else if (obj instanceof  DynamicInteractableTile) {
+                if (isInteracting)
+                    ((DynamicInteractableTile)obj).interact(this);
+            }
+        }
+    }
+
+    private void processContact(Object obj) {
+        if (obj instanceof EnemyOld) {
+            if (!isAttaking) {
                 level.setHealth(level.getHealth() - 7);
             }
-        } else if (userData instanceof DynamicInteractableTile) {
-            if (isInteracting)
-                ((DynamicInteractableTile)userData).interact(this);
         }
 //        else
 //            remove();
