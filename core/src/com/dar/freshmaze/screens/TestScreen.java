@@ -59,12 +59,10 @@ public class TestScreen implements Screen {
         final Bob bob = new Bob(physWorld, new Rectangle(), level);
         stage.addActor(bob);
 
-        EnemyOld enemy = new EnemyOld(physWorld, new Rectangle());
-        dungeon = new Dungeon(level, bob, enemy);
+        dungeon = new Dungeon(level, bob);
 
         Gdx.input.setInputProcessor(stage);
         stage.setKeyboardFocus(bob);
-        stage.addActor(enemy);
         indicator = new Indicator(level);
 
         //

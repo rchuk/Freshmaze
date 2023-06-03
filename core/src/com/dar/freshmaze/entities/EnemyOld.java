@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
+import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 import com.dar.freshmaze.util.IsometricUtil;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
@@ -33,8 +35,14 @@ public class EnemyOld extends Actor {
     private Body body;
     private final World physWorld;
 
-    public EnemyOld(World physWorld, Rectangle r) {
+    private final BattleLevelRoom room;
+
+    private boolean pendingDestroy = false;
+
+    public EnemyOld(World physWorld, BattleLevelRoom room) {
         super();
+        this.room = room;
+        final Rectangle r = room.getBounds();
         region = new TextureRegion(texture);
         sprite.setPosition(r.getX() + r.getWidth() * 0.5f,  r.getY() + r.getHeight() * 0.5f);
         sprite.setSize(1.0f, 1.0f);
@@ -56,6 +64,12 @@ public class EnemyOld extends Actor {
         body.createFixture(circle, 1);
         body.setUserData(this);
         body.createFixture(fdef);
+    }
+
+    public void kill() {
+        pendingDestroy = true;
+
+        room.onEnemyDeath(this);
     }
 
     @Override
@@ -80,6 +94,16 @@ public class EnemyOld extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        if (pendingDestroy) {
+            physWorld.destroyBody(body);
+            remove();
+
+            pendingDestroy = false;
+
+            return;
+        }
+
         if (!boxForward) {
             body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(-deltaPx, -deltaPy).scl(MOVEMENT_SPEED)));
 

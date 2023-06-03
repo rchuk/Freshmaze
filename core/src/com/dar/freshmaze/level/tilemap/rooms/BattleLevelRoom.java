@@ -8,6 +8,7 @@ import com.dar.freshmaze.level.EnemyGenerator;
 
 public class BattleLevelRoom extends LevelRoom {
     private final Array<EnemyOld> enemies;
+    private boolean isCleared = false;
 
     public BattleLevelRoom(Rectangle bounds, EnemyGenerator enemyGenerator) {
         super(bounds);
@@ -17,6 +18,17 @@ public class BattleLevelRoom extends LevelRoom {
 
     @Override
     public void onPlayerEnter(Bob bob) {
-        setIsOpen(false);
+        if (!isCleared)
+            setIsOpen(false);
+    }
+
+    public void onEnemyDeath(EnemyOld enemy) {
+        enemies.removeValue(enemy, true);
+
+        if (enemies.isEmpty()) {
+            setIsOpen(true);
+
+            isCleared = true;
+        }
     }
 }

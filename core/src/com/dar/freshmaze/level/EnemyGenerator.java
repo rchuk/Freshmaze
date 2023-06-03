@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.dar.freshmaze.entities.EnemyOld;
+import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 
 public class EnemyGenerator {
@@ -15,10 +16,10 @@ public class EnemyGenerator {
         this.stage = stage;
     }
 
-    public Array<EnemyOld> generate(LevelRoom room) {
+    public Array<EnemyOld> generate(BattleLevelRoom room) {
         final Array<EnemyOld> enemies = new Array<>();
 
-        enemies.add(new EnemyOld(physWorld, room.getBounds())); // TODO: Add ability to spawn enemies at arbitrary points
+        enemies.add(new EnemyOld(physWorld, room)); // TODO: Add ability to spawn enemies at arbitrary points
 
         enemies.forEach(stage::addActor);
 

@@ -198,7 +198,7 @@ public class Bob extends Actor {
         for (Object obj : closeObjects) {
             if (obj instanceof EnemyOld) {
                 if (isAttaking)
-                    ((EnemyOld)obj).remove();
+                    ((EnemyOld)obj).kill();
             } else if (obj instanceof  DynamicInteractableTile) {
                 if (isInteracting)
                     ((DynamicInteractableTile)obj).interact(this);

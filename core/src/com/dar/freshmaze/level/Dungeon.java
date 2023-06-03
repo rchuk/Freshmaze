@@ -11,16 +11,14 @@ import com.dar.freshmaze.util.RectangleUtil;
 public class Dungeon implements Disposable {
     private final Level level;
     private final Bob bob;
-    private final EnemyOld enemy;
     private LevelRoom currentRoom;
 
     private int levelIndex = 0;
     private boolean pendingTransition = true;
 
-    public Dungeon(Level level, Bob bob, EnemyOld enemy) {
+    public Dungeon(Level level, Bob bob) {
         this.level = level;
         this.bob = bob;
-        this.enemy = enemy;
 
         level.getTilemap().setDungeon(this);
     }
@@ -83,7 +81,6 @@ public class Dungeon implements Disposable {
         final Vector2 center = level.getTilemap().cellPosToVec(centerCell);
 
         bob.teleport(center);
-        enemy.teleport(center);
     }
 
     @Override
