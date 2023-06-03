@@ -2,6 +2,7 @@ package com.dar.freshmaze.level.bitmap;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.dar.freshmaze.level.graph.LevelNodeGenerator;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.FinalLevelRoom;
@@ -106,7 +107,8 @@ public class LevelBitmap {
                             return Cell.Kind.Wall;
                         case Hall:
                             if (room instanceof BattleLevelRoom) {
-                                room.addEntrance(new Vector2(x, y));
+                                final BattleLevelRoom battleRoom = (BattleLevelRoom)room;
+                                battleRoom.addEntrance(new Vector2(x, y));
 
                                 return Cell.Kind.HallEntrance;
                             } else {

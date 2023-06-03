@@ -6,30 +6,51 @@ import com.dar.freshmaze.level.tilemap.LevelTilemap;
 public class DynamicEntranceTile extends DynamicTile {
     private final TiledMapTile openTile;
     private final TiledMapTile closedTile;
+    private final TiledMapTile clearedTile;
 
-    private boolean isOpen = true;
+    private State state = State.Closed;
 
-    public DynamicEntranceTile(LevelTilemap tilemap, LevelTilemap.CellPos pos, TiledMapTile openTile, TiledMapTile closedTile) {
+    public DynamicEntranceTile(LevelTilemap tilemap, LevelTilemap.CellPos pos, TiledMapTile openTile, TiledMapTile closedTile, TiledMapTile clearedTile) {
         super(tilemap, pos, openTile);
 
         this.openTile = openTile;
         this.closedTile = closedTile;
+        this.clearedTile = clearedTile;
 
         setPhysBody(tilemap.createTilePhysBody(getCellPos(), getDefaultTile()));
     }
 
-    public boolean isOpen() {
-        return isOpen;
+    public State getState() {
+        return state;
     }
 
-    public void setIsOpen(boolean newIsOpen) {
-        isOpen = newIsOpen;
+    public void setState(State newState) {
+        state = newState;
 
         final LevelTilemap tilemap = getTilemap();
 
-        final TiledMapTile tile = isOpen ? openTile : closedTile;
+        final TiledMapTile tile = getTile();
 
         tilemap.placeTile(getCellPos(), tile, LevelTilemap.Layer.Wall);
         setPhysBody(tilemap.createTilePhysBody(getCellPos(), tile));
+    }
+
+    private TiledMapTile getTile() {
+        switch (state) {
+            case Open:
+                return openTile;
+            case Closed:
+                return closedTile;
+            case Cleared:
+                return clearedTile;
+        }
+
+        return null;
+    }
+
+    public enum State {
+        Open,
+        Closed,
+        Cleared
     }
 }

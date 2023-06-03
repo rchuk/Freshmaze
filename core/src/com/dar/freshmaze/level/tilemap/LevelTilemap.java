@@ -33,6 +33,7 @@ public class LevelTilemap implements Disposable {
     public final StaticTiledMapTile floorTile;
     public final StaticTiledMapTile wallTile;
     public final StaticTiledMapTile entranceOpenTile;
+    public final StaticTiledMapTile entranceClearedTile;
     public final StaticTiledMapTile entranceClosedTile;
     public final StaticTiledMapTile teleportMonolithTile;
 
@@ -56,8 +57,9 @@ public class LevelTilemap implements Disposable {
         floorTile = new StaticTiledMapTile(splitTiles[0][0]);
         wallTile = new StaticTiledMapTile(splitTiles[0][1]);
         entranceOpenTile = new StaticTiledMapTile(splitTiles[0][2]);
-        entranceClosedTile = new StaticTiledMapTile(splitTiles[0][3]);
-        teleportMonolithTile = new StaticTiledMapTile(splitTiles[0][4]);
+        entranceClearedTile = new StaticTiledMapTile(splitTiles[0][3]);
+        entranceClosedTile = new StaticTiledMapTile(splitTiles[0][4]);
+        teleportMonolithTile = new StaticTiledMapTile(splitTiles[0][5]);
 
         // wallTile.getProperties().put("is_walkable", Boolean.FALSE);
         // floorTile.getProperties().put("is_walkable", Boolean.TRUE);
@@ -182,7 +184,7 @@ public class LevelTilemap implements Disposable {
 
             case HallEntrance:
                 placeStaticTile(pos, floorTile, Layer.Floor);
-                placeDynamicTile(new DynamicEntranceTile(this, pos, entranceOpenTile, entranceClosedTile), Layer.Wall);
+                placeDynamicTile(new DynamicEntranceTile(this, pos, entranceOpenTile, entranceClosedTile, entranceClearedTile), Layer.Wall);
                 break;
 
             case Teleport:
