@@ -30,6 +30,9 @@ public class LevelNodeGenerator {
 
 
     public void generate(Vector2 levelSize, int hallThickness, LevelNodeGenerationRules rules, EnemyGenerator enemyGenerator) {
+        if (rooms != null)
+            rooms.forEach(LevelRoom::onDestroy);
+
         this.levelSize = levelSize;
         this.hallThickness = hallThickness;
         this.rules = rules;

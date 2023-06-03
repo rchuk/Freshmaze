@@ -66,10 +66,14 @@ public class EnemyOld extends Actor {
         body.createFixture(fdef);
     }
 
-    public void kill() {
+    public void destroy() {
         pendingDestroy = true;
+    }
 
+    public void kill() {
         room.onEnemyDeath(this);
+
+        destroy();
     }
 
     @Override

@@ -58,6 +58,8 @@ public class LevelRoom {
         entrances.add(entrance);
     }
 
+    public void onDestroy() {}
+
     public void onPlayerEnter(Bob bob) {}
     public void onPlayerExit(Bob bob) {}
 }

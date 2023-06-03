@@ -17,6 +17,11 @@ public class BattleLevelRoom extends LevelRoom {
     }
 
     @Override
+    public void onDestroy() {
+        enemies.forEach(EnemyOld::destroy);
+    }
+
+    @Override
     public void onPlayerEnter(Bob bob) {
         if (!isCleared)
             setIsOpen(false);
