@@ -37,10 +37,10 @@ public class Bob extends Actor {
 
     private Array<Object> closeObjects = new Array<>();
 
-    public Bob(World physWorld, Rectangle r, Level level) {
+    public Bob(World physWorld, Level level, Vector2 spawnPos) {
         super();
         region = new TextureRegion(texture);
-        sprite.setPosition(r.getX() + r.getWidth() * 0.5f,  r.getY() + r.getHeight() * 0.5f);
+        sprite.setPosition(spawnPos.x, spawnPos.y);
         sprite.setSize(1.0f, 1.0f);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         setTouchable(Touchable.enabled);

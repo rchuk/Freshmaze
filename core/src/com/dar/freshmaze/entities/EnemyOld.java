@@ -39,12 +39,11 @@ public class EnemyOld extends Actor {
 
     private boolean pendingDestroy = false;
 
-    public EnemyOld(World physWorld, BattleLevelRoom room) {
+    public EnemyOld(World physWorld, BattleLevelRoom room, Vector2 spawnPos) {
         super();
         this.room = room;
-        final Rectangle r = room.getBounds();
         region = new TextureRegion(texture);
-        sprite.setPosition(r.getX() + r.getWidth() * 0.5f,  r.getY() + r.getHeight() * 0.5f);
+        sprite.setPosition(spawnPos.x, spawnPos.y);
         sprite.setSize(1.0f, 1.0f);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         setTouchable(Touchable.enabled);

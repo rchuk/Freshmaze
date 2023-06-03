@@ -23,6 +23,8 @@ import com.dar.freshmaze.util.IsometricUtil;
 import com.dar.freshmaze.world.WorldContactListener;
 
 public class TestScreen implements Screen {
+    private static final float CAMERA_ZOOM = 3.0f / 128.0f;
+
     private static final float CAMERA_SPEED = 5.0f;
     private static final float CAMERA_ZOOM_SPEED = 0.25f;
 
@@ -33,6 +35,7 @@ public class TestScreen implements Screen {
 
     private final World physWorld;
     private final Box2DDebugRenderer physDebugRenderer;
+    private boolean enableFreeCamera = false;
 
     private final static int[] TILEMAP_FLOOR_LAYER = new int[] { LevelTilemap.Layer.Floor.getIndex() };
     private final static int[] TILEMAP_WALL_LAYER = new int[] { LevelTilemap.Layer.Wall.getIndex() };
@@ -46,7 +49,7 @@ public class TestScreen implements Screen {
         this.game = game;
 
         this.camera = camera;
-        camera.zoom = 8.0f / 128.0f;
+        camera.zoom = CAMERA_ZOOM;
         this.viewport = viewport;
 
         physWorld = new World(Vector2.Zero, true); //TODO: Change graphics scale to 1 unit = 1 meter
@@ -56,7 +59,7 @@ public class TestScreen implements Screen {
         stage = new Stage(viewport);
         final Level level = new Level(physWorld, stage);
 
-        final Bob bob = new Bob(physWorld, new Rectangle(), level);
+        final Bob bob = new Bob(physWorld, level, Vector2.Zero);
         stage.addActor(bob);
 
         dungeon = new Dungeon(level, bob);
@@ -64,10 +67,6 @@ public class TestScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         stage.setKeyboardFocus(bob);
         indicator = new Indicator(level);
-
-        //
-        camera.position.set(bob.getX(), bob.getY(), 0.0f);
-        //
     }
 
     private void generateLevel() {
@@ -88,6 +87,12 @@ public class TestScreen implements Screen {
 
         ScreenUtils.clear(0.1f, 0.1f, 0.25f, 1.0f);
 
+        //implement camera follow
+        if (!enableFreeCamera) {
+            final Vector2 playerPos = new Vector2(dungeon.getBob().getX(), dungeon.getBob().getY());
+            camera.position.set(IsometricUtil.cartToIso(playerPos), 0.0f);
+            camera.zoom = CAMERA_ZOOM;
+        }
         camera.update();
 
         final Level level = dungeon.getLevel();
@@ -149,17 +154,22 @@ public class TestScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
             generateLevel();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.MINUS))
-            camera.zoom += CAMERA_ZOOM_SPEED * dt;
-        else if (Gdx.input.isKeyPressed(Input.Keys.EQUALS))
-            camera.zoom -= CAMERA_ZOOM_SPEED * dt;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P))
+            enableFreeCamera = !enableFreeCamera;
 
-        camera.zoom = Math.max(0.01f, camera.zoom);
+        if (enableFreeCamera) {
+            if (Gdx.input.isKeyPressed(Input.Keys.MINUS))
+                camera.zoom += CAMERA_ZOOM_SPEED * dt;
+            else if (Gdx.input.isKeyPressed(Input.Keys.EQUALS))
+                camera.zoom -= CAMERA_ZOOM_SPEED * dt;
 
-        final float cameraSpeedMult = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 2.0f : 1.0f;
+            camera.zoom = Math.max(0.01f, camera.zoom);
 
-        final Vector2 cameraMovementVec = getInputMovementVec(Input.Keys.J, Input.Keys.L, Input.Keys.K, Input.Keys.I, CAMERA_SPEED);
-        camera.translate(cameraMovementVec.x * cameraSpeedMult * dt, cameraMovementVec.y * cameraSpeedMult * dt);
+            final float cameraSpeedMult = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 2.0f : 1.0f;
+
+            final Vector2 cameraMovementVec = getInputMovementVec(Input.Keys.J, Input.Keys.L, Input.Keys.K, Input.Keys.I, CAMERA_SPEED);
+            camera.translate(cameraMovementVec.x * cameraSpeedMult * dt, cameraMovementVec.y * cameraSpeedMult * dt);
+        }
     }
 
     private Vector2 getInputMovementVec(int leftKey, int rightKey, int downKey, int upKey, float speed) {

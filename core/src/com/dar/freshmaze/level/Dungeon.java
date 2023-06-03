@@ -46,8 +46,7 @@ public class Dungeon implements Disposable {
 
         updateRoom();
     }
-
-    // TODO: Room should open when all enemies are killed
+    
     private void updateRoom() {
         final LevelRoom newRoom = findContainingRoom();
         if (currentRoom == newRoom)
