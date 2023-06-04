@@ -1,8 +1,11 @@
 package com.dar.freshmaze.level;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -15,6 +18,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.dar.freshmaze.level.bitmap.LevelBitmap;
 import com.dar.freshmaze.level.graph.*;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
+import com.dar.freshmaze.level.tilemap.SortedIsometricTiledMapRenderer;
 import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 import com.dar.freshmaze.util.IsometricUtil;
 
@@ -26,8 +30,7 @@ public class Level implements Disposable {
     private final LevelNodeGenerator nodeGenerator;
     private final EnemyGenerator enemyGenerator;
     private final LevelTilemap tilemap;
-
-    private IsometricTiledMapRenderer tilemapRenderer;
+    private SortedIsometricTiledMapRenderer tilemapRenderer;
 
     private final ShapeRenderer shape;
     private List<Color> debugLeafColors;
@@ -48,8 +51,7 @@ public class Level implements Disposable {
         levelBitmap.generate(nodeGenerator);
 
         tilemap.generate(levelBitmap);
-
-        tilemapRenderer = new IsometricTiledMapRenderer(tilemap.getTilemap(), tilemap.getTileSize() / tilemap.getTextureTileSize());
+        tilemapRenderer = new SortedIsometricTiledMapRenderer(tilemap.getTilemap(), tilemap.getTileSize() / tilemap.getTextureTileSize());
         debugLeafColors = Stream
                 .generate(() -> new Color(MathUtils.random(0, 0xFFFFFF)))
                 .limit(nodeGenerator.getRooms().size())
@@ -83,12 +85,15 @@ public class Level implements Disposable {
         return tilemap;
     }
 
-    // NOTE: How to implement render order with entities sprites?
-    // Maybe write to Z-buffer? That way we don't have to sort anything
-    public void render(OrthographicCamera camera, float dt, int[] layers) {
+    public SortedIsometricTiledMapRenderer getTilemapRenderer() {
+        return tilemapRenderer;
+    }
+
+    public void render(OrthographicCamera camera, float dt, int[] layers, boolean writeDepth) {
         if (tilemapRenderer == null)
             return;
 
+        tilemapRenderer.setWriteDepth(writeDepth);
         tilemapRenderer.setView(camera);
         tilemapRenderer.render(layers);
     }

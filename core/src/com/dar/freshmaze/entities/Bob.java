@@ -15,7 +15,7 @@ import com.dar.freshmaze.level.tilemap.tiles.DynamicInteractableTile;
 import com.dar.freshmaze.util.IsometricUtil;
 
 public class Bob extends Actor {
-    Texture texture = new Texture(Gdx.files.internal("still.png"));
+    Texture texture = new Texture(Gdx.files.internal("player.png")); //new Texture(Gdx.files.internal("still.png"));
     Sprite sprite = new Sprite(texture);
     public static final float MOVEMENT_SPEED = 4.0f;
     public static final float deltaPx = 1.0f;
@@ -118,18 +118,23 @@ public class Bob extends Actor {
 
     @Override
     protected void positionChanged() {
-        sprite.setPosition(getX(), getY());
+        //sprite.setPosition(getX(), getY());
+        final Vector2 isoPos = IsometricUtil.cartToIso(new Vector2(getX(), getY()));
+        sprite.setPosition(isoPos.x, isoPos.y - 0.25f);
         super.positionChanged();
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
-        batch.setTransformMatrix(IsometricUtil.ISO_TRANSFORMATION_MATRIX); // Not needed if the sprites is already drawn as isometric
         sprite.draw(batch);
+
+        final Vector2 isoPos = IsometricUtil.cartToIso(new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2));
+        batch.getShader().setUniformf("height", isoPos.y);
+
         batch.setColor(getColor());
         batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-
+        batch.flush();
     }
 
     @Override

@@ -31,6 +31,7 @@ public class DynamicEntranceTile extends DynamicTile {
 
         final TiledMapTile tile = getTile();
 
+        // TODO: Implement something more complex, with more layers for correct depth sorting
         tilemap.placeTile(getCellPos(), tile, LevelTilemap.Layer.Wall);
         setPhysBody(tilemap.createTilePhysBody(getCellPos(), tile));
     }

@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
@@ -15,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dar.freshmaze.FreshmazeGame;
 import com.dar.freshmaze.entities.Bob;
 import com.dar.freshmaze.entities.EnemyOld;
+import com.dar.freshmaze.graphics.DepthSortedStage;
 import com.dar.freshmaze.indicator.Indicator;
 import com.dar.freshmaze.level.Dungeon;
 import com.dar.freshmaze.level.Level;
@@ -52,11 +55,11 @@ public class TestScreen implements Screen {
         camera.zoom = CAMERA_ZOOM;
         this.viewport = viewport;
 
-        physWorld = new World(Vector2.Zero, true); //TODO: Change graphics scale to 1 unit = 1 meter
+        physWorld = new World(Vector2.Zero, true);
         physWorld.setContactListener(new WorldContactListener());
         physDebugRenderer = new Box2DDebugRenderer();
 
-        stage = new Stage(viewport);
+        stage = new DepthSortedStage(viewport);
         final Level level = new Level(physWorld, stage);
 
         final Bob bob = new Bob(physWorld, level, Vector2.Zero);
@@ -85,9 +88,9 @@ public class TestScreen implements Screen {
         dungeon.update(delta);
         stage.act();
 
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         ScreenUtils.clear(0.1f, 0.1f, 0.25f, 1.0f);
 
-        //implement camera follow
         if (!enableFreeCamera) {
             final Vector2 playerPos = new Vector2(dungeon.getBob().getX(), dungeon.getBob().getY());
             camera.position.set(IsometricUtil.cartToIso(playerPos), 0.0f);
@@ -96,13 +99,16 @@ public class TestScreen implements Screen {
         camera.update();
 
         final Level level = dungeon.getLevel();
-        level.render(camera, delta, TILEMAP_FLOOR_LAYER);
-        level.debugRender(camera, delta, Level.DebugRender.ROOMS | Level.DebugRender.GRID);
-        debugRenderBobCell();
-        level.render(camera, delta, TILEMAP_WALL_LAYER);
+        level.render(camera, delta, TILEMAP_FLOOR_LAYER, false);
+        // level.debugRender(camera, delta, Level.DebugRender.ROOMS | Level.DebugRender.GRID);
+        // debugRenderBobCell();
+        level.render(camera, delta, TILEMAP_WALL_LAYER, true);
 
         debugRenderAxes();
 
+        final Rectangle viewBounds = dungeon.getLevel().getTilemapRenderer().getViewBounds();
+        stage.getBatch().getShader().bind();
+        stage.getBatch().getShader().setUniform2fv("bounds_vert", new float[] { viewBounds.y, viewBounds.height }, 0, 2);
         stage.draw();
 
         // Draw physics shapes in cartesian coordinates system (top-down view)
