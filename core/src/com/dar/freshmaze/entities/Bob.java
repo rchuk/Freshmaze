@@ -51,7 +51,7 @@ public class Bob extends Actor {
         this.physWorld = physWorld;
         final CircleShape circle = new CircleShape();
         circle.setPosition(new Vector2(0.5f, 0.5f));
-        circle.setRadius(0.5f);
+        circle.setRadius(0.3f);
         final BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.fixedRotation = true;

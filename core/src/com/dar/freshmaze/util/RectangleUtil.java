@@ -28,12 +28,7 @@ public class RectangleUtil {
      * @return rect
      */
     public static Rectangle shrink(Rectangle rect, Vector2 delta) {
-        return new Rectangle(
-                rect.x + delta.x,
-                rect.y + delta.y,
-                rect.width - delta.x,
-                rect.height - delta.y
-        );
+        return expand(rect, delta.scl(-1.0f));
     }
 
     /**
