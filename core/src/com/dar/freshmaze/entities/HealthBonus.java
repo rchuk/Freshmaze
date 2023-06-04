@@ -14,6 +14,7 @@ import com.dar.freshmaze.common.CommonHelper;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.dar.freshmaze.util.IsometricUtil;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.dar.freshmaze.util.RectangleUtil;
 
 import java.util.Random;
 
@@ -31,7 +32,7 @@ public class HealthBonus extends Actor {
     public HealthBonus(World physWorld, BattleLevelRoom room) {
         super();
         this.room = room;
-        final Rectangle r = room.getBounds();
+        final Rectangle r = RectangleUtil.shrink(room.getBounds(), new Vector2(1.0f, 1.0f));
         region = new TextureRegion(texture);
         Random rand = new Random();
         // sprite.setPosition(r.getX() + r.getWidth() * 0.5f,  r.getY() + r.getHeight() * 0.5f);

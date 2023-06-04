@@ -21,6 +21,22 @@ public class RectangleUtil {
     }
 
     /**
+     * Shrinks rectangle by delta in all directions
+     *
+     * @param rect rectangle to shrink
+     * @param delta size by which to shrink the rectangle
+     * @return rect
+     */
+    public static Rectangle shrink(Rectangle rect, Vector2 delta) {
+        return new Rectangle(
+                rect.x + delta.x,
+                rect.y + delta.y,
+                rect.width - delta.x,
+                rect.height - delta.y
+        );
+    }
+
+    /**
      * Normalizes a rectangle, in other words,
      * makes sure it has strictly positive size
      * and modifies its position accordingly
