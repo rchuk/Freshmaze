@@ -5,8 +5,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.dar.freshmaze.entities.EnemyOld;
+import com.dar.freshmaze.entities.HealthBonus;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
+
+import java.util.Random;
 
 public class EnemyGenerator {
     private final World physWorld;
@@ -19,10 +22,17 @@ public class EnemyGenerator {
 
     public Array<EnemyOld> generate(BattleLevelRoom room) {
         final Array<EnemyOld> enemies = new Array<>();
+        Random rand = new Random();
+        if(rand.nextBoolean())
+            enemies.add(new EnemyOld(physWorld, room)); // TODO: Add ability to spawn enemies at arbitrary points
+        if(rand.nextBoolean())
+            enemies.add(new EnemyOld(physWorld, room)); // TODO: Add ability to spawn enemies at arbitrary points
+        if(rand.nextBoolean() && rand.nextBoolean())
+            enemies.add(new EnemyOld(physWorld, room)); // TODO: Add ability to spawn enemies at arbitrary points
+        if(rand.nextInt(3) >= 0)
+            stage.addActor(new HealthBonus(physWorld, room));
 
-        final Vector2 spawnPos = room.getBounds().getCenter(new Vector2());
-        enemies.add(new EnemyOld(physWorld, room, spawnPos));
-
+        enemies.add(new EnemyOld(physWorld, room));
         enemies.forEach(stage::addActor);
 
         return enemies;

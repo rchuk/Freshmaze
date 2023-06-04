@@ -2,13 +2,17 @@ package com.dar.freshmaze.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.dar.freshmaze.level.Level;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicInteractableTile;
@@ -78,8 +82,12 @@ public class Bob extends Actor {
                 if (keycode == Input.Keys.DOWN)
                     movingDown = true;
                 if (keycode == Input.Keys.B) {
-                    sprite.scale(multiplier - 1);
+                    sprite.setScale(multiplier - 1);
                     isAttaking = true;
+                    ColorAction ca = new ColorAction();
+                    ca.setEndColor(Color.RED);
+                    ca.setDuration(0.4f);
+
                 }
                 if (keycode == Input.Keys.E)
                     isInteracting = true;
@@ -98,6 +106,8 @@ public class Bob extends Actor {
                 if (keycode == Input.Keys.DOWN)
                     movingDown = false;
                 if (keycode == Input.Keys.B) {
+
+
                     sprite.setScale(1);
                     isAttaking = false;
                 }
@@ -188,7 +198,6 @@ public class Bob extends Actor {
     public void addObjectInRadius(Object userData) {
         if (userData == null)
             return;
-
         processContact(userData);
 
         closeObjects.add(userData);
@@ -205,10 +214,14 @@ public class Bob extends Actor {
         for (Object obj : closeObjects) {
             if (obj instanceof EnemyOld) {
                 if (isAttaking)
-                    ((EnemyOld)obj).kill();
-            } else if (obj instanceof  DynamicInteractableTile) {
+                    ((EnemyOld) obj).kill();
+            } else if (obj instanceof DynamicInteractableTile) {
                 if (isInteracting)
-                    ((DynamicInteractableTile)obj).interact(this);
+                    ((DynamicInteractableTile) obj).interact(this);
+            } else if(obj instanceof HealthBonus) {
+                level.setHealth(Math.min(level.getHealth() + 10, 100));
+                ((HealthBonus) obj).remove();
+                ((HealthBonus) obj).teleport(new Vector2(1000, 1000));
             }
         }
     }
@@ -217,6 +230,19 @@ public class Bob extends Actor {
         if (obj instanceof EnemyOld) {
             if (!isAttaking) {
                 level.setHealth(level.getHealth() - 7);
+                ColorAction ca = new ColorAction();
+                ca.setEndColor(Color.RED);
+                ca.setDuration(0.4f);
+                ColorAction ca1 = new ColorAction();
+                ca1.setEndColor(Color.CLEAR);
+                ca1.setDuration(0.4f);
+                SequenceAction sequenceAction = new SequenceAction();
+                sequenceAction.addAction(ca);
+                sequenceAction.addAction(ca1);
+                addAction(sequenceAction);
+
+                addAction(ca);
+
             }
         }
 //        else

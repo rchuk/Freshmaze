@@ -17,21 +17,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 import java.util.Random;
 
-public class EnemyOld extends Actor {
-    Texture texture = new Texture(Gdx.files.internal("still.png"));
-    Sprite sprite = new Sprite(new Texture(Gdx.files.internal("still.png")));
-    public final float movementSpeed;
-    public final float deltaPx;
-    public final float deltaPy;
-    public static final float deltaS = 0.00001f;
-    private final int boxSize;
-    private int boxIndex = 0;
-    private boolean boxForward = true;
-    //    TextureRegion region;
-    public boolean movingRight = false;
-    public boolean movingLeft = false;
-    public boolean movingUp = false;
-    public boolean movingDown = false;
+public class HealthBonus extends Actor {
+    Texture texture = new Texture(Gdx.files.internal("heart.png"));
+    Sprite sprite = new Sprite(new Texture(Gdx.files.internal("heart.png")));
     TextureRegion region;
     private Body body;
     private final World physWorld;
@@ -40,13 +28,14 @@ public class EnemyOld extends Actor {
 
     private boolean pendingDestroy = false;
 
-    public EnemyOld(World physWorld, BattleLevelRoom room) {
+    public HealthBonus(World physWorld, BattleLevelRoom room) {
         super();
         this.room = room;
+        final Rectangle r = room.getBounds();
         region = new TextureRegion(texture);
         Random rand = new Random();
         // sprite.setPosition(r.getX() + r.getWidth() * 0.5f,  r.getY() + r.getHeight() * 0.5f);
-        sprite.setPosition((int) CommonHelper.randomPoint(room.getBounds()).x, (int) CommonHelper.randomPoint(room.getBounds()).y);
+        sprite.setPosition((int) CommonHelper.randomPoint(r).x, (int) CommonHelper.randomPoint(r).y);
         sprite.setSize(1.0f, 1.0f);
         setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         setTouchable(Touchable.enabled);
@@ -55,21 +44,16 @@ public class EnemyOld extends Actor {
         circle.setPosition(new Vector2(0.5f, 0.5f));
         circle.setRadius(0.5f);
         final BodyDef bd = new BodyDef();
-        bd.type = BodyDef.BodyType.DynamicBody;
+        bd.type = BodyDef.BodyType.StaticBody;
         bd.fixedRotation = true;
         bd.position.set(new Vector2(sprite.getX(), sprite.getY()));
-        bd.linearDamping = rand.nextFloat();
-        bd.angularDamping = rand.nextFloat();
+        bd.gravityScale = 0;
         FixtureDef fdef = new FixtureDef();
         fdef.shape = circle;
         body = physWorld.createBody(bd);
         body.createFixture(circle, 1);
         body.setUserData(this);
         body.createFixture(fdef);
-        deltaPx = rand.nextFloat() * 2;
-        deltaPy = rand.nextFloat() * 2;
-        boxSize = rand.nextInt(500);
-        movementSpeed = (rand.nextFloat() + 0.5f) * 2;
     }
 
     public void destroy() {
@@ -77,8 +61,6 @@ public class EnemyOld extends Actor {
     }
 
     public void kill() {
-        room.onEnemyDeath(this);
-
         destroy();
     }
 
@@ -105,31 +87,5 @@ public class EnemyOld extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-
-        if (pendingDestroy) {
-            physWorld.destroyBody(body);
-            remove();
-
-            pendingDestroy = false;
-
-            return;
-        }
-
-        if (!boxForward) {
-            body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(-deltaPx, -deltaPy).scl(movementSpeed)));
-
-        }
-        if (boxForward) {
-            body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(deltaPx, deltaPy).scl(movementSpeed)));
-        }
-        if (++boxIndex == boxSize) {
-            boxForward = !boxForward;
-            boxIndex = 0;
-        }
-        // MoveToAction mta = new MoveToAction();
-        // mta.setPosition(body.getPosition().x, body.getPosition().y);
-        // mta.setDuration(0);
-        // addAction(mta);
-        setPosition(body.getPosition().x, body.getPosition().y);
     }
 }
