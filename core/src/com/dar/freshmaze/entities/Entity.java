@@ -42,13 +42,17 @@ public class Entity extends PhysActor {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        final Vector2 isoPos = IsometricUtil.cartToIso(new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2));
-        batch.getShader().setUniformf("height", isoPos.y);
+        setShaderSortHeight(batch, 0.0f);
 
         batch.setTransformMatrix(renderMatrix);
         sprite.draw(batch);
 
         batch.flush();
+    }
+
+    protected void setShaderSortHeight(Batch batch, float offset) {
+        final Vector2 isoPos = IsometricUtil.cartToIso(new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2));
+        batch.getShader().setUniformf("height", isoPos.y + offset);
     }
 
     protected enum SpriteKind {

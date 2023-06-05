@@ -16,7 +16,7 @@ import com.dar.freshmaze.level.tilemap.tiles.DynamicInteractableTile;
 import com.dar.freshmaze.util.IsometricUtil;
 
 public class Bob extends Entity {
-    //Texture texture = new Texture(Gdx.files.internal("player.png"));
+    final Texture attackTexture = new Texture(Gdx.files.internal("iso_circle_marker.png"));
     public static final float MOVEMENT_SPEED = 4.0f;
     public static final float deltaPx = 1.0f;
     public static final float deltaPy = 1.0f;
@@ -31,7 +31,8 @@ public class Bob extends Entity {
     private Level level;
 
     // Configurable
-    private final static float attackSpeed = 0.2f;
+    private final static float attackSpeed = 1.0f;
+    private final static float attackDisplayMult = 0.1f;
 
     private final static float timePerAttack = 1.0f / attackSpeed;
     private float attackTimeLeft;
@@ -73,10 +74,8 @@ public class Bob extends Entity {
                     movingUp = false;
                 if (keycode == Input.Keys.DOWN)
                     movingDown = false;
-                if (keycode == Input.Keys.B) {
-                    getSprite().setScale(1);
+                if (keycode == Input.Keys.B)
                     isAttacking = false;
-                }
                 if (keycode == Input.Keys.E)
                     isInteracting = false;
 
@@ -84,6 +83,23 @@ public class Bob extends Entity {
 
             }
         });
+    }
+
+    @Override
+    public void draw(Batch batch, float alpha) {
+        // TODO: Add attack indicator!!
+        //
+        // TODO: Add shader if there's some time left
+        if (attackTimeLeft >= (1.0f - attackDisplayMult) * timePerAttack) {
+            final Vector2 pos = IsometricUtil.cartToIso(new Vector2(getX() - 0.5f, getY() - 0.5f));
+
+            setShaderSortHeight(batch, 0.01f);
+            batch.setColor(Color.RED);
+            batch.draw(attackTexture, pos.x, pos.y - 0.5f, 2.0f, 2.0f);
+            batch.flush();
+        }
+
+        super.draw(batch, alpha);
     }
 
     @Override
@@ -126,21 +142,23 @@ public class Bob extends Entity {
     }
 
     private void processActions() {
+        boolean attacked = false;
+        if (isAttacking) {
+            if (attackTimeLeft <= 0) {
+                attacked = true;
+                attackTimeLeft = timePerAttack;
+
+                //getSprite().setScale(multiplier - 1);
+                ColorAction ca = new ColorAction();
+                ca.setEndColor(Color.RED);
+                ca.setDuration(0.4f);
+            }
+        }
+
         for (Object obj : closeObjects) {
             if (obj instanceof EnemyOld) {
-                if (isAttacking) {
-                    if (attackTimeLeft <= 0) {
-                        System.out.println("Attack");
-                        ((EnemyOld) obj).kill();
-
-                        attackTimeLeft = timePerAttack;
-
-                        //getSprite().setScale(multiplier - 1);
-                        ColorAction ca = new ColorAction();
-                        ca.setEndColor(Color.RED);
-                        ca.setDuration(0.4f);
-                    }
-                }
+                if (attacked)
+                    ((EnemyOld) obj).kill();
             } else if (obj instanceof DynamicInteractableTile) {
                 if (isInteracting)
                     ((DynamicInteractableTile) obj).interact(this);
