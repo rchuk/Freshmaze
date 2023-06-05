@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dar.freshmaze.FreshmazeGame;
 import com.dar.freshmaze.entities.Bob;
@@ -49,6 +51,8 @@ public class TestScreen implements Screen {
     private final Stage stage;
     private Indicator indicator;
 
+    private final Stage uiStage;
+
     public TestScreen(FreshmazeGame game, OrthographicCamera camera, Viewport viewport) {
         this.game = game;
 
@@ -71,6 +75,8 @@ public class TestScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         stage.setKeyboardFocus(bob);
         indicator = new Indicator(level);
+
+        uiStage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
     }
 
     private void generateLevel() {
@@ -88,6 +94,7 @@ public class TestScreen implements Screen {
 
         dungeon.update(delta);
         stage.act();
+        uiStage.act();
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         ScreenUtils.clear(0.1f, 0.1f, 0.25f, 1.0f);
@@ -110,12 +117,16 @@ public class TestScreen implements Screen {
         final Rectangle viewBounds = dungeon.getLevel().getTilemapRenderer().getViewBounds();
         stage.getBatch().getShader().bind();
         stage.getBatch().getShader().setUniform2fv("bounds_vert", new float[] { viewBounds.y, viewBounds.height }, 0, 2);
+        stage.getViewport().apply();
         stage.draw();
+
+        uiStage.getViewport().apply();
+        uiStage.draw();
 
         // Draw physics shapes in cartesian coordinates system (top-down view)
         // physDebugRenderer.render(physWorld, camera.combined);
 
-        physDebugRenderer.render(physWorld, new Matrix4(camera.combined).mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX));
+        // physDebugRenderer.render(physWorld, new Matrix4(camera.combined).mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX));
 
         physWorld.step(1.0f / 60.0f, 6, 2);
         indicator.begin();
@@ -188,14 +199,11 @@ public class TestScreen implements Screen {
             // Create a table that fills the screen. Everything else will go inside this table.
             Table table = new Table();
             table.setFillParent(true);
-            table.setPosition(50, 50);
-            stage.addActor(table);
-
+            table.setPosition(0, 0);
+            uiStage.addActor(table);
             // Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
             final TextButton button = new TextButton("Click me!", skin);
             table.add(button);
-
-
         }
 
         if (enableFreeCamera) {
@@ -231,6 +239,8 @@ public class TestScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+
+        uiStage.getViewport().update(width, height);
     }
 
     @Override
@@ -251,5 +261,6 @@ public class TestScreen implements Screen {
     @Override
     public void dispose() {
         dungeon.dispose();
+        uiStage.dispose();
     }
 }
