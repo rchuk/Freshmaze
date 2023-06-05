@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -33,7 +34,7 @@ public class Bob extends Entity {
     private final Array<Object> closeObjects = new Array<>();
 
     public Bob(World physWorld, Level level, Vector2 spawnPos) {
-        super(physWorld, createSprite(), createBody(physWorld), new Vector2(0.5f, -0.5f), spawnPos);
+        super(physWorld, createSprite(), createBody(physWorld), new Vector2(0.5f, -0.5f), SpriteKind.Isometric, spawnPos);
 
         this.level = level;
 
@@ -88,6 +89,8 @@ public class Bob extends Entity {
     @Override
     public void act(float delta) {
         super.act(delta);
+        if (isDestroyed())
+            return;
 
         processActions();
 

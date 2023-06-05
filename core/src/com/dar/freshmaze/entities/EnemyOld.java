@@ -3,6 +3,7 @@ package com.dar.freshmaze.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -23,7 +24,7 @@ public class EnemyOld extends Entity {
     private final BattleLevelRoom room;
 
     public EnemyOld(World physWorld, BattleLevelRoom room, Vector2 spawnPos) {
-        super(physWorld, createSprite(), createBody(physWorld), new Vector2(0.5f, -0.5f), spawnPos);
+        super(physWorld, createSprite(), createBody(physWorld), new Vector2(0.5f, -0.5f), SpriteKind.Isometric, spawnPos);
 
         this.room = room;
 
@@ -42,6 +43,8 @@ public class EnemyOld extends Entity {
     @Override
     public void act(float delta) {
         super.act(delta);
+        if (isDestroyed())
+            return;
 
 //        if (++boxIndex == boxSize ) {
 //            boxForward = !boxForward;
@@ -56,7 +59,7 @@ public class EnemyOld extends Entity {
 //            boxIndex = 0;
         }
 
-        System.out.println(getBody().getPosition() + " " + room.getBounds());
+        // System.out.println(getBody().getPosition() + " " + room.getBounds());
         if (!boxForward) {
             getBody().setLinearVelocity(new Vector2(-deltaPx, -deltaPy).scl(movementSpeed));
         }
