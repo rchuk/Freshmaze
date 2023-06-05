@@ -89,4 +89,9 @@ public class HealthBonus extends Actor {
     public void act(float delta) {
         super.act(delta);
     }
+    @Override
+    public boolean remove() {
+        physWorld.destroyBody(body);
+        return super.remove();
+    }
 }
