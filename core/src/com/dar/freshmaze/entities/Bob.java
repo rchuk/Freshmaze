@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -31,6 +30,12 @@ public class Bob extends Entity {
     private final static float multiplier = 1.6f;
     private Level level;
 
+    // Configurable
+    private final static float attackSpeed = 0.2f;
+
+    private final static float timePerAttack = 1.0f / attackSpeed;
+    private float attackTimeLeft;
+
     private final Array<Object> closeObjects = new Array<>();
 
     public Bob(World physWorld, Level level, Vector2 spawnPos) {
@@ -50,13 +55,8 @@ public class Bob extends Entity {
                     movingUp = true;
                 if (keycode == Input.Keys.DOWN)
                     movingDown = true;
-                if (keycode == Input.Keys.B) {
-                    getSprite().setScale(multiplier - 1);
+                if (keycode == Input.Keys.B)
                     isAttacking = true;
-                    ColorAction ca = new ColorAction();
-                    ca.setEndColor(Color.RED);
-                    ca.setDuration(0.4f);
-                }
                 if (keycode == Input.Keys.E)
                     isInteracting = true;
 
@@ -92,6 +92,8 @@ public class Bob extends Entity {
         if (isDestroyed())
             return;
 
+        attackTimeLeft -= delta;
+
         processActions();
 
         float dx = 0;
@@ -126,8 +128,19 @@ public class Bob extends Entity {
     private void processActions() {
         for (Object obj : closeObjects) {
             if (obj instanceof EnemyOld) {
-                if (isAttacking)
-                    ((EnemyOld) obj).kill();
+                if (isAttacking) {
+                    if (attackTimeLeft <= 0) {
+                        System.out.println("Attack");
+                        ((EnemyOld) obj).kill();
+
+                        attackTimeLeft = timePerAttack;
+
+                        //getSprite().setScale(multiplier - 1);
+                        ColorAction ca = new ColorAction();
+                        ca.setEndColor(Color.RED);
+                        ca.setDuration(0.4f);
+                    }
+                }
             } else if (obj instanceof DynamicInteractableTile) {
                 if (isInteracting)
                     ((DynamicInteractableTile) obj).interact(this);
@@ -141,7 +154,7 @@ public class Bob extends Entity {
 
     private void processContact(Object obj) {
         if (obj instanceof EnemyOld) {
-            if (!isAttacking) {
+            //if (!isAttacking) {
                 level.setHealth(level.getHealth() - 7);
                 ColorAction ca = new ColorAction();
                 ca.setEndColor(Color.RED);
@@ -156,7 +169,7 @@ public class Bob extends Entity {
 
                 addAction(ca);
 
-            }
+            //}
         }
     }
 
