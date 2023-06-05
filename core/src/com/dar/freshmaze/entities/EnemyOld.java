@@ -116,17 +116,17 @@ public class EnemyOld extends Actor {
 
             return;
         }
-        if (++boxIndex == boxSize ) {
-            boxForward = !boxForward;
-            boxIndex = 0;
-        }
-        if(body.getPosition().x - deltaPx * movementSpeed <= room.getBounds().x || body.getPosition().y - deltaPy * movementSpeed <= room.getBounds().y) {
+//        if (++boxIndex == boxSize ) {
+//            boxForward = !boxForward;
+//            boxIndex = 0;
+//        }
+        if(body.getPosition().x - deltaPx * movementSpeed < room.getBounds().x || body.getPosition().y - deltaPy * movementSpeed < room.getBounds().y) {
             boxForward = true;
-            boxIndex = 0;
+//            boxIndex = 0;
 
-        } else if(body.getPosition().x + deltaPx * movementSpeed >= room.getBounds().x + room.getBounds().width || body.getPosition().y + deltaPy * movementSpeed >= room.getBounds().y + room.getBounds().height) {
+        } else if(body.getPosition().x + deltaPx * movementSpeed > room.getBounds().x + room.getBounds().width || body.getPosition().y + deltaPy * movementSpeed > room.getBounds().y + room.getBounds().height) {
             boxForward = false;
-            boxIndex = 0;
+//            boxIndex = 0;
         }
 
         System.out.println(body.getPosition() + " " + room.getBounds());
