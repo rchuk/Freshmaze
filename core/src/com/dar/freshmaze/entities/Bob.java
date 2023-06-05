@@ -4,70 +4,38 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.ScaleByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.dar.freshmaze.level.Level;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicInteractableTile;
 import com.dar.freshmaze.util.IsometricUtil;
 
-public class Bob extends Actor {
-    Texture texture = new Texture(Gdx.files.internal("player.png")); //new Texture(Gdx.files.internal("still.png"));
-    Sprite sprite = new Sprite(texture);
+public class Bob extends Entity {
+    //Texture texture = new Texture(Gdx.files.internal("player.png"));
     public static final float MOVEMENT_SPEED = 4.0f;
     public static final float deltaPx = 1.0f;
     public static final float deltaPy = 1.0f;
-    public static final float deltaS = 0.00001f;
-    //    TextureRegion region;
     public boolean movingRight = false;
     public boolean movingLeft = false;
     public boolean movingUp = false;
     public boolean movingDown = false;
-    TextureRegion region;
-    private Body body;
-    private boolean toDelete = false;
-    private final World physWorld;
-    private boolean isAttaking = false;
+
+    private boolean isAttacking = false;
     private boolean isInteracting = false;
     private final static float multiplier = 1.6f;
     private Level level;
 
-    private Array<Object> closeObjects = new Array<>();
+    private final Array<Object> closeObjects = new Array<>();
 
     public Bob(World physWorld, Level level, Vector2 spawnPos) {
-        super();
-        region = new TextureRegion(texture);
-        sprite.setPosition(spawnPos.x, spawnPos.y);
-        sprite.setSize(1.0f, 1.0f);
-        setBounds(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
-        setTouchable(Touchable.enabled);
-        this.physWorld = physWorld;
-        final CircleShape circle = new CircleShape();
-        circle.setPosition(new Vector2(0.5f, 0.5f));
-        circle.setRadius(0.3f);
-        final BodyDef bd = new BodyDef();
-        bd.type = BodyDef.BodyType.DynamicBody;
-        bd.fixedRotation = true;
-        bd.position.set(new Vector2(sprite.getX(), sprite.getY()));
-        bd.linearDamping = 1f;
-        bd.angularDamping = 1f;
-        final CircleShape circleSensor = new CircleShape();
-        circleSensor.setPosition(new Vector2(0.5f, 0.5f));
-        circleSensor.setRadius(0.5f * multiplier);
-        FixtureDef fdef = new FixtureDef();
-        fdef.shape = circleSensor;
-        fdef.isSensor = true;
-        body = physWorld.createBody(bd);
-        body.createFixture(circle, 1);
-        body.setUserData(this);
-        body.createFixture(fdef);
+        super(physWorld, createSprite(), createBody(physWorld), new Vector2(0.5f, -0.5f), spawnPos);
+
+        this.level = level;
 
         addListener(new InputListener() {
 
@@ -82,12 +50,11 @@ public class Bob extends Actor {
                 if (keycode == Input.Keys.DOWN)
                     movingDown = true;
                 if (keycode == Input.Keys.B) {
-                    sprite.setScale(multiplier - 1);
-                    isAttaking = true;
+                    getSprite().setScale(multiplier - 1);
+                    isAttacking = true;
                     ColorAction ca = new ColorAction();
                     ca.setEndColor(Color.RED);
                     ca.setDuration(0.4f);
-
                 }
                 if (keycode == Input.Keys.E)
                     isInteracting = true;
@@ -106,10 +73,8 @@ public class Bob extends Actor {
                 if (keycode == Input.Keys.DOWN)
                     movingDown = false;
                 if (keycode == Input.Keys.B) {
-
-
-                    sprite.setScale(1);
-                    isAttaking = false;
+                    getSprite().setScale(1);
+                    isAttacking = false;
                 }
                 if (keycode == Input.Keys.E)
                     isInteracting = false;
@@ -118,33 +83,6 @@ public class Bob extends Actor {
 
             }
         });
-        this.level = level;
-    }
-
-    public void teleport(Vector2 pos) {
-        setPosition(pos.x, pos.y);
-        body.setTransform(pos, 0.0f);
-    }
-
-    @Override
-    protected void positionChanged() {
-        //sprite.setPosition(getX(), getY());
-        final Vector2 isoPos = IsometricUtil.cartToIso(new Vector2(getX(), getY()));
-        sprite.setPosition(isoPos.x, isoPos.y - 0.25f);
-        super.positionChanged();
-    }
-
-    @Override
-    public void draw(Batch batch, float alpha) {
-        sprite.draw(batch);
-
-        final Vector2 isoPos = IsometricUtil.cartToIso(new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2));
-        batch.getShader().setUniformf("height", isoPos.y);
-
-        batch.setColor(getColor());
-        batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),
-                getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-        batch.flush();
     }
 
     @Override
@@ -164,35 +102,7 @@ public class Bob extends Actor {
         if (movingDown)
             dy = -deltaPy;
 
-        body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(dx, dy).nor().scl(MOVEMENT_SPEED)));
-        // MoveToAction mta = new MoveToAction();
-        // mta.setPosition(body.getPosition().x, body.getPosition().y);
-        // mta.setDuration(0);
-        // addAction(mta);
-        setPosition(body.getPosition().x, body.getPosition().y);
-//        MoveByAction mba = new MoveByAction();
-//        mba.setAmount(dx, dy);
-//        mba.setDuration(deltaS);
-//        addAction(mba);
-
-
-//        SequenceAction sequenceAction = new SequenceAction();
-//        ColorAction ca = new ColorAction();
-//        ca.setEndColor(Color.RED);
-//        ca.setDuration(0.5f);
-//        ColorAction ca1 = new ColorAction();
-//        ca1.setEndColor(Color.CLEAR);
-//        ca1.setDuration(0.5f);
-//        sequenceAction.addAction(ca);
-//        sequenceAction.addAction(ca1);
-//        addAction(sequenceAction);
-
-    }
-
-    @Override
-    public boolean remove() {
-        toDelete = true;
-        return super.remove();
+        getBody().setLinearVelocity(IsometricUtil.isoToCart(new Vector2(dx, dy).nor().scl(MOVEMENT_SPEED)));
     }
 
     public void addObjectInRadius(Object userData) {
@@ -213,7 +123,7 @@ public class Bob extends Actor {
     private void processActions() {
         for (Object obj : closeObjects) {
             if (obj instanceof EnemyOld) {
-                if (isAttaking)
+                if (isAttacking)
                     ((EnemyOld) obj).kill();
             } else if (obj instanceof DynamicInteractableTile) {
                 if (isInteracting)
@@ -221,14 +131,14 @@ public class Bob extends Actor {
             } else if(obj instanceof HealthBonus) {
                 level.setHealth(Math.min(level.getHealth() + 10, 100));
                 ((HealthBonus) obj).remove();
-                ((HealthBonus) obj).teleport(new Vector2(1000, 1000));
+                // ((HealthBonus) obj).teleport(new Vector2(1000, 1000));
             }
         }
     }
 
     private void processContact(Object obj) {
         if (obj instanceof EnemyOld) {
-            if (!isAttaking) {
+            if (!isAttacking) {
                 level.setHealth(level.getHealth() - 7);
                 ColorAction ca = new ColorAction();
                 ca.setEndColor(Color.RED);
@@ -245,7 +155,38 @@ public class Bob extends Actor {
 
             }
         }
-//        else
-//            remove();
+    }
+
+    private static Sprite createSprite() {
+        final Sprite sprite = new Sprite(new Texture(Gdx.files.internal("player.png")));
+        sprite.setSize(1.0f, 1.0f);
+
+        return sprite;
+    }
+
+    private static Body createBody(World physWorld) {
+        final CircleShape circle = new CircleShape();
+        circle.setPosition(new Vector2(0.5f, 0.5f));
+        circle.setRadius(0.3f);
+
+        final BodyDef bd = new BodyDef();
+        bd.type = BodyDef.BodyType.DynamicBody;
+        bd.fixedRotation = true;
+        bd.linearDamping = 1f;
+        bd.angularDamping = 1f;
+
+        final CircleShape circleSensor = new CircleShape();
+        circleSensor.setPosition(new Vector2(0.5f, 0.5f));
+        circleSensor.setRadius(0.5f * multiplier);
+
+        final FixtureDef fdef = new FixtureDef();
+        fdef.shape = circleSensor;
+        fdef.isSensor = true;
+
+        final Body body = physWorld.createBody(bd);
+        body.createFixture(circle, 1);
+        body.createFixture(fdef);
+
+        return body;
     }
 }
