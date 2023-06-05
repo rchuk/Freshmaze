@@ -74,7 +74,7 @@ public class TestScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
         stage.setKeyboardFocus(bob);
-        indicator = new Indicator(level);
+        indicator = new Indicator(bob);
 
         uiStage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
     }
