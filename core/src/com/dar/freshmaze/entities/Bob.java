@@ -29,7 +29,7 @@ public class Bob extends Entity {
     private boolean isInteracting = false;
     private final static float multiplier = 1.6f;
     private Level level;
-    private int health = 100;
+    private int health;
 
     // Configurable
     private final static float attackSpeed = 1.0f;
@@ -44,6 +44,7 @@ public class Bob extends Entity {
         super(physWorld, createSprite(), createBody(physWorld), new Vector2(0.5f, -0.5f), SpriteKind.Isometric, spawnPos);
 
         this.level = level;
+        health = getMaxHealth();
 
         addListener(new InputListener() {
 
@@ -84,6 +85,14 @@ public class Bob extends Entity {
 
             }
         });
+    }
+
+    public float getAttackTimeLeft() {
+        return attackTimeLeft;
+    }
+
+    public float getTimePerAttack() {
+        return timePerAttack;
     }
 
     @Override
@@ -232,4 +241,7 @@ public class Bob extends Entity {
         return health;
     }
 
+    public int getMaxHealth() {
+        return 100;
+    }
 }

@@ -5,11 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -19,9 +17,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dar.freshmaze.FreshmazeGame;
 import com.dar.freshmaze.entities.Bob;
-import com.dar.freshmaze.entities.EnemyOld;
 import com.dar.freshmaze.graphics.DepthSortedStage;
-import com.dar.freshmaze.indicator.Indicator;
+import com.dar.freshmaze.indicator.RectIndicator;
 import com.dar.freshmaze.level.Dungeon;
 import com.dar.freshmaze.level.Level;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
@@ -49,8 +46,6 @@ public class TestScreen implements Screen {
 
     private final Dungeon dungeon;
     private final Stage stage;
-    private Indicator indicator;
-
     private final Stage uiStage;
 
     public TestScreen(FreshmazeGame game, OrthographicCamera camera, Viewport viewport) {
@@ -74,9 +69,42 @@ public class TestScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
         stage.setKeyboardFocus(bob);
-        indicator = new Indicator(bob);
 
         uiStage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
+        createUI();
+    }
+
+    private void createUI() {
+        final RectIndicator healthIndicator = new RectIndicator(new RectIndicator.FloatRangeBinder() {
+            @Override
+            public float getValue() {
+                return dungeon.getBob().getHealth();
+            }
+
+            @Override
+            public float getMaxValue() {
+                return dungeon.getBob().getMaxHealth();
+            }
+        });
+        healthIndicator.setIndicatorColor(Color.RED);
+        healthIndicator.setBounds(0.0f, uiStage.getHeight() - 40.0f, 200.0f, 40.0f);
+
+        final RectIndicator attackIndicator = new RectIndicator(new RectIndicator.FloatRangeBinder() {
+            @Override
+            public float getValue() {
+                return 1.0f - Math.max(dungeon.getBob().getAttackTimeLeft(), 0.0f);
+            }
+
+            @Override
+            public float getMaxValue() {
+                return dungeon.getBob().getTimePerAttack();
+            }
+        });
+        attackIndicator.setIndicatorColor(Color.TEAL);
+        attackIndicator.setBounds(200.0f, uiStage.getHeight() - 40.0f, 200.0f, 40.0f);
+
+        uiStage.addActor(healthIndicator);
+        uiStage.addActor(attackIndicator);
     }
 
     private void generateLevel() {
@@ -120,6 +148,7 @@ public class TestScreen implements Screen {
         stage.getViewport().apply();
         stage.draw();
 
+        Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
         uiStage.getViewport().apply();
         uiStage.draw();
 
@@ -129,8 +158,6 @@ public class TestScreen implements Screen {
         // physDebugRenderer.render(physWorld, new Matrix4(camera.combined).mul(IsometricUtil.ISO_TRANSFORMATION_MATRIX));
 
         physWorld.step(1.0f / 60.0f, 6, 2);
-        indicator.begin();
-        indicator.end();
     }
 
     private void debugRenderBobCell() {
