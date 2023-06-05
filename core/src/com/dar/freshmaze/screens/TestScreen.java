@@ -3,15 +3,16 @@ package com.dar.freshmaze.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dar.freshmaze.FreshmazeGame;
@@ -162,6 +163,40 @@ public class TestScreen implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.P))
             enableFreeCamera = !enableFreeCamera;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+            System.out.println("touchDown 2");
+            Skin skin = new Skin();
+
+            // Generate a 1x1 white texture and store it in the skin named "white".
+            Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+            pixmap.setColor(Color.WHITE);
+            pixmap.fill();
+            skin.add("white", new Texture(pixmap));
+
+            // Store the default libGDX font under the name "default".
+            skin.add("default", new BitmapFont());
+
+            // Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
+            TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+            textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
+            textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
+            textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+            textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+            textButtonStyle.font = skin.getFont("default");
+            skin.add("default", textButtonStyle);
+
+            // Create a table that fills the screen. Everything else will go inside this table.
+            Table table = new Table();
+            table.setFillParent(true);
+            table.setPosition(50, 50);
+            stage.addActor(table);
+
+            // Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
+            final TextButton button = new TextButton("Click me!", skin);
+            table.add(button);
+
+
+        }
 
         if (enableFreeCamera) {
             if (Gdx.input.isKeyPressed(Input.Keys.MINUS))
