@@ -42,6 +42,7 @@ public class EnemyOld extends Actor {
 
     public EnemyOld(World physWorld, BattleLevelRoom room) {
         super();
+
         this.room = room;
         region = new TextureRegion(texture);
         Random rand = new Random();
@@ -68,7 +69,7 @@ public class EnemyOld extends Actor {
         body.createFixture(fdef);
         deltaPx = rand.nextFloat() * 2;
         deltaPy = rand.nextFloat() * 2;
-        boxSize = rand.nextInt(500);
+        boxSize = rand.nextInt(300) + 50;
         movementSpeed = (rand.nextFloat() + 0.5f) * 2;
     }
 
@@ -97,6 +98,7 @@ public class EnemyOld extends Actor {
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 
     }
+
     public void teleport(Vector2 pos) {
         setPosition(body.getPosition().x, body.getPosition().y);
         body.setTransform(pos, 0.0f);
@@ -114,17 +116,25 @@ public class EnemyOld extends Actor {
 
             return;
         }
+        if (++boxIndex == boxSize ) {
+            boxForward = !boxForward;
+            boxIndex = 0;
+        }
+        if(body.getPosition().x - deltaPx * movementSpeed <= room.getBounds().x || body.getPosition().y - deltaPy * movementSpeed <= room.getBounds().y) {
+            boxForward = true;
+            boxIndex = 0;
 
+        } else if(body.getPosition().x + deltaPx * movementSpeed >= room.getBounds().x + room.getBounds().width || body.getPosition().y + deltaPy * movementSpeed >= room.getBounds().y + room.getBounds().height) {
+            boxForward = false;
+            boxIndex = 0;
+        }
+
+        System.out.println(body.getPosition() + " " + room.getBounds());
         if (!boxForward) {
             body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(-deltaPx, -deltaPy).scl(movementSpeed)));
-
         }
         if (boxForward) {
             body.setLinearVelocity(IsometricUtil.isoToCart(new Vector2(deltaPx, deltaPy).scl(movementSpeed)));
-        }
-        if (++boxIndex == boxSize) {
-            boxForward = !boxForward;
-            boxIndex = 0;
         }
         // MoveToAction mta = new MoveToAction();
         // mta.setPosition(body.getPosition().x, body.getPosition().y);
