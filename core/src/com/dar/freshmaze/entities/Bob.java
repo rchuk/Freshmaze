@@ -29,6 +29,7 @@ public class Bob extends Entity {
     private boolean isInteracting = false;
     private final static float multiplier = 1.6f;
     private Level level;
+    private int health = 100;
 
     // Configurable
     private final static float attackSpeed = 1.0f;
@@ -93,7 +94,7 @@ public class Bob extends Entity {
         if (attackTimeLeft >= (1.0f - attackDisplayMult) * timePerAttack) {
             final Vector2 pos = IsometricUtil.cartToIso(new Vector2(getX() - 0.5f, getY() - 0.5f));
 
-            setShaderSortHeight(batch, 0.01f);
+            setShaderSortHeight(batch, 1.0f);
             batch.setColor(Color.RED);
             batch.draw(attackTexture, pos.x, pos.y - 0.5f, 2.0f, 2.0f);
             batch.flush();
@@ -163,7 +164,7 @@ public class Bob extends Entity {
                 if (isInteracting)
                     ((DynamicInteractableTile) obj).interact(this);
             } else if(obj instanceof HealthBonus) {
-                level.setHealth(Math.min(level.getHealth() + 10, 100));
+                setHealth(Math.min(getHealth() + 10, 100));
                 ((HealthBonus) obj).remove();
                 // ((HealthBonus) obj).teleport(new Vector2(1000, 1000));
             }
@@ -173,7 +174,8 @@ public class Bob extends Entity {
     private void processContact(Object obj) {
         if (obj instanceof EnemyOld) {
             //if (!isAttacking) {
-                level.setHealth(level.getHealth() - 7);
+                setHealth(getHealth() - 7);
+
                 ColorAction ca = new ColorAction();
                 ca.setEndColor(Color.RED);
                 ca.setDuration(0.4f);
@@ -223,4 +225,11 @@ public class Bob extends Entity {
 
         return body;
     }
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    public int getHealth() {
+        return health;
+    }
+
 }
