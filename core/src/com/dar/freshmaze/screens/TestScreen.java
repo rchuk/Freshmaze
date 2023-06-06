@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -85,10 +84,11 @@ public class TestScreen implements Screen {
         dungeon = new Dungeon(level, bob);
 
         uiStage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
-        if (!hasGameBegun)
+        if (!hasGameBegun) {
             addGameStartUI();
-        else
-            startGame();
+        } else {
+            uiStage.addActor(new ScreenTransition(1.0f, 3.0f, true, this::startGame));
+        }
     }
 
     private void createUI() {
@@ -143,13 +143,17 @@ public class TestScreen implements Screen {
         }
         handleInput(delta);
 
+        if (dungeon.isMaxLevel()) {
+            victory();
+        }
+
         if (dungeon.isPendingTransition()) {
             if (levelTransitionState == LevelTransitionState.None) {
                 levelTransitionState = LevelTransitionState.InProcess;
 
                 levelChangeTransitionScreen = new ScreenTransition(2.0f, 2.5f, false, () -> {
                     levelTransitionState = LevelTransitionState.Completed;
-   
+
                     levelChangeTransitionScreen.remove();
                     levelChangeTransitionScreen = new ScreenTransition(2.0f, 2.5f, true);
                     uiStage.addActor(levelChangeTransitionScreen);
@@ -353,46 +357,46 @@ public class TestScreen implements Screen {
         mainInput = false;
         Gdx.input.setInputProcessor(stage);
 
-        Table table = new Table();
-        table.setFillParent(true);
-        table.setPosition(0, 0);
-        uiStage.addActor(table);
-        TextureRegion texture = new TextureRegion(new Texture(Gdx.files.internal("gameover.png")));
-        Image image = new Image(texture);
-        image.setScaling(Scaling.fillX);
-        table.add(image).row();
-        table.columnDefaults(1);
+        uiStage.addActor(new ScreenTransition(1.0f, 3.0f, false, () -> {
+            Table table = new Table();
+            table.setFillParent(true);
+            table.setPosition(0, 0);
+            uiStage.addActor(table);
+            TextureRegion texture = new TextureRegion(new Texture(Gdx.files.internal("gameover.png")));
+            Image image = new Image(texture);
+            image.setScaling(Scaling.fillX);
+            table.add(image).row();
+            table.columnDefaults(1);
 
-        final TextButton button = new TextButton("Press Q to quit", skin);
-        table.add(button).fill().row();
+            final TextButton button = new TextButton("Press Q to quit", skin);
+            table.add(button).fill().row();
 
-        final TextButton button2 = new TextButton("Press R to restart", skin);
-        table.add(button2).fill().row();
-
-        uiStage.addActor(new ScreenTransition(1.0f, 3.0f, false));
+            final TextButton button2 = new TextButton("Press R to restart", skin);
+            table.add(button2).fill().row();
+        }));
     }
     private void victory() {
         mainInput = false;
         Gdx.input.setInputProcessor(stage);
 
-        Table table = new Table();
-        table.setFillParent(true);
-        table.setPosition(0, 0);
-        uiStage.addActor(table);
+        uiStage.addActor(new ScreenTransition(1.0f, 3.0f, false, () -> {
+            Table table = new Table();
+            table.setFillParent(true);
+            table.setPosition(0, 0);
+            uiStage.addActor(table);
 
-        TextureRegion texture = new TextureRegion(new Texture(Gdx.files.internal("victory.png")));
-        Image image = new Image(texture);
-        image.setScaling(Scaling.fillX);
-        table.add(image).row();
-        table.columnDefaults(1);
+            TextureRegion texture = new TextureRegion(new Texture(Gdx.files.internal("victory.png")));
+            Image image = new Image(texture);
+            image.setScaling(Scaling.fillX);
+            table.add(image).row();
+            table.columnDefaults(1);
 
-        final TextButton button = new TextButton("Press q to quite", skin);
-        table.add(button).fill().row();
+            final TextButton button = new TextButton("Press Q to quit", skin);
+            table.add(button).fill().row();
 
-        final TextButton button2 = new TextButton("Press r to restart", skin);
-        table.add(button2).fill().row();
-
-        uiStage.addActor(new ScreenTransition(1.0f, 3.0f, false));
+            final TextButton button2 = new TextButton("Press R to restart", skin);
+            table.add(button2).fill().row();
+        }));
     }
 
     private static Skin createSkin() {

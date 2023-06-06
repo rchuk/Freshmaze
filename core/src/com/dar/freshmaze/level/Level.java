@@ -37,6 +37,21 @@ public class Level implements Disposable {
     private final ShapeRenderer shape;
     private List<Color> debugLeafColors;
     private Matrix4 debugRenderMatrix;
+
+    private final static int MAX_LEVEL = 3;
+
+    private final Vector2[] levelSizes = {
+        new Vector2(38, 38),
+        new Vector2(50, 50),
+        new Vector2(64, 64)
+    };
+
+    private final LevelNodeGenerationRules[] generationRules = {
+            new LevelNodeGenerationRules(6, 12, 20, 0.75f, 2),
+            new LevelNodeGenerationRules(8, 12, 25, 0.75f, 2),
+            new LevelNodeGenerationRules(8, 14, 30, 0.75f, 2)
+    };
+
 //    private Dungeon dungeon;
     public Level(World physWorld, Stage stage) {
         nodeGenerator = new LevelNodeGenerator();
@@ -72,13 +87,18 @@ public class Level implements Disposable {
         return nodeGenerator.getSpawnRoom();
     }
 
+    public int getMaxLevel() {
+        return MAX_LEVEL;
+    }
+
     private void generateNodes(int levelIndex) {
         // TODO: Make levels progressively harder
 
         nodeGenerator.generate(
-                new Vector2(64, 64),
+                levelSizes[levelIndex],
                 2,
-                new LevelNodeGenerationRules(10, 16, 40, 0.75f, 2),
+                generationRules[levelIndex],
+                //new LevelNodeGenerationRules(10, 16, 40, 0.75f, 2),
                 enemyGenerator,
                 spikeGenerator
         );

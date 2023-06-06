@@ -40,7 +40,8 @@ public class Dungeon implements Disposable {
     public void moveToNextLevel() {
         levelIndex++;
 
-        pendingTransition = true;
+        if (!isMaxLevel())
+            pendingTransition = true;
     }
 
     public void update(float dt) {
@@ -87,6 +88,11 @@ public class Dungeon implements Disposable {
 
         bob.teleport(center);
     }
+
+    public boolean isMaxLevel() {
+        return getLevelIndex() == level.getMaxLevel();
+    }
+
     public int getLevelIndex() {
         return levelIndex;
     }

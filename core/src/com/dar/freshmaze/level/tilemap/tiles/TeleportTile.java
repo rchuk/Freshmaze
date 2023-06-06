@@ -8,6 +8,8 @@ import com.dar.freshmaze.level.tilemap.LevelTilemap;
 public class TeleportTile extends DynamicInteractableTile {
     private final Dungeon dungeon;
 
+    private boolean wasActived = false;
+
     public TeleportTile(LevelTilemap tilemap, LevelTilemap.CellPos pos, TiledMapTile tile, Dungeon dungeon) {
         super(tilemap, pos, tile, LevelTilemap.Layer.Wall);
 
@@ -16,6 +18,11 @@ public class TeleportTile extends DynamicInteractableTile {
 
     @Override
     public void interact(Bob player) {
+        if (wasActived)
+            return;
+
+        wasActived = true;
+
         dungeon.moveToNextLevel();
     }
 }
