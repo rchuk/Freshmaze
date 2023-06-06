@@ -332,7 +332,6 @@ public class TestScreen implements Screen {
     private void gameover() {
         mainInput = false;
         Gdx.input.setInputProcessor(stage);
-        Skin skin = new Skin();
 
         Table table = new Table();
         table.setFillParent(true);
@@ -344,14 +343,13 @@ public class TestScreen implements Screen {
         table.add(image).row();
         table.columnDefaults(1);
 
-        final TextButton button = new TextButton("Press q to quit", skin);
+        final TextButton button = new TextButton("Press Q to quit", skin);
         table.add(button).fill().row();
 
-        final TextButton button2 = new TextButton("Press r to restart", skin);
+        final TextButton button2 = new TextButton("Press R to restart", skin);
         table.add(button2).fill().row();
 
         uiStage.addActor(new ScreenTransition(1.0f, 3.0f, false));
-
     }
     private void victory() {
         mainInput = false;
