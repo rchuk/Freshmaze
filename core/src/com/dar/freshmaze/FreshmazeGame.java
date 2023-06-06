@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.dar.freshmaze.screens.GameScreen;
 import com.dar.freshmaze.screens.TestScreen;
 import com.dar.freshmaze.util.TimeUtil;
 
@@ -22,8 +23,17 @@ public class FreshmazeGame extends Game {
 
 		batch = new SpriteBatch();
 		shape = new ShapeRenderer();
-		OrthographicCamera camera = new OrthographicCamera();
-		Viewport       viewport = new FitViewport(WIDTH, HEIGHT, camera);
+
+		start();
+	}
+
+	public void start() {
+		if (getScreen() != null)
+			getScreen().dispose();
+
+		final OrthographicCamera camera = new OrthographicCamera();
+		final Viewport viewport = new FitViewport(WIDTH, HEIGHT, camera);
+
 		setScreen(new TestScreen(this, camera, viewport));
 	}
 

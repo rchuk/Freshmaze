@@ -13,10 +13,12 @@ public class ScreenTransition extends Actor {
 
     private Color color = Color.BLACK;
     private final float speed;
+    private final float duration;
     private float time = 0.0f;
 
-    public ScreenTransition(float speed) {
+    public ScreenTransition(float speed, float duration) {
         this.speed = speed;
+        this.duration = duration;
     }
 
     public void setColor(Color newColor) {
@@ -26,6 +28,10 @@ public class ScreenTransition extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        if (time >= duration) {
+            return;
+        }
 
         time += delta * speed;
     }
@@ -67,7 +73,6 @@ public class ScreenTransition extends Actor {
                 + "varying LOWP vec4 v_color;\n" //
                 + "varying vec2 v_texCoords;\n" //
                 + "uniform sampler2D u_texture;\n" //
-                + "uniform float alpha_threshold;\n" //
                 + "uniform float time;\n" //
                 + "uniform float duration;\n" //
                 + "void main()\n" //
@@ -77,9 +82,6 @@ public class ScreenTransition extends Actor {
                 + "  \n" //
                 + "  vec4 tex = texture2D(u_texture, uv);\n" //
                 + "  tex.a = step(cos(time), uv.x * uv.y);\n" //
-                + "  \n" //
-                + "  if(tex.a < alpha_threshold)\n" //
-                + "      discard;\n"//
                 + "\n" //
                 + "  gl_FragColor = v_color * tex;\n"
                 + "}";
@@ -87,9 +89,6 @@ public class ScreenTransition extends Actor {
         final ShaderProgram shader = new ShaderProgram(vertexShader, fragmentShader);
         if (!shader.isCompiled())
             throw new IllegalArgumentException("Error compiling shader: " + shader.getLog());
-
-        shader.bind();
-        shader.setUniformf("alpha_threshold", 0.5f);
 
         return shader;
     }

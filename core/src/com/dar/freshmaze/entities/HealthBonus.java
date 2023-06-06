@@ -120,5 +120,4 @@ public class HealthBonus extends Entity {
 
         return shader;
     }
-    //
 }

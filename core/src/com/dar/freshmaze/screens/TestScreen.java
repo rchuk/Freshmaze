@@ -1,5 +1,6 @@
 package com.dar.freshmaze.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -231,6 +232,11 @@ public class TestScreen implements Screen {
                 camera.translate(cameraMovementVec.x * cameraSpeedMult * dt, cameraMovementVec.y * cameraSpeedMult * dt);
             }
         } else {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+                game.start();
+
+                return;
+            }
             if (Gdx.input.isKeyJustPressed(Input.Keys.Q))
                 Gdx.app.exit();
         }
@@ -313,13 +319,13 @@ public class TestScreen implements Screen {
         //table.add(image).width(image2.getRegionWidth()).height(image2.getRegionHeight()).row();
         table.columnDefaults(1);
         // Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
-        final TextButton button = new TextButton("Press q to quite", skin);
+        final TextButton button = new TextButton("Press q to quit", skin);
         table.add(button).fill().row();
 
-        uiStage.addActor(new ScreenTransition(1.0f));
+        final TextButton button2 = new TextButton("Press r to restart", skin);
+        table.add(button2).fill().row();
 
-//        final TextButton button2 = new TextButton("Press r to restart", skin);
-//        table.add(button2).fill().row();
+        uiStage.addActor(new ScreenTransition(1.0f, 3.0f));
 
     }
     private void victory() {
@@ -360,9 +366,10 @@ public class TestScreen implements Screen {
         final TextButton button = new TextButton("Press q to quite", skin);
         table.add(button).fill().row();
 
-//        final TextButton button2 = new TextButton("Press r to restart", skin);
-//        table.add(button2).fill().row();
+        final TextButton button2 = new TextButton("Press r to restart", skin);
+        table.add(button2).fill().row();
 
+        uiStage.addActor(new ScreenTransition(1.0f, 3.0f));
     }
 
 }
