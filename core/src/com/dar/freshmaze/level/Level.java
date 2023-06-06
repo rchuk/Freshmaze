@@ -37,9 +37,11 @@ public class Level implements Disposable {
     private final ShapeRenderer shape;
     private List<Color> debugLeafColors;
     private Matrix4 debugRenderMatrix;
+//    private Dungeon dungeon;
     public Level(World physWorld, Stage stage) {
         nodeGenerator = new LevelNodeGenerator();
         tilemap = new LevelTilemap(physWorld, "level/tiles/tiles.png", 1.0f, 128);
+//        this.dungeon =dungeon;
         enemyGenerator = new EnemyGenerator(physWorld, stage);
         spikeGenerator = new SpikeGenerator();
 
@@ -47,6 +49,8 @@ public class Level implements Disposable {
     }
 
     public LevelRoom generate(int levelIndex) {
+        enemyGenerator.setDungeon(getTilemap().getDungeon());
+
         generateNodes(levelIndex);
 
         final LevelBitmap levelBitmap = new LevelBitmap();

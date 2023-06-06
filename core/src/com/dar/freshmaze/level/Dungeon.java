@@ -81,6 +81,9 @@ public class Dungeon implements Disposable {
 
         bob.teleport(center);
     }
+    public int getLevelIndex() {
+        return levelIndex;
+    }
 
     @Override
     public void dispose() {
