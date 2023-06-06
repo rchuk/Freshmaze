@@ -14,13 +14,15 @@ public class Dungeon implements Disposable {
     private LevelRoom currentRoom;
 
     private int levelIndex = 0;
-    private boolean pendingTransition = true;
+    private boolean pendingTransition = false;
 
     public Dungeon(Level level, Bob bob) {
         this.level = level;
         this.bob = bob;
 
         level.getTilemap().setDungeon(this);
+
+        generateLevel();
     }
 
     public Level getLevel() {
@@ -29,6 +31,10 @@ public class Dungeon implements Disposable {
 
     public Bob getBob() {
         return bob;
+    }
+
+    public boolean isPendingTransition() {
+        return pendingTransition;
     }
 
     public void moveToNextLevel() {

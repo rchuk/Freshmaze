@@ -60,6 +60,8 @@ public class TestScreen implements Screen {
     private boolean shouldRestart = false;
 
 
+    private LevelTransitionState levelTransitionState = LevelTransitionState.None;
+    private ScreenTransition levelChangeTransitionScreen;
     private ScreenTransition startGameTransitionScreen;
 
     public TestScreen(FreshmazeGame game, OrthographicCamera camera, Viewport viewport, boolean skipMenu) {
@@ -141,7 +143,28 @@ public class TestScreen implements Screen {
         }
         handleInput(delta);
 
-        dungeon.update(delta);
+        if (dungeon.isPendingTransition()) {
+            if (levelTransitionState == LevelTransitionState.None) {
+                levelTransitionState = LevelTransitionState.InProcess;
+
+                levelChangeTransitionScreen = new ScreenTransition(2.0f, 2.5f, false, () -> {
+                    levelTransitionState = LevelTransitionState.Completed;
+   
+                    levelChangeTransitionScreen.remove();
+                    levelChangeTransitionScreen = new ScreenTransition(2.0f, 2.5f, true);
+                    uiStage.addActor(levelChangeTransitionScreen);
+                });
+                uiStage.addActor(levelChangeTransitionScreen);
+            }
+        }
+
+        if (levelTransitionState != LevelTransitionState.InProcess) {
+            if (levelTransitionState == LevelTransitionState.Completed)
+                levelTransitionState = LevelTransitionState.None;
+
+            dungeon.update(delta);
+        }
+
         stage.act();
         uiStage.act();
 
@@ -394,5 +417,11 @@ public class TestScreen implements Screen {
         skin.add("default", textButtonStyle);
 
         return skin;
+    }
+
+    private enum LevelTransitionState {
+        None,
+        InProcess,
+        Completed
     }
 }
