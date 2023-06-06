@@ -214,8 +214,6 @@ public class TestScreen implements Screen {
                 enableFreeCamera = !enableFreeCamera;
             if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
                 System.out.println("touchDown 2");
-
-
             }
 
             if (enableFreeCamera) {
@@ -303,14 +301,15 @@ public class TestScreen implements Screen {
         skin.add("default", textButtonStyle);
 
         // Create a table that fills the screen. Everything else will go inside this table.
-        TextureRegion image2 = new TextureRegion(new Texture(Gdx.files.internal("gameover.png")));
+        TextureRegion texture = new TextureRegion(new Texture(Gdx.files.internal("gameover.png")));
         Table table = new Table();
         table.setFillParent(true);
         table.setPosition(0, 0);
         uiStage.addActor(table);
-        Image image = new Image(image2);
-        image.setScaling(Scaling.fill);
-        table.add(image).width(image2.getRegionWidth()).height(image2.getRegionHeight()).row();
+        Image image = new Image(texture);
+        image.setScaling(Scaling.fillX);
+        table.add(image).row();
+        //table.add(image).width(image2.getRegionWidth()).height(image2.getRegionHeight()).row();
         table.columnDefaults(1);
         // Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
         final TextButton button = new TextButton("Press q to quite", skin);
@@ -344,14 +343,15 @@ public class TestScreen implements Screen {
         skin.add("default", textButtonStyle);
 
         // Create a table that fills the screen. Everything else will go inside this table.
-        TextureRegion image2 = new TextureRegion(new Texture(Gdx.files.internal("victory.png")));
+        TextureRegion texture = new TextureRegion(new Texture(Gdx.files.internal("victory.png")));
         Table table = new Table();
         table.setFillParent(true);
         table.setPosition(0, 0);
         uiStage.addActor(table);
-        Image image = new Image(image2);
-        image.setScaling(Scaling.fill);
-        table.add(image).width(image2.getRegionWidth()).height(image2.getRegionHeight()).row();
+        Image image = new Image(texture);
+        image.setScaling(Scaling.fillX);
+        table.add(image).row();
+        //table.add(image).width(image2.getRegionWidth()).height(image2.getRegionHeight()).row();
         table.columnDefaults(1);
         // Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
         final TextButton button = new TextButton("Press q to quite", skin);
