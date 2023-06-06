@@ -19,6 +19,7 @@ import com.dar.freshmaze.level.bitmap.LevelBitmap;
 import com.dar.freshmaze.level.graph.*;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
 import com.dar.freshmaze.level.tilemap.SortedIsometricTiledMapRenderer;
+import com.dar.freshmaze.level.tilemap.SpikeGenerator;
 import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 import com.dar.freshmaze.util.IsometricUtil;
 
@@ -29,6 +30,7 @@ import java.util.stream.Stream;
 public class Level implements Disposable {
     private final LevelNodeGenerator nodeGenerator;
     private final EnemyGenerator enemyGenerator;
+    private final SpikeGenerator spikeGenerator;
     private final LevelTilemap tilemap;
     private SortedIsometricTiledMapRenderer tilemapRenderer;
 
@@ -39,6 +41,7 @@ public class Level implements Disposable {
         nodeGenerator = new LevelNodeGenerator();
         tilemap = new LevelTilemap(physWorld, "level/tiles/tiles.png", 1.0f, 128);
         enemyGenerator = new EnemyGenerator(physWorld, stage);
+        spikeGenerator = new SpikeGenerator();
 
         shape = new ShapeRenderer();
     }
@@ -72,7 +75,8 @@ public class Level implements Disposable {
                 new Vector2(64, 64),
                 2,
                 new LevelNodeGenerationRules(10, 16, 40, 0.75f, 2),
-                enemyGenerator
+                enemyGenerator,
+                spikeGenerator
         );
     }
 
@@ -86,6 +90,10 @@ public class Level implements Disposable {
 
     public SortedIsometricTiledMapRenderer getTilemapRenderer() {
         return tilemapRenderer;
+    }
+
+    public void update(float dt) {
+        nodeGenerator.getRooms().forEach(room -> room.act(dt));
     }
 
     public void render(OrthographicCamera camera, float dt, int[] layers, boolean writeDepth) {

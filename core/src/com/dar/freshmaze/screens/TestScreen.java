@@ -45,7 +45,7 @@ public class TestScreen implements Screen {
     private final Box2DDebugRenderer physDebugRenderer;
     private boolean enableFreeCamera = false;
 
-    private final static int[] TILEMAP_FLOOR_LAYER = new int[] { LevelTilemap.Layer.Floor.getIndex() };
+    private final static int[] TILEMAP_FLOOR_LAYER = new int[] { LevelTilemap.Layer.Floor.getIndex(), LevelTilemap.Layer.FloorOverlay.getIndex() };
     private final static int[] TILEMAP_WALL_LAYER = new int[] { LevelTilemap.Layer.Wall.getIndex() };
 
 

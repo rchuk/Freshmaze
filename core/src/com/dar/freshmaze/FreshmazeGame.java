@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.dar.freshmaze.screens.GameScreen;
 import com.dar.freshmaze.screens.TestScreen;
 import com.dar.freshmaze.util.TimeUtil;
 

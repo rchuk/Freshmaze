@@ -74,6 +74,8 @@ public class LevelBitmap {
                 return 'R';
             case Teleport:
                 return 'T';
+            case Spikes:
+                return 'S';
         };
 
         return '@';
@@ -97,6 +99,12 @@ public class LevelBitmap {
                 final Vector2 teleportPos = finalRoom.getTeleportPos();
 
                 getCell((int)teleportPos.x, (int)teleportPos.y).setKind(Cell.Kind.Teleport);
+            } else if (room instanceof BattleLevelRoom) {
+                final BattleLevelRoom battleRoom = (BattleLevelRoom)room;
+
+                battleRoom.getSpikes().forEach(pos ->
+                    getCell((int)pos.x, (int)pos.y).setKind(Cell.Kind.Spikes)
+                );
             }
         });
 
@@ -185,7 +193,8 @@ public class LevelBitmap {
             Hall,
             Wall,
             HallEntrance,
-            Teleport
+            Teleport,
+            Spikes
         }
 
         private Kind kind;

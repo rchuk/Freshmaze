@@ -8,13 +8,15 @@ public abstract class DynamicTile {
     private final LevelTilemap tilemap;
     private final LevelTilemap.CellPos cellPos;
     private final TiledMapTile defaultTile;
+    private final LevelTilemap.Layer defaultLayer;
 
     private Body physBody;
 
-    public DynamicTile(LevelTilemap tilemap, LevelTilemap.CellPos cellPos, TiledMapTile defaultTile) {
+    public DynamicTile(LevelTilemap tilemap, LevelTilemap.CellPos cellPos, TiledMapTile defaultTile, LevelTilemap.Layer defaultLayer) {
         this.tilemap = tilemap;
         this.cellPos = cellPos;
         this.defaultTile = defaultTile;
+        this.defaultLayer = defaultLayer;
     }
 
     public LevelTilemap getTilemap() {
@@ -31,6 +33,10 @@ public abstract class DynamicTile {
 
     public TiledMapTile getDefaultTile() {
         return defaultTile;
+    }
+
+    public LevelTilemap.Layer getDefaultLayer() {
+        return defaultLayer;
     }
 
     protected void setPhysBody(Body newPhysBody) {

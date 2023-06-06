@@ -3,7 +3,9 @@ package com.dar.freshmaze.level.graph;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.dar.freshmaze.level.EnemyGenerator;
+import com.dar.freshmaze.level.tilemap.SpikeGenerator;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.FinalLevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
@@ -29,7 +31,7 @@ public class LevelNodeGenerator {
     private LevelRoom finalRoom;
 
 
-    public void generate(Vector2 levelSize, int hallThickness, LevelNodeGenerationRules rules, EnemyGenerator enemyGenerator) {
+    public void generate(Vector2 levelSize, int hallThickness, LevelNodeGenerationRules rules, EnemyGenerator enemyGenerator, SpikeGenerator spikeGenerator) {
         if (rooms != null)
             rooms.forEach(LevelRoom::onDestroy);
 
@@ -40,7 +42,7 @@ public class LevelNodeGenerator {
         generateNodes();
         generateGraph();
         generateHalls();
-        generateRooms(enemyGenerator);
+        generateRooms(enemyGenerator, spikeGenerator);
     }
 
     public Vector2 getLevelSize() {
@@ -75,7 +77,7 @@ public class LevelNodeGenerator {
         return finalRoom;
     }
 
-    private void generateRooms(EnemyGenerator enemyGenerator) {
+    private void generateRooms(EnemyGenerator enemyGenerator, SpikeGenerator spikeGenerator) {
         final ArrayList<Integer> indices = IntStream.range(0, leaves.size())
                 .boxed()
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -90,10 +92,8 @@ public class LevelNodeGenerator {
         rooms.add(spawnRoom);
         rooms.add(finalRoom);
 
-        for (int i = 2; i < indices.size(); ++i) {
-            final LevelRoom room = new BattleLevelRoom(leaves.get(indices.get(i)).getRoomBounds(), enemyGenerator);
-            rooms.add(room);
-        }
+        for (int i = 2; i < indices.size(); ++i)
+            rooms.add(createBattleRoom(leaves.get(indices.get(i)), enemyGenerator, spikeGenerator));
 
         // TODO: Generate contents
     }
@@ -107,6 +107,16 @@ public class LevelNodeGenerator {
         final Vector2 teleportPos = new Vector2(bounds.x + (int)(0.5f * bounds.width), bounds.y + (int)(0.5f * bounds.height));;
 
         return new FinalLevelRoom(bounds, teleportPos);
+    }
+
+    private BattleLevelRoom createBattleRoom(LevelNode node, EnemyGenerator enemyGenerator, SpikeGenerator spikeGenerator) {
+        final float spikeInterval = MathUtils.random(1.0f, 4.0f);
+
+        final BattleLevelRoom room = new BattleLevelRoom(node.getRoomBounds(), enemyGenerator, spikeInterval);
+
+        room.setSpikes(spikeGenerator.generateSpikes(room));
+
+        return room;
     }
 
     private void generateHalls() {

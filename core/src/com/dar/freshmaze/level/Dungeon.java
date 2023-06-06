@@ -45,6 +45,7 @@ public class Dungeon implements Disposable {
         }
 
         updateRoom();
+        level.update(dt);
     }
     
     private void updateRoom() {

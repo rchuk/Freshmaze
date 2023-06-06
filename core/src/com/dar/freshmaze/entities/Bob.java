@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.dar.freshmaze.level.Level;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicInteractableTile;
+import com.dar.freshmaze.level.tilemap.tiles.SpikesTile;
 import com.dar.freshmaze.util.IsometricUtil;
 
 public class Bob extends Entity {
@@ -97,8 +98,6 @@ public class Bob extends Entity {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        // TODO: Add attack indicator!!
-        //
         // TODO: Add shader if there's some time left
         if (attackTimeLeft >= (1.0f - attackDisplayMult) * timePerAttack) {
             final Vector2 pos = IsometricUtil.cartToIso(new Vector2(getX() - 0.5f, getY() - 0.5f));
@@ -139,9 +138,9 @@ public class Bob extends Entity {
     public void addObjectInRadius(Object userData) {
         if (userData == null)
             return;
-        processContact(userData);
 
-        closeObjects.add(userData);
+        if (!processContact(userData))
+            closeObjects.add(userData);
     }
 
     public void removeObjectInRadius(Object userData) {
@@ -180,11 +179,12 @@ public class Bob extends Entity {
         }
     }
 
-    private void processContact(Object obj) {
+    private boolean processContact(Object obj) {
         if (obj instanceof EnemyOld) {
             //if (!isAttacking) {
                 setHealth(getHealth() - 7);
 
+                // TODO: Move this animation somewhere!
                 ColorAction ca = new ColorAction();
                 ca.setEndColor(Color.RED);
                 ca.setDuration(0.4f);
@@ -199,7 +199,13 @@ public class Bob extends Entity {
                 addAction(ca);
 
             //}
+        } else if (obj instanceof SpikesTile) {
+            ((SpikesTile)obj).onTouch(this);
+
+            return true;
         }
+
+        return false;
     }
 
     private static Sprite createSprite() {

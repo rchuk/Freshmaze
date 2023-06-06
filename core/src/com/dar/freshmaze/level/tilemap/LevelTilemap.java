@@ -12,17 +12,15 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.dar.freshmaze.level.Dungeon;
 import com.dar.freshmaze.level.bitmap.LevelBitmap;
-import com.dar.freshmaze.level.tilemap.tiles.DynamicEntranceTile;
-import com.dar.freshmaze.level.tilemap.tiles.DynamicTeleportTile;
+import com.dar.freshmaze.level.tilemap.tiles.EntranceTile;
+import com.dar.freshmaze.level.tilemap.tiles.SpikesTile;
+import com.dar.freshmaze.level.tilemap.tiles.TeleportTile;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicTile;
 
 import java.util.Objects;
@@ -38,6 +36,7 @@ public class LevelTilemap implements Disposable {
     public final StaticTiledMapTile teleportMonolithTile;
     public final StaticTiledMapTile chestClosedTile;
     public final StaticTiledMapTile chestOpenTile;
+    public final StaticTiledMapTile spikesTile;
 
     private final float tileSize;
     private final int textureTileSize;
@@ -64,6 +63,7 @@ public class LevelTilemap implements Disposable {
         teleportMonolithTile = new StaticTiledMapTile(splitTiles[0][5]);
         chestClosedTile = new StaticTiledMapTile(splitTiles[0][6]);
         chestOpenTile = new StaticTiledMapTile(splitTiles[0][7]);
+        spikesTile = new StaticTiledMapTile(splitTiles[1][0]);
 
         // wallTile.getProperties().put("is_walkable", Boolean.FALSE);
         // floorTile.getProperties().put("is_walkable", Boolean.TRUE);
@@ -74,6 +74,7 @@ public class LevelTilemap implements Disposable {
         teleportMonolithTile.getObjects().add(new RectangleMapObject());
         chestClosedTile.getObjects().add(new RectangleMapObject());
         chestOpenTile.getObjects().add(new RectangleMapObject());
+        spikesTile.getObjects().add(new RectangleMapObject());
     }
 
     public float getTileSize() {
@@ -142,8 +143,8 @@ public class LevelTilemap implements Disposable {
         dynamicTiles.clear();
 
         final MapLayers layers = tilemap.getLayers();
-        layers.add(createLayer(bitmap.getWidth(), bitmap.getHeight()));
-        layers.add(createLayer(bitmap.getWidth(), bitmap.getHeight()));
+        for (int i = 0; i < 3; ++i)
+            layers.add(createLayer(bitmap.getWidth(), bitmap.getHeight()));
 
         for (int yi = 0; yi < bitmap.getHeight(); ++yi) {
             for (int xi = 0; xi < bitmap.getWidth(); ++xi) {
@@ -191,12 +192,17 @@ public class LevelTilemap implements Disposable {
 
             case HallEntrance:
                 placeStaticTile(pos, floorTile, Layer.Floor);
-                placeDynamicTile(new DynamicEntranceTile(this, pos, entranceOpenTile, entranceClosedTile, entranceClearedTile), Layer.Wall);
+                placeDynamicTile(new EntranceTile(this, pos, entranceOpenTile, entranceClosedTile, entranceClearedTile));
                 break;
 
             case Teleport:
                 placeStaticTile(pos, floorTile, Layer.Floor);
-                placeDynamicTile(new DynamicTeleportTile(this, pos, teleportMonolithTile, dungeon), Layer.Wall);
+                placeDynamicTile(new TeleportTile(this, pos, teleportMonolithTile, dungeon));
+                break;
+
+            case Spikes:
+                placeStaticTile(pos, floorTile, Layer.Floor);
+                placeDynamicTile(new SpikesTile(this, pos, spikesTile));
                 break;
 
             default:
@@ -204,9 +210,9 @@ public class LevelTilemap implements Disposable {
         }
     }
 
-    public void placeDynamicTile(DynamicTile dynamicTile, Layer layerIndex) {
+    public void placeDynamicTile(DynamicTile dynamicTile) {
         final CellPos pos = dynamicTile.getCellPos();
-        placeTile(pos, dynamicTile.getDefaultTile(), layerIndex);
+        placeTile(pos, dynamicTile.getDefaultTile(), dynamicTile.getDefaultLayer());
 
         dynamicTiles.put(pos, dynamicTile);
     }
@@ -227,6 +233,17 @@ public class LevelTilemap implements Disposable {
     }
 
     public Body createTilePhysBody(CellPos pos, TiledMapTile tile) {
+        return createTilePhysBodyImpl(pos, tile, false);
+    }
+
+    public Body createTilePhysBodySensor(CellPos pos, TiledMapTile tile) {
+        return createTilePhysBodyImpl(pos, tile, true);
+    }
+
+    private Body createTilePhysBodyImpl(CellPos pos, TiledMapTile tile, boolean isSensor) {
+        if (tile == null)
+            return null;
+
         final Vector2 worldPos = cellPosToVec(pos);
         final Array<RectangleMapObject> objects = tile.getObjects().getByType(RectangleMapObject.class);
         if (objects.isEmpty())
@@ -245,7 +262,11 @@ public class LevelTilemap implements Disposable {
         final BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.StaticBody;
         final Body body = physWorld.createBody(bd);
-        body.createFixture(shape, 1);
+
+        final FixtureDef fdef = new FixtureDef();
+        fdef.shape = shape;
+        fdef.isSensor = isSensor;
+        body.createFixture(fdef);
 
         shape.dispose();
 
@@ -295,7 +316,8 @@ public class LevelTilemap implements Disposable {
 
     public enum Layer {
         Floor(0),
-        Wall(1);
+        FloorOverlay(1),
+        Wall(2);
 
         private final int index;
 

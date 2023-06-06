@@ -5,11 +5,11 @@ import com.dar.freshmaze.entities.Bob;
 import com.dar.freshmaze.level.Dungeon;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
 
-public class DynamicTeleportTile extends DynamicInteractableTile {
+public class TeleportTile extends DynamicInteractableTile {
     private final Dungeon dungeon;
 
-    public DynamicTeleportTile(LevelTilemap tilemap, LevelTilemap.CellPos pos, TiledMapTile tile, Dungeon dungeon) {
-        super(tilemap, pos, tile);
+    public TeleportTile(LevelTilemap tilemap, LevelTilemap.CellPos pos, TiledMapTile tile, Dungeon dungeon) {
+        super(tilemap, pos, tile, LevelTilemap.Layer.Wall);
 
         this.dungeon = dungeon;
     }
