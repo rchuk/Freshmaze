@@ -5,13 +5,16 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -47,6 +50,8 @@ public class TestScreen implements Screen {
     private final Dungeon dungeon;
     private final Stage stage;
     private final Stage uiStage;
+    private boolean mainInput = true;
+    private final Bob bob;
 
     public TestScreen(FreshmazeGame game, OrthographicCamera camera, Viewport viewport) {
         this.game = game;
@@ -62,7 +67,7 @@ public class TestScreen implements Screen {
         stage = new DepthSortedStage(viewport);
         final Level level = new Level(physWorld, stage);
 
-        final Bob bob = new Bob(physWorld, level, Vector2.Zero);
+        bob = new Bob(physWorld, level, Vector2.Zero);
         stage.addActor(bob);
 
         dungeon = new Dungeon(level, bob);
@@ -118,6 +123,10 @@ public class TestScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if(bob.getHealth() <= 0) {
+            stage.setKeyboardFocus(null);
+            gameover();
+        }
         handleInput(delta);
 
         dungeon.update(delta);
@@ -196,55 +205,35 @@ public class TestScreen implements Screen {
     }
 
     private void handleInput(float dt) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-            generateLevel();
+        if(mainInput) {
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.P))
-            enableFreeCamera = !enableFreeCamera;
-        if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
-            System.out.println("touchDown 2");
-            Skin skin = new Skin();
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+                generateLevel();
 
-            // Generate a 1x1 white texture and store it in the skin named "white".
-            Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-            pixmap.setColor(Color.WHITE);
-            pixmap.fill();
-            skin.add("white", new Texture(pixmap));
+            if (Gdx.input.isKeyJustPressed(Input.Keys.P))
+                enableFreeCamera = !enableFreeCamera;
+            if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+                System.out.println("touchDown 2");
 
-            // Store the default libGDX font under the name "default".
-            skin.add("default", new BitmapFont());
 
-            // Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
-            TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-            textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-            textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-            textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
-            textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
-            textButtonStyle.font = skin.getFont("default");
-            skin.add("default", textButtonStyle);
+            }
 
-            // Create a table that fills the screen. Everything else will go inside this table.
-            Table table = new Table();
-            table.setFillParent(true);
-            table.setPosition(0, 0);
-            uiStage.addActor(table);
-            // Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
-            final TextButton button = new TextButton("Click me!", skin);
-            table.add(button);
-        }
+            if (enableFreeCamera) {
+                if (Gdx.input.isKeyPressed(Input.Keys.MINUS))
+                    camera.zoom += CAMERA_ZOOM_SPEED * dt;
+                else if (Gdx.input.isKeyPressed(Input.Keys.EQUALS))
+                    camera.zoom -= CAMERA_ZOOM_SPEED * dt;
 
-        if (enableFreeCamera) {
-            if (Gdx.input.isKeyPressed(Input.Keys.MINUS))
-                camera.zoom += CAMERA_ZOOM_SPEED * dt;
-            else if (Gdx.input.isKeyPressed(Input.Keys.EQUALS))
-                camera.zoom -= CAMERA_ZOOM_SPEED * dt;
+                camera.zoom = Math.max(0.01f, camera.zoom);
 
-            camera.zoom = Math.max(0.01f, camera.zoom);
+                final float cameraSpeedMult = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 2.0f : 1.0f;
 
-            final float cameraSpeedMult = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) ? 2.0f : 1.0f;
-
-            final Vector2 cameraMovementVec = getInputMovementVec(Input.Keys.J, Input.Keys.L, Input.Keys.K, Input.Keys.I, CAMERA_SPEED);
-            camera.translate(cameraMovementVec.x * cameraSpeedMult * dt, cameraMovementVec.y * cameraSpeedMult * dt);
+                final Vector2 cameraMovementVec = getInputMovementVec(Input.Keys.J, Input.Keys.L, Input.Keys.K, Input.Keys.I, CAMERA_SPEED);
+                camera.translate(cameraMovementVec.x * cameraSpeedMult * dt, cameraMovementVec.y * cameraSpeedMult * dt);
+            }
+        } else {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.Q))
+                Gdx.app.exit();
         }
     }
 
@@ -290,4 +279,87 @@ public class TestScreen implements Screen {
         dungeon.dispose();
         uiStage.dispose();
     }
+    private void gameover() {
+        mainInput = false;
+        Gdx.input.setInputProcessor(stage);
+        Skin skin = new Skin();
+
+        // Generate a 1x1 white texture and store it in the skin named "white".
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.WHITE);
+        pixmap.fill();
+        skin.add("white", new Texture(pixmap));
+
+        // Store the default libGDX font under the name "default".
+        skin.add("default", new BitmapFont());
+
+        // Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
+        textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
+        textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+        textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+        textButtonStyle.font = skin.getFont("default");
+        skin.add("default", textButtonStyle);
+
+        // Create a table that fills the screen. Everything else will go inside this table.
+        TextureRegion image2 = new TextureRegion(new Texture(Gdx.files.internal("gameover.png")));
+        Table table = new Table();
+        table.setFillParent(true);
+        table.setPosition(0, 0);
+        uiStage.addActor(table);
+        Image image = new Image(image2);
+        image.setScaling(Scaling.fill);
+        table.add(image).width(image2.getRegionWidth()).height(image2.getRegionHeight()).row();
+        table.columnDefaults(1);
+        // Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
+        final TextButton button = new TextButton("Press q to quite", skin);
+        table.add(button).fill().row();
+
+//        final TextButton button2 = new TextButton("Press r to restart", skin);
+//        table.add(button2).fill().row();
+
+    }
+    private void victory() {
+        mainInput = false;
+        Gdx.input.setInputProcessor(stage);
+        Skin skin = new Skin();
+
+        // Generate a 1x1 white texture and store it in the skin named "white".
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.WHITE);
+        pixmap.fill();
+        skin.add("white", new Texture(pixmap));
+
+        // Store the default libGDX font under the name "default".
+        skin.add("default", new BitmapFont());
+
+        // Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
+        textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
+        textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
+        textButtonStyle.over = skin.newDrawable("white", Color.LIGHT_GRAY);
+        textButtonStyle.font = skin.getFont("default");
+        skin.add("default", textButtonStyle);
+
+        // Create a table that fills the screen. Everything else will go inside this table.
+        TextureRegion image2 = new TextureRegion(new Texture(Gdx.files.internal("victory.png")));
+        Table table = new Table();
+        table.setFillParent(true);
+        table.setPosition(0, 0);
+        uiStage.addActor(table);
+        Image image = new Image(image2);
+        image.setScaling(Scaling.fill);
+        table.add(image).width(image2.getRegionWidth()).height(image2.getRegionHeight()).row();
+        table.columnDefaults(1);
+        // Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
+        final TextButton button = new TextButton("Press q to quite", skin);
+        table.add(button).fill().row();
+
+//        final TextButton button2 = new TextButton("Press r to restart", skin);
+//        table.add(button2).fill().row();
+
+    }
+
 }
