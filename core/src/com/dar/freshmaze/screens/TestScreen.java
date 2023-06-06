@@ -161,7 +161,7 @@ public class TestScreen implements Screen {
         // debugRenderBobCell();
         level.render(camera, delta, TILEMAP_WALL_LAYER, true);
 
-        debugRenderAxes();
+        // debugRenderAxes();
 
         final Rectangle viewBounds = dungeon.getLevel().getTilemapRenderer().getViewBounds();
         stage.setVerticalViewBounds(new Vector2(viewBounds.y, viewBounds.height));
@@ -238,9 +238,6 @@ public class TestScreen implements Screen {
         if(mainInput) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.P))
                 enableFreeCamera = !enableFreeCamera;
-            if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
-                System.out.println("touchDown 2");
-            }
 
             if (enableFreeCamera) {
                 if (Gdx.input.isKeyPressed(Input.Keys.MINUS))

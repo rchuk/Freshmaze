@@ -51,15 +51,15 @@ public class Bob extends Entity {
 
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.RIGHT)
+                if (keycode == Input.Keys.D)
                     movingRight = true;
-                if (keycode == Input.Keys.LEFT)
+                if (keycode == Input.Keys.A)
                     movingLeft = true;
-                if (keycode == Input.Keys.UP)
+                if (keycode == Input.Keys.W)
                     movingUp = true;
-                if (keycode == Input.Keys.DOWN)
+                if (keycode == Input.Keys.S)
                     movingDown = true;
-                if (keycode == Input.Keys.B)
+                if (keycode == Input.Keys.SPACE)
                     isAttacking = true;
                 if (keycode == Input.Keys.E)
                     isInteracting = true;
@@ -69,15 +69,15 @@ public class Bob extends Entity {
 
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.RIGHT)
+                if (keycode == Input.Keys.D)
                     movingRight = false;
-                if (keycode == Input.Keys.LEFT)
+                if (keycode == Input.Keys.A)
                     movingLeft = false;
-                if (keycode == Input.Keys.UP)
+                if (keycode == Input.Keys.W)
                     movingUp = false;
-                if (keycode == Input.Keys.DOWN)
+                if (keycode == Input.Keys.S)
                     movingDown = false;
-                if (keycode == Input.Keys.B)
+                if (keycode == Input.Keys.SPACE)
                     isAttacking = false;
                 if (keycode == Input.Keys.E)
                     isInteracting = false;
