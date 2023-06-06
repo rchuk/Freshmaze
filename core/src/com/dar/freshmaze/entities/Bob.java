@@ -96,6 +96,12 @@ public class Bob extends Entity {
         return timePerAttack;
     }
 
+    public void damage(int damage) {
+        setHealth(getHealth() - damage);
+
+        onDamage();
+    }
+
     @Override
     public void draw(Batch batch, float alpha) {
         // TODO: Add shader if there's some time left
@@ -107,6 +113,8 @@ public class Bob extends Entity {
             batch.draw(attackTexture, pos.x, pos.y - 0.5f, 2.0f, 2.0f);
             batch.flush();
         }
+
+        getSprite().setColor(getColor());
 
         super.draw(batch, alpha);
     }
@@ -157,10 +165,9 @@ public class Bob extends Entity {
                 attacked = true;
                 attackTimeLeft = timePerAttack;
 
-                //getSprite().setScale(multiplier - 1);
-                ColorAction ca = new ColorAction();
-                ca.setEndColor(Color.RED);
-                ca.setDuration(0.4f);
+                //ColorAction ca = new ColorAction();
+                //ca.setEndColor(Color.RED);
+                //ca.setDuration(0.4f);
             }
         }
 
@@ -181,24 +188,7 @@ public class Bob extends Entity {
 
     private boolean processContact(Object obj) {
         if (obj instanceof EnemyOld) {
-            //if (!isAttacking) {
-                setHealth(getHealth() - 7);
-
-                // TODO: Move this animation somewhere!
-                ColorAction ca = new ColorAction();
-                ca.setEndColor(Color.RED);
-                ca.setDuration(0.4f);
-                ColorAction ca1 = new ColorAction();
-                ca1.setEndColor(Color.CLEAR);
-                ca1.setDuration(0.4f);
-                SequenceAction sequenceAction = new SequenceAction();
-                sequenceAction.addAction(ca);
-                sequenceAction.addAction(ca1);
-                addAction(sequenceAction);
-
-                addAction(ca);
-
-            //}
+            damage(7);
         } else if (obj instanceof SpikesTile) {
             ((SpikesTile)obj).onTouch(this);
 
@@ -206,6 +196,21 @@ public class Bob extends Entity {
         }
 
         return false;
+    }
+
+    private void onDamage() {
+        ColorAction ca = new ColorAction();
+        ca.setEndColor(Color.RED);
+        ca.setDuration(0.4f);
+        ColorAction ca1 = new ColorAction();
+        ca1.setEndColor(Color.WHITE);
+        ca1.setDuration(0.4f);
+        SequenceAction sequenceAction = new SequenceAction();
+        sequenceAction.addAction(ca);
+        sequenceAction.addAction(ca1);
+        addAction(sequenceAction);
+
+        addAction(ca);
     }
 
     private static Sprite createSprite() {

@@ -17,7 +17,7 @@ public class SpikesTile extends DynamicTile {
     }
 
     public void onTouch(Bob bob) {
-        bob.setHealth(bob.getHealth() - 3); //
+        bob.damage(3); //
     }
 
     public boolean isOpen() {
