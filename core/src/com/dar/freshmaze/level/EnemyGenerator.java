@@ -18,10 +18,15 @@ import java.util.Random;
 public class EnemyGenerator {
     private final World physWorld;
     private final Stage stage;
+    private Dungeon dungeon;
 
     public EnemyGenerator(World physWorld, Stage stage) {
         this.physWorld = physWorld;
         this.stage = stage;
+    }
+
+    public void setDungeon(Dungeon dungeon) {
+        this.dungeon = dungeon;
     }
 
     public Result generate(BattleLevelRoom room) {
@@ -30,11 +35,12 @@ public class EnemyGenerator {
 
         if(MathUtils.randomBoolean())
             enemies.add(createEnemy(room));
-        if(MathUtils.randomBoolean())
+        if(MathUtils.randomBoolean() && dungeon.getLevelIndex() >= 1)
             enemies.add(createEnemy(room));
-        if(MathUtils.randomBoolean() && MathUtils.randomBoolean())
+        if(MathUtils.randomBoolean() && MathUtils.randomBoolean() && dungeon.getLevelIndex() >= 2)
             enemies.add(createEnemy(room));
-        if(MathUtils.random(3) >= 0)
+        System.out.println(dungeon.getLevelIndex());
+        if(MathUtils.random(3) >= dungeon.getLevelIndex())
             otherEntities.add(createHealthBouns(room));
 
         enemies.add(createEnemy(room));

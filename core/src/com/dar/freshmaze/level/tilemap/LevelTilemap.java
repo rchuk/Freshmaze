@@ -130,6 +130,7 @@ public class LevelTilemap implements Disposable {
     public void setDungeon(Dungeon newDungeon) {
         dungeon = newDungeon;
     }
+    public Dungeon getDungeon() { return dungeon; }
 
     public void generate(LevelBitmap bitmap) {
         tilemap = new TiledMap();
