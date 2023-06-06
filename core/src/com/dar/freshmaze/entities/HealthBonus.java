@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.dar.freshmaze.graphics.DepthSortedStage;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.dar.freshmaze.util.TimeUtil;
@@ -30,6 +31,7 @@ public class HealthBonus extends Entity {
     public void draw(Batch batch, float alpha) {
         final ShaderProgram oldShader = batch.getShader();
         batch.setShader(shader);
+        ((DepthSortedStage)getStage()).shaderSetVerticalViewBounds();
         shader.setUniformf("time", 2.0f * TimeUtil.timef());
 
         super.draw(batch, alpha);

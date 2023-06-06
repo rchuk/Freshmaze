@@ -48,7 +48,7 @@ public class TestScreen implements Screen {
 
 
     private final Dungeon dungeon;
-    private final Stage stage;
+    private final DepthSortedStage stage;
     private final Stage uiStage;
     private boolean mainInput = true;
     private final Bob bob;
@@ -152,8 +152,8 @@ public class TestScreen implements Screen {
         debugRenderAxes();
 
         final Rectangle viewBounds = dungeon.getLevel().getTilemapRenderer().getViewBounds();
-        stage.getBatch().getShader().bind();
-        stage.getBatch().getShader().setUniform2fv("bounds_vert", new float[] { viewBounds.y, viewBounds.height }, 0, 2);
+        stage.setVerticalViewBounds(new Vector2(viewBounds.y, viewBounds.height));
+        stage.shaderSetVerticalViewBounds();
         stage.getViewport().apply();
         stage.draw();
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -12,11 +13,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Modified stage, that renders object using OpenGL depth test
  */
 public class DepthSortedStage extends Stage {
+    private Vector2 verticalViewBounds;
+
     public DepthSortedStage() {
         super();
         init();
     }
-
     /** Creates a stage with the specified viewport. The stage will use its own {@link Batch} which will be disposed when the stage
      * is disposed. */
     public DepthSortedStage(Viewport viewport) {
@@ -34,6 +36,20 @@ public class DepthSortedStage extends Stage {
 
     private void init() {
         getBatch().setShader(createShader());
+    }
+
+    public Vector2 getVerticalViewBounds() {
+        return verticalViewBounds;
+    }
+
+    public void setVerticalViewBounds(Vector2 newVerticalViewBounds) {
+        verticalViewBounds = newVerticalViewBounds;
+    }
+
+    public void shaderSetVerticalViewBounds() {
+        final Vector2 bounds = getVerticalViewBounds();
+        getBatch().getShader().bind();
+        getBatch().getShader().setUniform2fv("bounds_vert", new float[] { bounds.x, bounds.y }, 0, 2);
     }
 
     @Override
