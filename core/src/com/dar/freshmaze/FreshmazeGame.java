@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dar.freshmaze.screens.TestScreen;
+import com.dar.freshmaze.util.TimeUtil;
 
 public class FreshmazeGame extends Game {
 	public final static float WIDTH = 640;
@@ -17,6 +18,8 @@ public class FreshmazeGame extends Game {
 
 	@Override
 	public void create () {
+		TimeUtil.init();
+
 		batch = new SpriteBatch();
 		shape = new ShapeRenderer();
 		OrthographicCamera camera = new OrthographicCamera();
