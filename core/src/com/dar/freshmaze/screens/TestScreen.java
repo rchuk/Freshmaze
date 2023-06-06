@@ -25,6 +25,7 @@ import com.dar.freshmaze.indicator.RectIndicator;
 import com.dar.freshmaze.level.Dungeon;
 import com.dar.freshmaze.level.Level;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
+import com.dar.freshmaze.ui.ScreenTransition;
 import com.dar.freshmaze.util.IsometricUtil;
 import com.dar.freshmaze.world.WorldContactListener;
 
@@ -314,6 +315,8 @@ public class TestScreen implements Screen {
         // Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
         final TextButton button = new TextButton("Press q to quite", skin);
         table.add(button).fill().row();
+
+        uiStage.addActor(new ScreenTransition(1.0f));
 
 //        final TextButton button2 = new TextButton("Press r to restart", skin);
 //        table.add(button2).fill().row();
