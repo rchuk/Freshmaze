@@ -16,20 +16,51 @@ public class ScreenTransition extends Actor {
     private final float duration;
     private float time = 0.0f;
 
-    public ScreenTransition(float speed, float duration) {
+    private boolean fadeOut;
+    private boolean isFrozen = false;
+
+    private final TransitionCallback callback;
+
+    public ScreenTransition(float speed, float duration, boolean fadeOut) {
+        this(speed, duration, fadeOut, null);
+    }
+
+    public ScreenTransition(float speed, float duration, boolean fadeOut, TransitionCallback callback) {
         this.speed = speed;
         this.duration = duration;
+        this.fadeOut = fadeOut;
+        this.callback = callback;
+
+        shader.bind();
+        shader.setUniformf("fade_mult", fadeOut ? -1.0f : 1.0f);
     }
 
     public void setColor(Color newColor) {
         color = newColor;
     }
 
+    public boolean isFrozen() {
+        return isFrozen;
+    }
+
+    public void setIsFrozen(boolean newIsFrozen) {
+        isFrozen = newIsFrozen;
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);
 
+        if (isFrozen)
+            return;
+
         if (time >= duration) {
+            if (fadeOut)
+                remove();
+
+            if (callback != null)
+                callback.onComplete();
+
             return;
         }
 
@@ -75,13 +106,14 @@ public class ScreenTransition extends Actor {
                 + "uniform sampler2D u_texture;\n" //
                 + "uniform float time;\n" //
                 + "uniform float duration;\n" //
+                + "uniform float fade_mult;\n" //
                 + "void main()\n" //
                 + "{\n" //
                 + "  vec2 uv = v_texCoords;\n" //
                 + "  uv = (uv - vec2(0.5)) * 2.0;\n" //
                 + "  \n" //
                 + "  vec4 tex = texture2D(u_texture, uv);\n" //
-                + "  tex.a = step(cos(time), uv.x * uv.y);\n" //
+                + "  tex.a = step(fade_mult * cos(time), uv.x * uv.y);\n" //
                 + "\n" //
                 + "  gl_FragColor = v_color * tex;\n"
                 + "}";
@@ -91,5 +123,9 @@ public class ScreenTransition extends Actor {
             throw new IllegalArgumentException("Error compiling shader: " + shader.getLog());
 
         return shader;
+    }
+
+    public interface TransitionCallback {
+        void onComplete();
     }
 }

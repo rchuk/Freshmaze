@@ -23,17 +23,17 @@ public class FreshmazeGame extends Game {
 		batch = new SpriteBatch();
 		shape = new ShapeRenderer();
 
-		start();
+		start(false);
 	}
 
-	public void start() {
+	public void start(boolean isRestart) {
 		if (getScreen() != null)
 			getScreen().dispose();
 
 		final OrthographicCamera camera = new OrthographicCamera();
 		final Viewport viewport = new FitViewport(WIDTH, HEIGHT, camera);
 
-		setScreen(new TestScreen(this, camera, viewport));
+		setScreen(new TestScreen(this, camera, viewport, isRestart));
 	}
 
 	@Override
