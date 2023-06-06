@@ -54,6 +54,7 @@ public class TestScreen implements Screen {
     private final Stage uiStage;
     private boolean mainInput = true;
     private final Bob bob;
+    private boolean shouldRestart = false;
 
     public TestScreen(FreshmazeGame game, OrthographicCamera camera, Viewport viewport) {
         this.game = game;
@@ -125,6 +126,12 @@ public class TestScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if (shouldRestart) {
+            game.start();
+
+            return;
+        }
+
         if(bob.getHealth() <= 0) {
             stage.setKeyboardFocus(null);
             gameover();
@@ -232,11 +239,8 @@ public class TestScreen implements Screen {
                 camera.translate(cameraMovementVec.x * cameraSpeedMult * dt, cameraMovementVec.y * cameraSpeedMult * dt);
             }
         } else {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-                game.start();
-
-                return;
-            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.R))
+                shouldRestart = true;
             if (Gdx.input.isKeyJustPressed(Input.Keys.Q))
                 Gdx.app.exit();
         }
