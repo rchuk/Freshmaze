@@ -8,6 +8,7 @@ import com.dar.freshmaze.entities.EnemyOld;
 import com.dar.freshmaze.entities.Entity;
 import com.dar.freshmaze.level.EnemyGenerator;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
+import com.dar.freshmaze.level.tilemap.tiles.DynamicChestTile;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicEntranceTile;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicTile;
 
@@ -49,10 +50,18 @@ public class BattleLevelRoom extends LevelRoom {
         enemies.removeValue(enemy, true);
 
         if (enemies.isEmpty()) {
-            setEntrancesState(DynamicEntranceTile.State.Cleared);
-
             isCleared = true;
+
+            onCleared();
         }
+    }
+
+    private void onCleared() {
+        setEntrancesState(DynamicEntranceTile.State.Cleared);
+
+        final LevelTilemap tilemap = getLevel().getTilemap();
+        final LevelTilemap.CellPos pos = tilemap.vecToCellPos(getBounds().getCenter(new Vector2()));
+        tilemap.placeDynamicTile(new DynamicChestTile(tilemap, pos, tilemap.chestClosedTile, tilemap.chestOpenTile), LevelTilemap.Layer.Wall);
     }
 
     private void setEntrancesState(DynamicEntranceTile.State state) {

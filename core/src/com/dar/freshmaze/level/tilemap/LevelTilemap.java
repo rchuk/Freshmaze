@@ -36,6 +36,8 @@ public class LevelTilemap implements Disposable {
     public final StaticTiledMapTile entranceClearedTile;
     public final StaticTiledMapTile entranceClosedTile;
     public final StaticTiledMapTile teleportMonolithTile;
+    public final StaticTiledMapTile chestClosedTile;
+    public final StaticTiledMapTile chestOpenTile;
 
     private final float tileSize;
     private final int textureTileSize;
@@ -60,13 +62,18 @@ public class LevelTilemap implements Disposable {
         entranceClearedTile = new StaticTiledMapTile(splitTiles[0][3]);
         entranceClosedTile = new StaticTiledMapTile(splitTiles[0][4]);
         teleportMonolithTile = new StaticTiledMapTile(splitTiles[0][5]);
+        chestClosedTile = new StaticTiledMapTile(splitTiles[0][6]);
+        chestOpenTile = new StaticTiledMapTile(splitTiles[0][7]);
 
         // wallTile.getProperties().put("is_walkable", Boolean.FALSE);
         // floorTile.getProperties().put("is_walkable", Boolean.TRUE);
 
+        // TODO: Set proper rectangle size
         wallTile.getObjects().add(new RectangleMapObject());
         entranceClosedTile.getObjects().add(new RectangleMapObject());
         teleportMonolithTile.getObjects().add(new RectangleMapObject());
+        chestClosedTile.getObjects().add(new RectangleMapObject());
+        chestOpenTile.getObjects().add(new RectangleMapObject());
     }
 
     public float getTileSize() {
@@ -197,7 +204,7 @@ public class LevelTilemap implements Disposable {
         }
     }
 
-    private void placeDynamicTile(DynamicTile dynamicTile, Layer layerIndex) {
+    public void placeDynamicTile(DynamicTile dynamicTile, Layer layerIndex) {
         final CellPos pos = dynamicTile.getCellPos();
         placeTile(pos, dynamicTile.getDefaultTile(), layerIndex);
 
