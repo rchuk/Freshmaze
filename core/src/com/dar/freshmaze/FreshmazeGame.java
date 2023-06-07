@@ -1,6 +1,8 @@
 package com.dar.freshmaze;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -22,6 +24,8 @@ public class FreshmazeGame extends Game {
 
 		batch = new SpriteBatch();
 		shape = new ShapeRenderer();
+		Sound sound = Gdx.audio.newSound(Gdx.files.internal("sound.mp3"));
+        sound.setLooping(sound.play(1.0f), true);
 
 		start(false);
 	}

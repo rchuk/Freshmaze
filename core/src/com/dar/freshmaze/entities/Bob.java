@@ -2,6 +2,7 @@ package com.dar.freshmaze.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -172,6 +173,8 @@ public class Bob extends Entity {
             if (attackTimeLeft <= 0) {
                 attacked = true;
                 attackTimeLeft = getTimePerAttack();
+                Sound sound = Gdx.audio.newSound(Gdx.files.internal("attack.mp3"));
+                sound.setLooping(sound.play(1.0f), false);
             }
         }
 
