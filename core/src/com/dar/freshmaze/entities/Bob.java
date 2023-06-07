@@ -32,11 +32,10 @@ public class Bob extends Entity {
     private Level level;
     private int health;
 
-    // Configurable
-    private final static float attackSpeed = 1.0f;
+    private final static float maxAttackSpeed = 1.5f;
     private final static float attackDisplayMult = 0.1f;
 
-    private final static float timePerAttack = 1.0f / attackSpeed;
+    private float attackSpeed = 0.5f;
     private float attackTimeLeft;
 
     private final Array<Object> closeObjects = new Array<>();
@@ -48,7 +47,6 @@ public class Bob extends Entity {
         health = getMaxHealth();
 
         addListener(new InputListener() {
-
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == Input.Keys.D)
@@ -83,7 +81,6 @@ public class Bob extends Entity {
                     isInteracting = false;
 
                 return true;
-
             }
         });
     }
@@ -93,7 +90,7 @@ public class Bob extends Entity {
     }
 
     public float getTimePerAttack() {
-        return timePerAttack;
+        return 1.0f / attackSpeed;
     }
 
     public void damage(int damage) {
@@ -108,9 +105,15 @@ public class Bob extends Entity {
         onHeal();
     }
 
+    public void increaseAttackSpeed(float amount) {
+        attackSpeed = Math.min(attackSpeed + amount, maxAttackSpeed);
+
+        onIncreaseAttackSpeed();
+    }
+
     @Override
     public void draw(Batch batch, float alpha) {
-        if (attackTimeLeft >= (1.0f - attackDisplayMult) * timePerAttack) {
+        if (attackTimeLeft >= (1.0f - attackDisplayMult) * getTimePerAttack()) {
             final Vector2 pos = IsometricUtil.cartToIso(new Vector2(getX() - 0.5f, getY() - 0.5f));
 
             setShaderSortHeight(batch, 1.0f);
@@ -168,7 +171,7 @@ public class Bob extends Entity {
         if (isAttacking) {
             if (attackTimeLeft <= 0) {
                 attacked = true;
-                attackTimeLeft = timePerAttack;
+                attackTimeLeft = getTimePerAttack();
             }
         }
 
@@ -219,6 +222,21 @@ public class Bob extends Entity {
         ColorAction ca1 = new ColorAction();
         ca1.setEndColor(Color.WHITE);
         ca1.setDuration(0.4f);
+        SequenceAction sequenceAction = new SequenceAction();
+        sequenceAction.addAction(ca);
+        sequenceAction.addAction(ca1);
+        addAction(sequenceAction);
+
+        addAction(ca);
+    }
+
+    private void onIncreaseAttackSpeed() {
+        ColorAction ca = new ColorAction();
+        ca.setEndColor(Color.TEAL);
+        ca.setDuration(0.6f);
+        ColorAction ca1 = new ColorAction();
+        ca1.setEndColor(Color.WHITE);
+        ca1.setDuration(0.6f);
         SequenceAction sequenceAction = new SequenceAction();
         sequenceAction.addAction(ca);
         sequenceAction.addAction(ca1);

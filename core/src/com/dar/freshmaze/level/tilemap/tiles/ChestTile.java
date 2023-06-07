@@ -1,6 +1,7 @@
 package com.dar.freshmaze.level.tilemap.tiles;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.math.MathUtils;
 import com.dar.freshmaze.entities.Bob;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
 
@@ -22,7 +23,12 @@ public class ChestTile extends DynamicInteractableTile {
         if (isOpen)
             return;
 
-        // TODO: Add some bonuses to the player
+        final float random = MathUtils.random();
+        if (random < 0.2) {
+            player.heal(10);
+        } else if (random < 0.8) {
+            player.increaseAttackSpeed(0.15f);
+        }
 
         isOpen = true;
 

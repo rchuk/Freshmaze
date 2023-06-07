@@ -108,7 +108,7 @@ public class GameScreen implements Screen {
         final RectIndicator attackIndicator = new RectIndicator(new RectIndicator.FloatRangeBinder() {
             @Override
             public float getValue() {
-                return 1.0f - Math.max(dungeon.getBob().getAttackTimeLeft(), 0.0f);
+                return getMaxValue() - Math.max(dungeon.getBob().getAttackTimeLeft(), 0.0f);
             }
 
             @Override
