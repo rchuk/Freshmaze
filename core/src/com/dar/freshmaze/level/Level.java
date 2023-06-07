@@ -1,13 +1,9 @@
 package com.dar.freshmaze.level;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
@@ -52,11 +48,9 @@ public class Level implements Disposable {
             new LevelNodeGenerationRules(8, 14, 30, 0.75f, 2)
     };
 
-//    private Dungeon dungeon;
     public Level(World physWorld, Stage stage) {
         nodeGenerator = new LevelNodeGenerator();
         tilemap = new LevelTilemap(physWorld, "level/tiles/tiles.png", 1.0f, 128);
-//        this.dungeon =dungeon;
         enemyGenerator = new EnemyGenerator(physWorld, stage);
         spikeGenerator = new SpikeGenerator();
 
@@ -92,13 +86,10 @@ public class Level implements Disposable {
     }
 
     private void generateNodes(int levelIndex) {
-        // TODO: Make levels progressively harder
-
         nodeGenerator.generate(
                 levelSizes[levelIndex],
                 2,
                 generationRules[levelIndex],
-                //new LevelNodeGenerationRules(10, 16, 40, 0.75f, 2),
                 enemyGenerator,
                 spikeGenerator
         );

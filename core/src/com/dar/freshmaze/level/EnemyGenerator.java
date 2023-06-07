@@ -6,14 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.dar.freshmaze.common.CommonHelper;
-import com.dar.freshmaze.entities.EnemyOld;
+import com.dar.freshmaze.entities.Enemy;
 import com.dar.freshmaze.entities.Entity;
 import com.dar.freshmaze.entities.HealthBonus;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.dar.freshmaze.util.RectangleUtil;
-
-import java.util.Random;
 
 public class EnemyGenerator {
     private final World physWorld;
@@ -30,7 +27,7 @@ public class EnemyGenerator {
     }
 
     public Result generate(BattleLevelRoom room) {
-        final Array<EnemyOld> enemies = new Array<>();
+        final Array<Enemy> enemies = new Array<>();
         final Array<Entity> otherEntities = new Array<>();
 
         if(MathUtils.randomBoolean())
@@ -39,7 +36,6 @@ public class EnemyGenerator {
             enemies.add(createEnemy(room));
         if(MathUtils.randomBoolean() && MathUtils.randomBoolean() && dungeon.getLevelIndex() >= 2)
             enemies.add(createEnemy(room));
-        System.out.println(dungeon.getLevelIndex());
         if(MathUtils.random(3) >= dungeon.getLevelIndex())
             otherEntities.add(createHealthBouns(room));
 
@@ -54,19 +50,19 @@ public class EnemyGenerator {
         return new HealthBonus(physWorld, room, getSpawnPos(RectangleUtil.shrink(room.getBounds(), new Vector2(1.0f, 1.0f))));
     }
 
-    private EnemyOld createEnemy(BattleLevelRoom room) {
-        return new EnemyOld(physWorld, room, getSpawnPos(room.getBounds()));
+    private Enemy createEnemy(BattleLevelRoom room) {
+        return new Enemy(physWorld, room, getSpawnPos(room.getBounds()));
     }
 
     private static Vector2 getSpawnPos(Rectangle rect) {
-        return new Vector2((int)CommonHelper.randomPoint(rect).x, (int)CommonHelper.randomPoint(rect).y);
+        return RectangleUtil.getRandomPoint(rect);
     }
 
-    public class Result {
-        public final Array<EnemyOld> enemies;
+    public static class Result {
+        public final Array<Enemy> enemies;
         public final Array<Entity> otherEntities;
 
-        public Result(Array<EnemyOld> enemies, Array<Entity> otherEntities) {
+        public Result(Array<Enemy> enemies, Array<Entity> otherEntities) {
             this.enemies = enemies;
             this.otherEntities = otherEntities;
         }

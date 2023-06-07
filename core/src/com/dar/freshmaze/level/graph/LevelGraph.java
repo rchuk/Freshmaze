@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.dar.freshmaze.common.Graph;
-import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 import com.dar.freshmaze.util.RectangleUtil;
 
 import java.util.HashMap;

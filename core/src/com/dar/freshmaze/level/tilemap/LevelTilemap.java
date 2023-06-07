@@ -54,7 +54,6 @@ public class LevelTilemap implements Disposable {
         tiles = new Texture(Gdx.files.internal(tilesetPath));
         final TextureRegion[][] splitTiles = TextureRegion.split(tiles, textureTileSize, textureTileSize);
 
-        // TODO: Create tileset
         floorTile = new StaticTiledMapTile(splitTiles[0][0]);
         wallTile = new StaticTiledMapTile(splitTiles[0][1]);
         entranceOpenTile = new StaticTiledMapTile(splitTiles[0][2]);
@@ -65,10 +64,6 @@ public class LevelTilemap implements Disposable {
         chestOpenTile = new StaticTiledMapTile(splitTiles[0][7]);
         spikesTile = new StaticTiledMapTile(splitTiles[1][0]);
 
-        // wallTile.getProperties().put("is_walkable", Boolean.FALSE);
-        // floorTile.getProperties().put("is_walkable", Boolean.TRUE);
-
-        // TODO: Set proper rectangle size
         wallTile.getObjects().add(new RectangleMapObject());
         entranceClosedTile.getObjects().add(new RectangleMapObject());
         teleportMonolithTile.getObjects().add(new RectangleMapObject());

@@ -3,8 +3,6 @@ package com.dar.freshmaze.level;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.dar.freshmaze.entities.Bob;
-import com.dar.freshmaze.entities.EnemyOld;
-import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 import com.dar.freshmaze.util.RectangleUtil;
 

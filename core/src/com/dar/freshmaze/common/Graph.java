@@ -1,6 +1,5 @@
 package com.dar.freshmaze.common;
 
-import java.sql.Connection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

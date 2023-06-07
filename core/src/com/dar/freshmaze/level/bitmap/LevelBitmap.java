@@ -2,7 +2,6 @@ package com.dar.freshmaze.level.bitmap;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.dar.freshmaze.level.graph.LevelNodeGenerator;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.dar.freshmaze.level.tilemap.rooms.FinalLevelRoom;
@@ -47,7 +46,6 @@ public class LevelBitmap {
         // debugPrint();
     }
 
-    // TODO: Remove
     private void debugPrint() {
         System.out.println("Width: " + width + " height: " + height);
         for (int yi = height - 1; yi >= 0; --yi) {
@@ -59,7 +57,6 @@ public class LevelBitmap {
         }
     }
 
-    // TODO: Remove when it's no longer needed
     private char getDebugCellChar(Cell cell) {
         switch (cell.kind) {
             case HallEntrance:

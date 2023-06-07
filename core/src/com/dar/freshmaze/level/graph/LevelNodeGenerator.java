@@ -94,8 +94,6 @@ public class LevelNodeGenerator {
 
         for (int i = 2; i < indices.size(); ++i)
             rooms.add(createBattleRoom(leaves.get(indices.get(i)), enemyGenerator, spikeGenerator));
-
-        // TODO: Generate contents
     }
 
     private SpawnLevelRoom createSpawnRoom(LevelNode node) {
@@ -172,14 +170,6 @@ public class LevelNodeGenerator {
 
         // TODO: Create some utility function like getIntCenter
         return new Vector2(rect.x + (int)(0.5f * rect.width), rect.y + (int)(0.5f * rect.height));
-
-        // TODO: Implement some better mechanism or leave it as is
-        /*
-        if (edge.isVertical())
-            return new Vector2(rect.x + (int)(0.5f * rect.width), rect.y + MathUtils.random(0, (int)rect.height));
-        else
-            return new Vector2(rect.x + MathUtils.random(0, rect.width), rect.y + (int)(0.5f * rect.width));
-        */
     }
 
     private void generateGraph() {

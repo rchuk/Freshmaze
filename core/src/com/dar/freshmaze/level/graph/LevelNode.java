@@ -2,7 +2,6 @@ package com.dar.freshmaze.level.graph;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.dar.freshmaze.level.tilemap.rooms.LevelRoom;
 
 public class LevelNode {
     private final LevelNodeGenerationRules rules;

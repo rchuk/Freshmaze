@@ -17,7 +17,7 @@ import com.dar.freshmaze.level.tilemap.tiles.SpikesTile;
 import com.dar.freshmaze.util.IsometricUtil;
 
 public class Bob extends Entity {
-    final Texture attackTexture = new Texture(Gdx.files.internal("iso_circle_marker.png"));
+    private final Texture attackTexture = new Texture(Gdx.files.internal("iso_circle_marker.png"));
     public static final float MOVEMENT_SPEED = 4.0f;
     public static final float deltaPx = 1.0f;
     public static final float deltaPy = 1.0f;
@@ -102,9 +102,14 @@ public class Bob extends Entity {
         onDamage();
     }
 
+    public void heal(int amount) {
+        setHealth(Math.min(getHealth() + amount, getMaxHealth()));
+
+        onHeal();
+    }
+
     @Override
     public void draw(Batch batch, float alpha) {
-        // TODO: Add shader if there's some time left
         if (attackTimeLeft >= (1.0f - attackDisplayMult) * timePerAttack) {
             final Vector2 pos = IsometricUtil.cartToIso(new Vector2(getX() - 0.5f, getY() - 0.5f));
 
@@ -164,30 +169,24 @@ public class Bob extends Entity {
             if (attackTimeLeft <= 0) {
                 attacked = true;
                 attackTimeLeft = timePerAttack;
-
-                //ColorAction ca = new ColorAction();
-                //ca.setEndColor(Color.RED);
-                //ca.setDuration(0.4f);
             }
         }
 
         for (Object obj : closeObjects) {
-            if (obj instanceof EnemyOld) {
+            if (obj instanceof Enemy) {
                 if (attacked)
-                    ((EnemyOld) obj).kill();
+                    ((Enemy) obj).kill();
             } else if (obj instanceof DynamicInteractableTile) {
                 if (isInteracting)
                     ((DynamicInteractableTile) obj).interact(this);
             } else if(obj instanceof HealthBonus) {
-                setHealth(Math.min(getHealth() + 10, 100));
-                ((HealthBonus) obj).remove();
-                // ((HealthBonus) obj).teleport(new Vector2(1000, 1000));
+                ((HealthBonus) obj).interact(this);
             }
         }
     }
 
     private boolean processContact(Object obj) {
-        if (obj instanceof EnemyOld) {
+        if (obj instanceof Enemy) {
             damage(7);
         } else if (obj instanceof SpikesTile) {
             ((SpikesTile)obj).onTouch(this);
@@ -201,6 +200,21 @@ public class Bob extends Entity {
     private void onDamage() {
         ColorAction ca = new ColorAction();
         ca.setEndColor(Color.RED);
+        ca.setDuration(0.4f);
+        ColorAction ca1 = new ColorAction();
+        ca1.setEndColor(Color.WHITE);
+        ca1.setDuration(0.4f);
+        SequenceAction sequenceAction = new SequenceAction();
+        sequenceAction.addAction(ca);
+        sequenceAction.addAction(ca1);
+        addAction(sequenceAction);
+
+        addAction(ca);
+    }
+
+    private void onHeal() {
+        ColorAction ca = new ColorAction();
+        ca.setEndColor(Color.GREEN);
         ca.setDuration(0.4f);
         ColorAction ca1 = new ColorAction();
         ca1.setEndColor(Color.WHITE);

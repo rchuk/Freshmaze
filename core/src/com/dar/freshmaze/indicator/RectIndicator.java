@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class RectIndicator extends Actor {
-    private Texture texture;
+    private final Texture texture;
 
     private Color backgroundColor = Color.BLACK;
     private Color indicatorColor = Color.WHITE;
@@ -28,8 +28,6 @@ public class RectIndicator extends Actor {
     public void setIndicatorColor(Color newIndicatorColor) {
         indicatorColor = newIndicatorColor;
     }
-
-    // TODO: Add interpolation
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

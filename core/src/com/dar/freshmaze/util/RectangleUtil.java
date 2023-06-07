@@ -1,9 +1,17 @@
 package com.dar.freshmaze.util;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class RectangleUtil {
+    public static Vector2 getRandomPoint(Rectangle rect) {
+        return new Vector2(
+                (int)rect.x + MathUtils.random((int)rect.width - 1),
+                (int)rect.y + MathUtils.random((int)rect.height - 1)
+        );
+    }
+
     /**
      * Expands rectangle by delta in all directions
      *

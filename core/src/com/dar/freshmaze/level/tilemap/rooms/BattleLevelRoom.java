@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.dar.freshmaze.entities.Bob;
-import com.dar.freshmaze.entities.EnemyOld;
+import com.dar.freshmaze.entities.Enemy;
 import com.dar.freshmaze.entities.Entity;
 import com.dar.freshmaze.level.EnemyGenerator;
 import com.dar.freshmaze.level.tilemap.LevelTilemap;
@@ -16,7 +16,7 @@ import com.dar.freshmaze.level.tilemap.tiles.SpikesTile;
 public class BattleLevelRoom extends LevelRoom {
     private final Array<Vector2> entrances = new Array<>();
     private Array<Vector2> spikes;
-    private final Array<EnemyOld> enemies;
+    private final Array<Enemy> enemies;
     private final Array<Entity> otherEntities;
 
     private boolean wasEntered = false;
@@ -76,7 +76,7 @@ public class BattleLevelRoom extends LevelRoom {
 
     @Override
     public void onDestroy() {
-        enemies.forEach(EnemyOld::destroy);
+        enemies.forEach(Enemy::destroy);
         otherEntities.forEach(Entity::destroy);
     }
 
@@ -89,7 +89,7 @@ public class BattleLevelRoom extends LevelRoom {
         }
     }
 
-    public void onEnemyDeath(EnemyOld enemy) {
+    public void onEnemyDeath(Enemy enemy) {
         enemies.removeValue(enemy, true);
 
         if (enemies.isEmpty()) {

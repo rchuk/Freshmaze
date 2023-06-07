@@ -3,14 +3,12 @@ package com.dar.freshmaze.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.dar.freshmaze.graphics.DepthSortedStage;
 import com.dar.freshmaze.level.tilemap.rooms.BattleLevelRoom;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -25,6 +23,12 @@ public class HealthBonus extends Entity {
         super(physWorld, createSprite(), createBody(physWorld), new Vector2(0.25f, 0.25f), SpriteKind.Isometric, spawnPos);
 
         this.room = room;
+    }
+
+    public void interact(Bob bob) {
+        bob.heal(10);
+
+        remove();
     }
 
     @Override
