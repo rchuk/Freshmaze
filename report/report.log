@@ -1,0 +1,1481 @@
+This is XeTeX, Version 3.141592653-2.6-0.999994 (Web2C 2022/nixos.org) (preloaded format=xelatex 1980.1.1)  17 JUN 2023 17:59
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**report.tex
+(./report.tex
+LaTeX2e <2022-11-01> patch level 1
+L3 programming layer <2023-02-22>
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/base/size10.clo
+File: size10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count181
+\c@section=\count182
+\c@subsection=\count183
+\c@subsubsection=\count184
+\c@paragraph=\count185
+\c@subparagraph=\count186
+\c@figure=\count187
+\c@table=\count188
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/polyglossia/polyglossia.sty
+Package: polyglossia 2023/02/11 v1.60 Modern multilingual typesetting with XeLa
+TeX and LuaLaTeX
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count189
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/makecmds/makecmds.sty
+Package: makecmds 2009/09/03 v1.0a extra command making commands
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/xkeyval/xkeyval.tex
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks16
+\XKV@tempa@toks=\toks17
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/xkeyval/keyval.tex))
+\XKV@depth=\count190
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/fontspec/fontspec.sty
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/l3packages/xparse/xparse.sty
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2023-02-22 L3 programming layer (loader) 
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/l3backend/l3backend-xetex.def
+File: l3backend-xetex.def 2023-01-16 L3 backend support: XeTeX
+\g__graphics_track_int=\count191
+\l__pdf_internal_box=\box51
+\g__pdf_backend_object_int=\count192
+\g__pdf_backend_annotation_int=\count193
+\g__pdf_backend_link_int=\count194
+))
+Package: xparse 2023-02-02 L3 Experimental document command parser
+)
+Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/fontspec/fontspec-xetex.sty
+Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTe
+X
+\l__fontspec_script_int=\count195
+\l__fontspec_language_int=\count196
+\l__fontspec_strnum_int=\count197
+\l__fontspec_tmp_int=\count198
+\l__fontspec_tmpa_int=\count199
+\l__fontspec_tmpb_int=\count266
+\l__fontspec_tmpc_int=\count267
+\l__fontspec_em_int=\count268
+\l__fontspec_emdef_int=\count269
+\l__fontspec_strong_int=\count270
+\l__fontspec_strongdef_int=\count271
+\l__fontspec_tmpa_dim=\dimen141
+\l__fontspec_tmpb_dim=\dimen142
+\l__fontspec_tmpc_dim=\dimen143
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/fontspec/fontspec.cfg)))
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+Package: l3keys2e 2023-02-02 LaTeX2e option processing using LaTeX3 keys
+)
+\xpg@normalclass=\XeTeXcharclass1
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/polyglossia/gloss-latex.lde
+Package: gloss-latex 2023/02/11 vv1.60 polyglossia: module for default language
+
+The property list \polyglossia@langsetup contains the pairs (without outer
+braces):
+>  {latex/script}  =>  {latin}
+>  {latex/lcscript}  =>  {latin}
+>  {latex/scripttag}  =>  {}
+>  {latex/language}  =>  {Latex}
+>  {latex/langtag}  =>  {ENG}
+>  {latex/bcp47}  =>  {}
+>  {latex/hyphennames}  =>  {english}
+>  {latex/direction}  =>  {LR}
+>  {latex/hyphenmins}  =>  {2,3}
+>  {latex/frenchspacing}  =>  {false}
+>  {latex/indentfirst}  =>  {false}
+>  {latex/fontsetup}  =>  {true}
+>  {latex/envname}  =>  {latex}
+>  {latex/babelname}  =>  {latex}
+>  {latex/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/Localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/DefineCommandsCmd}  =>  {use_none:n}.
+)
+Package polyglossia Info: Default language is latex.
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count272
+\Gm@cntv=\count273
+\c@Gm@tempcnt=\count274
+\Gm@bindingoffset=\dimen144
+\Gm@wd@mp=\dimen145
+\Gm@odd@mp=\dimen146
+\Gm@even@mp=\dimen147
+\Gm@layoutwidth=\dimen148
+\Gm@layoutheight=\dimen149
+\Gm@layouthoffset=\dimen150
+\Gm@layoutvoffset=\dimen151
+\Gm@dimlist=\toks18
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/graphics/graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: xetex.def on input line 107.
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2022/09/22 v5.0n Graphics/color driver for xetex
+))
+\Gin@req@height=\dimen152
+\Gin@req@width=\dimen153
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/listings/listings.sty
+\lst@mode=\count275
+\lst@gtempboxa=\box52
+\lst@token=\toks19
+\lst@length=\count276
+\lst@currlwidth=\dimen154
+\lst@column=\count277
+\lst@pos=\count278
+\lst@lostspace=\dimen155
+\lst@width=\dimen156
+\lst@newlines=\count279
+\lst@lineno=\count280
+\lst@maxwidth=\dimen157
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
+\c@lstnumber=\count281
+\lst@skipnumbers=\count282
+\lst@framebox=\box53
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/listings/listings.cfg
+File: listings.cfg 2023/02/27 1.9 listings configuration
+))
+Package: listings 2023/02/27 1.9 (Carsten Heinz)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/graphics/color.sty
+Package: color 2022/01/06 v1.3d Standard LaTeX Color (DPC)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: xetex.def on input line 149.
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/graphics/mathcolor.ltx))
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2022/12/19 v0.5x Insert pages of external PDF documents (AM)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/base/ifthen.sty
+Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count283
+\calc@Bcount=\count284
+\calc@Adimen=\dimen158
+\calc@Bdimen=\dimen159
+\calc@Askip=\skip50
+\calc@Bskip=\skip51
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count285
+\calc@Cskip=\skip52
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2020/10/14 v3.0a eso-pic (RN)
+\ESO@tempdima=\dimen160
+\ESO@tempdimb=\dimen161
+)
+\AM@pagewidth=\dimen162
+\AM@pageheight=\dimen163
+\AM@fboxrule=\dimen164
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/pdfpages/ppxetex.def
+File: ppxetex.def 2022/12/19 v0.5x Pdfpages driver for XeTeX (AM)
+)
+\pdfpages@includegraphics@status=\count286
+\AM@pagebox=\box54
+\AM@global@opts=\toks20
+\AM@pagecnt=\count287
+\AM@toc@title=\toks21
+\AM@lof@heading=\toks22
+\c@AM@survey=\count288
+\AM@templatesizebox=\box55
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2023-02-07 v7.00v Hypertext links for LaTeX
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode not found.
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/hyperref/nameref.sty
+Package: nameref 2022-05-17 v2.50 Cross-referencing by name of section
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count289
+)
+\@linkdim=\dimen165
+\Hy@linkcounter=\count290
+\Hy@pagecounter=\count291
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2023-02-07 v7.00v Hyperref: PDFDocEncoding definition (HO)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count292
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/hyperref/puenc.def
+File: puenc.def 2023-02-07 v7.00v Hyperref: PDF Unicode definition (HO)
+)
+Package hyperref Info: Hyper figures OFF on input line 4177.
+Package hyperref Info: Link nesting OFF on input line 4182.
+Package hyperref Info: Hyper index ON on input line 4185.
+Package hyperref Info: Plain pages OFF on input line 4192.
+Package hyperref Info: Backreferencing OFF on input line 4197.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4425.
+\c@Hy@tempcnt=\count293
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4763.
+\XeTeXLinkMargin=\dimen166
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count294
+\Field@Width=\dimen167
+\Fld@charsize=\dimen168
+Package hyperref Info: Hyper figures OFF on input line 6042.
+Package hyperref Info: Link nesting OFF on input line 6047.
+Package hyperref Info: Hyper index ON on input line 6050.
+Package hyperref Info: backreferencing OFF on input line 6057.
+Package hyperref Info: Link coloring OFF on input line 6062.
+Package hyperref Info: Link coloring with OCG OFF on input line 6067.
+Package hyperref Info: PDF/A mode OFF on input line 6072.
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count295
+\c@Item=\count296
+\c@Hfootnote=\count297
+)
+Package hyperref Info: Driver (autodetected): hxetex.
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/hyperref/hxetex.def
+File: hxetex.def 2023-02-07 v7.00v Hyperref driver for XeTeX
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\pdfm@box=\box56
+\c@Hy@AnnotLevel=\count298
+\HyField@AnnotCount=\count299
+\Fld@listcount=\count300
+\c@bookmark@seq@number=\count301
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+85.
+)
+\Hy@SectionHShift=\skip53
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/pdflscape/pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PD
+F (HO)
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
+
+))
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count302
+\float@exts=\toks23
+\float@box=\box57
+\@float@everytoks=\toks24
+\@floatcapt=\box58
+)
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/polyglossia/gloss-ukrainian.ldf
+File: gloss-ukrainian.ldf polyglossia: module for Ukrainian
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/polyglossia/xpg-cyrillicnumbers.sty
+Package: xpg-cyrillicnumbers 2019/11/15 v0.2 Formatting of Cyrillic alphabetic 
+numbers
+)
+The property list \polyglossia@langsetup contains the pairs (without outer
+braces):
+>  {latex/script}  =>  {latin}
+>  {latex/lcscript}  =>  {latin}
+>  {latex/scripttag}  =>  {}
+>  {latex/language}  =>  {Latex}
+>  {latex/langtag}  =>  {ENG}
+>  {latex/bcp47}  =>  {}
+>  {latex/hyphennames}  =>  {english}
+>  {latex/direction}  =>  {LR}
+>  {latex/hyphenmins}  =>  {2,3}
+>  {latex/frenchspacing}  =>  {false}
+>  {latex/indentfirst}  =>  {false}
+>  {latex/fontsetup}  =>  {true}
+>  {latex/envname}  =>  {latex}
+>  {latex/babelname}  =>  {latex}
+>  {latex/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/Localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/DefineCommandsCmd}  =>  {use_none:n}
+>  {ukrainian/script}  =>  {Cyrillic}
+>  {ukrainian/lcscript}  =>  {cyrillic}
+>  {ukrainian/scripttag}  =>  {cyrl}
+>  {ukrainian/language}  =>  {Ukrainian}
+>  {ukrainian/langtag}  =>  {UKR}
+>  {ukrainian/bcp47}  =>  {uk}
+>  {ukrainian/hyphennames}  =>  {ukrainian}
+>  {ukrainian/direction}  =>  {LR}
+>  {ukrainian/hyphenmins}  =>  {2,2}
+>  {ukrainian/frenchspacing}  =>  {true}
+>  {ukrainian/indentfirst}  =>  {false}
+>  {ukrainian/fontsetup}  =>  {true}
+>  {ukrainian/envname}  =>  {ukrainian}
+>  {ukrainian/babelname}  =>  {ukrainian}
+>  {ukrainian/localnumeral}  =>  {ukrainiannumerals}
+>  {ukrainian/Localnumeral}  =>  {Ukrainiannumerals}
+>  {ukrainian/DefineCommandsCmd}  =>  {xpg_define_language_commands:e}.
+Package polyglossia Info: Option: Ukrainian, numerals=arabic.
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/polyglossia/babelsh.def
+File: babelsh.def 2022/06/21 Babel common definitions for shorthands
+ Taken verbatim from babel files (2022/06/06 v3.76)
+)
+Package babel Info: Making " an active character on input line 67.
+)
+Package polyglossia Info: Default language is ukrainian.
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/polyglossia/gloss-english.ldf
+File: gloss-english.ldf polyglossia: module for English
+The property list \polyglossia@langsetup contains the pairs (without outer
+braces):
+>  {latex/script}  =>  {latin}
+>  {latex/lcscript}  =>  {latin}
+>  {latex/scripttag}  =>  {}
+>  {latex/language}  =>  {Latex}
+>  {latex/langtag}  =>  {ENG}
+>  {latex/bcp47}  =>  {}
+>  {latex/hyphennames}  =>  {english}
+>  {latex/direction}  =>  {LR}
+>  {latex/hyphenmins}  =>  {2,3}
+>  {latex/frenchspacing}  =>  {false}
+>  {latex/indentfirst}  =>  {false}
+>  {latex/fontsetup}  =>  {true}
+>  {latex/envname}  =>  {latex}
+>  {latex/babelname}  =>  {latex}
+>  {latex/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/Localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/DefineCommandsCmd}  =>  {use_none:n}
+>  {ukrainian/script}  =>  {Cyrillic}
+>  {ukrainian/lcscript}  =>  {cyrillic}
+>  {ukrainian/scripttag}  =>  {cyrl}
+>  {ukrainian/language}  =>  {Ukrainian}
+>  {ukrainian/langtag}  =>  {UKR}
+>  {ukrainian/bcp47}  =>  {uk}
+>  {ukrainian/hyphennames}  =>  {ukrainian}
+>  {ukrainian/direction}  =>  {LR}
+>  {ukrainian/hyphenmins}  =>  {2,2}
+>  {ukrainian/frenchspacing}  =>  {true}
+>  {ukrainian/indentfirst}  =>  {false}
+>  {ukrainian/fontsetup}  =>  {true}
+>  {ukrainian/envname}  =>  {ukrainian}
+>  {ukrainian/babelname}  =>  {ukrainian}
+>  {ukrainian/localnumeral}  =>  {ukrainiannumerals}
+>  {ukrainian/Localnumeral}  =>  {Ukrainiannumerals}
+>  {ukrainian/DefineCommandsCmd}  =>  {xpg_define_language_commands:e}
+>  {english/script}  =>  {latin}
+>  {english/lcscript}  =>  {latin}
+>  {english/scripttag}  =>  {}
+>  {english/language}  =>  {English}
+>  {english/langtag}  =>  {ENG}
+>  {english/bcp47}  =>  {en-US}
+>  {english/hyphennames}  =>  {english,american,usenglish,USenglish}
+>  {english/direction}  =>  {LR}
+>  {english/hyphenmins}  =>  {2,3}
+>  {english/frenchspacing}  =>  {false}
+>  {english/indentfirst}  =>  {false}
+>  {english/fontsetup}  =>  {true}
+>  {english/envname}  =>  {english}
+>  {english/babelname}  =>  {english}
+>  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {english/DefineCommandsCmd}  =>  {xpg_define_language_commands:e}.
+Package polyglossia Info: Option: English, variant=american.
+)
+
+Package fontspec Info: Font family 'CMUSerif(0)' created for font 'CMU Serif'
+(fontspec)             with options [Ligatures=TeX].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->"CMU
+(fontspec)             Serif/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: <->"CMU
+(fontspec)             Serif/OT:script=latn;language=dflt;+smcp;mapping=tex-tex
+t;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"CMU
+(fontspec)             Serif/B/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: <->"CMU
+(fontspec)             Serif/B/OT:script=latn;language=dflt;+smcp;mapping=tex-t
+ext;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.: <->"CMU
+(fontspec)             Serif/I/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.: <->"CMU
+(fontspec)             Serif/BI/OT:script=latn;language=dflt;mapping=tex-text;"
+
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+
+
+Package fontspec Info: Font family 'CMUSansSerif(0)' created for font 'CMU
+(fontspec)             Sans Serif' with options [Ligatures=TeX].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->"CMU Sans
+(fontspec)             Serif/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"CMU Sans
+(fontspec)             Serif/B/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             - 'italic' (m/it) with NFSS spec.: <->"CMU Sans
+(fontspec)             Serif/I/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.: <->"CMU Sans
+(fontspec)             Serif/BI/OT:script=latn;language=dflt;mapping=tex-text;"
+
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+
+
+Package fontspec Info: Font family 'CMUTypewriterText(0)' created for font
+(fontspec)             'CMU Typewriter Text' with options
+(fontspec)             [WordSpace={1,0,0},HyphenChar=None,PunctuationSpace=Word
+Space].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->"CMU Typewriter
+(fontspec)             Text/OT:script=latn;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"CMU Typewriter
+(fontspec)             Text/B/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+(fontspec)             - 'italic' (m/it) with NFSS spec.: <->"CMU Typewriter
+(fontspec)             Text/I/OT:script=latn;language=dflt;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.: <->"CMU
+(fontspec)             Typewriter Text/BI/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2023/02/27 1.9 listings language file
+) (./report.aux
+
+Package fontspec Info: Font family 'CMUSerif(1)' created for font 'CMU Serif'
+(fontspec)             with options [Ligatures=TeX,Script=Cyrillic].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->"CMU
+(fontspec)             Serif/OT:script=cyrl;language=dflt;mapping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: <->"CMU
+(fontspec)             Serif/OT:script=cyrl;language=dflt;+smcp;mapping=tex-tex
+t;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"CMU
+(fontspec)             Serif/B/OT:script=cyrl;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: <->"CMU
+(fontspec)             Serif/B/OT:script=cyrl;language=dflt;+smcp;mapping=tex-t
+ext;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.: <->"CMU
+(fontspec)             Serif/I/OT:script=cyrl;language=dflt;mapping=tex-text;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.: <->"CMU
+(fontspec)             Serif/BI/OT:script=cyrl;language=dflt;mapping=tex-text;"
+
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+
+)
+\openout1 = `report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 3
+6.
+
+(/nix/store/xgfq22zyrhjxj37430zmfph99q860pcd-texlive-combined-full-2022-final-t
+exmfdist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2022/07/10 v2.5l Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+
+Package fontspec Info: Adjusting the maths setup (use [no-math] to avoid
+(fontspec)             this).
+
+\symlegacymaths=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 36.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 36.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 36.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 36.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 36.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 36.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 36.
+LaTeX Font Info:    Redeclaring math accent \check on input line 36.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 36.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 36.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \colon on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 36.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 36.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 36.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `normal' on input line 36.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> TU/CMUSerif(0)/m/n on input line 36.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `bold' on input line 36.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> TU/CMUSerif(0)/m/n on input line 36.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  TU/CMUSerif(0)/m/n --> TU/CMUSerif(0)/m/n on input line
+ 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> TU/CMUSerif(0)/m/it on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> TU/CMUSerif(0)/b/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> TU/CMUSansSerif(0)/m/n on input line 3
+6.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> TU/CMUTypewriterText(0)/m/n on input l
+ine 36.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  TU/CMUSerif(0)/m/n --> TU/CMUSerif(0)/b/n on input line
+ 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> TU/CMUSerif(0)/b/it on input line 36.
+
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> TU/CMUSansSerif(0)/b/n on input line 
+36.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> TU/CMUTypewriterText(0)/b/n on input l
+ine 36.
+The property list \__xpg_alias contains the pairs (without outer braces):
+>  {latex/target}  =>  {latex}
+>  {ukrainian/target}  =>  {ukrainian}
+>  {uk/target}  =>  {ukrainian}
+>  {english/target}  =>  {english}
+>  {en/target}  =>  {english}
+>  {en-AU/target}  =>  {english}
+>  {en-AU/variant}  =>  {australian}
+>  {en-AU/options}  =>  {variant=australian}
+>  {en-CA/target}  =>  {english}
+>  {en-CA/variant}  =>  {canadian}
+>  {en-CA/options}  =>  {variant=canadian}
+>  {en-GB/target}  =>  {english}
+>  {en-GB/variant}  =>  {british}
+>  {en-GB/options}  =>  {variant=british}
+>  {en-NZ/target}  =>  {english}
+>  {en-NZ/variant}  =>  {newzealand}
+>  {en-NZ/options}  =>  {variant=newzealand}
+>  {en-US/target}  =>  {english}
+>  {en-US/variant}  =>  {us}
+>  {en-US/options}  =>  {variant=us}
+>  {american/target}  =>  {english}
+>  {american/variant}  =>  {us}
+>  {american/options}  =>  {variant=us}
+>  {australian/target}  =>  {english}
+>  {australian/variant}  =>  {australian}
+>  {australian/options}  =>  {variant=australian}
+>  {british/target}  =>  {english}
+>  {british/variant}  =>  {british}
+>  {british/options}  =>  {variant=british}
+>  {canadian/target}  =>  {english}
+>  {canadian/variant}  =>  {canadian}
+>  {canadian/options}  =>  {variant=canadian}
+>  {newzealand/target}  =>  {english}
+>  {newzealand/variant}  =>  {newzealand}
+>  {newzealand/options}  =>  {variant=newzealand}.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
+*geometry* verbose mode - [ preamble ] result:
+* driver: xetex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(81.94394pt, 433.62pt, 81.94394pt)
+* v-part:(T,H,B)=(106.75473pt, 578.15999pt, 160.13213pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=433.62pt
+* \textheight=578.15999pt
+* \oddsidemargin=9.67395pt
+* \evensidemargin=9.67395pt
+* \topmargin=-2.51526pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+\c@lstlisting=\count303
+Package hyperref Info: Link coloring OFF on input line 36.
+(./report.out) (./report.out)
+\@outlinefile=\write3
+\openout3 = `report.out'.
+
+File: ./images//kma.png Graphic file (type bmp)
+<./images//kma.png>
+ [1
+
+]
+File: uml.pdf Graphic file (type pdf)
+<use uml.pdf>
+ [1]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 1>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 1>
+ [2]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 1>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 1>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 1>
+ [3]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 2>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 2>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 2>
+ [4]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 3>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 3>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 3>
+ [5]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 4>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 4>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 4>
+ [6]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 5>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 5>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 5>
+ [7]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 6>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 6>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 6>
+ [8]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 7>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 7>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 7>
+ [9]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 8>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 8>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 8>
+ [10]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 9>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 9>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 9>
+
+[11]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 10>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 10>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 10>
+ [12]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 11>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 11>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 11>
+ [13]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 12>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 12>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 12>
+ [14]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 13>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 13>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 13>
+ [15]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 14>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 14>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 14>
+ [16]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 15>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 15>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 15>
+ [17]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 16>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 16>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 16>
+ [18]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 17>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 17>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 17>
+ [19]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 18>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 18>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 18>
+ [20]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 19>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 19>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 19>
+ [21]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 20>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 20>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 20>
+ [22]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 21>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 21>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 21>
+ [23]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 22>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 22>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 22>
+ [24]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 23>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 23>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 23>
+ [25]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 24>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 24>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 24>
+
+[26]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 25>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 25>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 25>
+ [27]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 26>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 26>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 26>
+ [28]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 27>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 27>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 27>
+ [29]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 28>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 28>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 28>
+ [30]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 29>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 29>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 29>
+ [31]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 30>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 30>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 30>
+ [32]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 31>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 31>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 31>
+ [33]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 32>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 32>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 32>
+ [34]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 33>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 33>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 33>
+ [35]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 34>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 34>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 34>
+ [36]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 35>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 35>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 35>
+ [37]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 36>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 36>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 36>
+ [38]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 37>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 37>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 37>
+ [39]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 38>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 38>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 38>
+ [40]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 39>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 39>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 39>
+
+[41]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 40>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 40>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 40>
+ [42]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 41>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 41>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 41>
+ [43]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 42>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 42>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 42>
+ [44]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 43>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 43>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 43>
+ [45]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 44>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 44>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 44>
+ [46]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 45>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 45>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 45>
+ [47]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 46>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 46>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 46>
+ [48]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 47>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 47>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 47>
+ [49]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 48>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 48>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 48>
+ [50]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 49>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 49>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 49>
+ [51]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 50>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 50>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 50>
+ [52]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 51>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 51>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 51>
+ [53]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 52>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 52>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 52>
+ [54]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 53>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 53>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 53>
+ [55]
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 54>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 54>
+File: ../docs/latex/refman.pdf Graphic file (type pdf)
+<use ../docs/latex/refman.pdf, page 54>
+
+[56]
+File: ./images//1.png Graphic file (type bmp)
+<./images//1.png>
+File: ./images//2.png Graphic file (type bmp)
+<./images//2.png>
+File: ./images//3.png Graphic file (type bmp)
+<./images//3.png>
+ [57]
+File: ./images//4.png Graphic file (type bmp)
+<./images//4.png>
+ [58] (./source_files.tex
+
+Package fontspec Info: Font family 'CMUTypewriterText(1)' created for font
+(fontspec)             'CMU Typewriter Text' with options
+(fontspec)             [WordSpace={1,0,0},HyphenChar=None,PunctuationSpace=Word
+Space,Script=Cyrillic].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->"CMU Typewriter
+(fontspec)             Text/OT:script=cyrl;language=dflt;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"CMU Typewriter
+(fontspec)             Text/B/OT:script=cyrl;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+(fontspec)             - 'italic' (m/it) with NFSS spec.: <->"CMU Typewriter
+(fontspec)             Text/I/OT:script=cyrl;language=dflt;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.: <->"CMU
+(fontspec)             Typewriter Text/BI/OT:script=cyrl;language=dflt;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
+(fontspec)             and font adjustment code:
+(fontspec)             \fontdimen 2\font =1\fontdimen 2\font \fontdimen 3\font
+(fontspec)             =0\fontdimen 3\font \fontdimen 4\font =0\fontdimen
+(fontspec)             4\font \fontdimen 7\font =0\fontdimen 2\font
+(fontspec)             \tex_hyphenchar:D \font =-1\scan_stop: 
+
+
+(../core/src/com/dar/freshmaze/FreshmazeGame.java [59])
+(../core/src/com/dar/freshmaze/screens/GameScreen.java [60] [61] [62] [63]
+[64] [65] [66] [67] [68] [69]) (../core/src/com/dar/freshmaze/common/Graph.java
+[70]) (../core/src/com/dar/freshmaze/level/bitmap/LevelBitmap.java [71]
+[72] [73] [74] [75]) (../core/src/com/dar/freshmaze/level/graph/LevelGraph.java
+[76] [77]) (../core/src/com/dar/freshmaze/level/graph/LevelNode.java [78]
+[79]) (../core/src/com/dar/freshmaze/level/graph/LevelNodeGenerationRules.java
+[80]) (../core/src/com/dar/freshmaze/level/graph/LevelNodeGenerator.java
+[81] [82] [83] [84] [85])
+(../core/src/com/dar/freshmaze/level/tilemap/LevelTilemap.java [86] [87]
+[88] [89] [90] [91] [92] [93])
+(../core/src/com/dar/freshmaze/level/tilemap/tiles/ChestTile.java)
+(../core/src/com/dar/freshmaze/level/tilemap/tiles/DynamicTile.java [94]
+[95])
+(../core/src/com/dar/freshmaze/level/tilemap/tiles/DynamicInteractableTile.java
+) (../core/src/com/dar/freshmaze/level/tilemap/tiles/EntranceTile.java [96])
+(../core/src/com/dar/freshmaze/level/tilemap/tiles/SpikesTile.java [97])
+(../core/src/com/dar/freshmaze/level/tilemap/tiles/TeleportTile.java [98])
+(../core/src/com/dar/freshmaze/level/tilemap/rooms/BattleLevelRoom.java
+[99] [100] [101])
+(../core/src/com/dar/freshmaze/level/tilemap/rooms/FinalLevelRoom.java [102])
+(../core/src/com/dar/freshmaze/level/tilemap/rooms/LevelRoom.java [103])
+(../core/src/com/dar/freshmaze/level/tilemap/rooms/SpawnLevelRoom.java)
+(../core/src/com/dar/freshmaze/level/tilemap/SortedIsometricTiledMapRenderer.ja
+va
+Overfull \hbox (54.38477pt too wide) in paragraph at lines 1--2
+[][][][] 
+ []
+
+
+Overfull \hbox (34.38477pt too wide) in paragraph at lines 15--17
+[][][][][][][] 
+ []
+
+[104] [105] [106] [107] [108] [109] [110])
+(../core/src/com/dar/freshmaze/level/tilemap/SpikeGenerator.java [111])
+(../core/src/com/dar/freshmaze/level/Dungeon.java [112] [113] [114])
+(../core/src/com/dar/freshmaze/level/EnemyGenerator.java [115])
+(../core/src/com/dar/freshmaze/level/Level.java [116] [117] [118] [119]
+[120]) (../core/src/com/dar/freshmaze/util/RectangleUtil.java [121] [122])
+(../core/src/com/dar/freshmaze/util/IsometricUtil.java [123] [124])
+(../core/src/com/dar/freshmaze/util/TimeUtil.java)
+(../core/src/com/dar/freshmaze/entities/Bob.java [125] [126] [127] [128]
+[129] [130] [131]) (../core/src/com/dar/freshmaze/entities/Enemy.java [132]
+[133]) (../core/src/com/dar/freshmaze/entities/HealthBonus.java [134] [135]
+[136]) (../core/src/com/dar/freshmaze/entities/Entity.java [137] [138])
+(../core/src/com/dar/freshmaze/entities/PhysActor.java [139])
+(../core/src/com/dar/freshmaze/indicator/RectIndicator.java [140]) [141]
+(../core/src/com/dar/freshmaze/world/WorldContactListener.java [142])
+(../core/src/com/dar/freshmaze/graphics/DepthSortedStage.java [143] [144])
+(../core/src/com/dar/freshmaze/ui/ScreenTransition.java [145] [146] [147]))
+[148] (./report.lof
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 2.
+)
+\tf@lof=\write4
+\openout4 = `report.lof'.
+
+The property list \polyglossia@langsetup contains the pairs (without outer
+braces):
+>  {latex/script}  =>  {latin}
+>  {latex/lcscript}  =>  {latin}
+>  {latex/scripttag}  =>  {}
+>  {latex/language}  =>  {Latex}
+>  {latex/langtag}  =>  {ENG}
+>  {latex/bcp47}  =>  {}
+>  {latex/hyphennames}  =>  {english}
+>  {latex/direction}  =>  {LR}
+>  {latex/hyphenmins}  =>  {2,3}
+>  {latex/frenchspacing}  =>  {false}
+>  {latex/indentfirst}  =>  {false}
+>  {latex/fontsetup}  =>  {true}
+>  {latex/envname}  =>  {latex}
+>  {latex/babelname}  =>  {latex}
+>  {latex/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/Localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/DefineCommandsCmd}  =>  {use_none:n}
+>  {ukrainian/script}  =>  {Cyrillic}
+>  {ukrainian/lcscript}  =>  {cyrillic}
+>  {ukrainian/scripttag}  =>  {cyrl}
+>  {ukrainian/language}  =>  {Ukrainian}
+>  {ukrainian/langtag}  =>  {UKR}
+>  {ukrainian/bcp47}  =>  {uk}
+>  {ukrainian/hyphennames}  =>  {ukrainian}
+>  {ukrainian/direction}  =>  {LR}
+>  {ukrainian/hyphenmins}  =>  {2,2}
+>  {ukrainian/frenchspacing}  =>  {true}
+>  {ukrainian/indentfirst}  =>  {false}
+>  {ukrainian/fontsetup}  =>  {true}
+>  {ukrainian/envname}  =>  {ukrainian}
+>  {ukrainian/babelname}  =>  {ukrainian}
+>  {ukrainian/localnumeral}  =>  {ukrainiannumerals}
+>  {ukrainian/Localnumeral}  =>  {Ukrainiannumerals}
+>  {ukrainian/DefineCommandsCmd}  =>  {xpg_define_language_commands:e}
+>  {english/script}  =>  {latin}
+>  {english/lcscript}  =>  {latin}
+>  {english/scripttag}  =>  {}
+>  {english/language}  =>  {English}
+>  {english/langtag}  =>  {ENG}
+>  {english/bcp47}  =>  {en-US}
+>  {english/hyphennames}  =>  {english,american,usenglish,USenglish}
+>  {english/direction}  =>  {LR}
+>  {english/hyphenmins}  =>  {2,3}
+>  {english/frenchspacing}  =>  {false}
+>  {english/indentfirst}  =>  {false}
+>  {english/fontsetup}  =>  {true}
+>  {english/envname}  =>  {english}
+>  {english/babelname}  =>  {american}
+>  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {english/DefineCommandsCmd}  =>  {xpg_define_language_commands:e}.
+The property list \__xpg_alias contains the pairs (without outer braces):
+>  {latex/target}  =>  {latex}
+>  {ukrainian/target}  =>  {ukrainian}
+>  {uk/target}  =>  {ukrainian}
+>  {english/target}  =>  {english}
+>  {en/target}  =>  {english}
+>  {en-AU/target}  =>  {english}
+>  {en-AU/variant}  =>  {australian}
+>  {en-AU/options}  =>  {variant=australian}
+>  {en-CA/target}  =>  {english}
+>  {en-CA/variant}  =>  {canadian}
+>  {en-CA/options}  =>  {variant=canadian}
+>  {en-GB/target}  =>  {english}
+>  {en-GB/variant}  =>  {british}
+>  {en-GB/options}  =>  {variant=british}
+>  {en-NZ/target}  =>  {english}
+>  {en-NZ/variant}  =>  {newzealand}
+>  {en-NZ/options}  =>  {variant=newzealand}
+>  {en-US/target}  =>  {english}
+>  {en-US/variant}  =>  {us}
+>  {en-US/options}  =>  {variant=us}
+>  {american/target}  =>  {english}
+>  {american/variant}  =>  {us}
+>  {american/options}  =>  {variant=us}
+>  {australian/target}  =>  {english}
+>  {australian/variant}  =>  {australian}
+>  {australian/options}  =>  {variant=australian}
+>  {british/target}  =>  {english}
+>  {british/variant}  =>  {british}
+>  {british/options}  =>  {variant=british}
+>  {canadian/target}  =>  {english}
+>  {canadian/variant}  =>  {canadian}
+>  {canadian/options}  =>  {variant=canadian}
+>  {newzealand/target}  =>  {english}
+>  {newzealand/variant}  =>  {newzealand}
+>  {newzealand/options}  =>  {variant=newzealand}.
+ [149] (./report.aux)
+Package rerunfilecheck Info: File `report.out' has not changed.
+(rerunfilecheck)             Checksum: 519A940B05B0B063DDBFB4D352D84B8A;2069.
+ ) 
+Here is how much of TeX's memory you used:
+ 16664 strings out of 476684
+ 351632 string characters out of 5781117
+ 2173018 words of memory out of 5000000
+ 36501 multiletter control sequences out of 15000+600000
+ 513327 words of font info for 98 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 86i,17n,91p,395b,1866s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on report.pdf (150 pages).

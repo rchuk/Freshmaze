@@ -1,0 +1,8 @@
+<map id="com.dar.freshmaze.level.tilemap.tiles.DynamicTile" name="com.dar.freshmaze.level.tilemap.tiles.DynamicTile">
+<area shape="rect" id="node1" title=" " alt="" coords="5,101,248,141"/>
+<area shape="rect" id="node2" href="$classcom_1_1dar_1_1freshmaze_1_1level_1_1tilemap_1_1tiles_1_1DynamicInteractableTile.html" title=" " alt="" coords="296,37,539,77"/>
+<area shape="rect" id="node5" href="$classcom_1_1dar_1_1freshmaze_1_1level_1_1tilemap_1_1tiles_1_1EntranceTile.html" title=" " alt="" coords="296,101,539,141"/>
+<area shape="rect" id="node6" href="$classcom_1_1dar_1_1freshmaze_1_1level_1_1tilemap_1_1tiles_1_1SpikesTile.html" title=" " alt="" coords="296,165,539,205"/>
+<area shape="rect" id="node3" href="$classcom_1_1dar_1_1freshmaze_1_1level_1_1tilemap_1_1tiles_1_1ChestTile.html" title=" " alt="" coords="587,5,829,45"/>
+<area shape="rect" id="node4" href="$classcom_1_1dar_1_1freshmaze_1_1level_1_1tilemap_1_1tiles_1_1TeleportTile.html" title=" " alt="" coords="587,69,829,109"/>
+</map>

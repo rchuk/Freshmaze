@@ -25,6 +25,9 @@ import com.dar.freshmaze.level.tilemap.tiles.DynamicTile;
 
 import java.util.Objects;
 
+/**
+ * TileMap for levels.
+ */
 public class LevelTilemap implements Disposable {
     private final Texture tiles;
 
@@ -47,6 +50,13 @@ public class LevelTilemap implements Disposable {
     private final World physWorld;
     private Dungeon dungeon;
 
+    /**
+     *
+     * @param physWorld
+     * @param tilesetPath
+     * @param tileSize
+     * @param textureTileSize
+     */
     public LevelTilemap(World physWorld, String tilesetPath, float tileSize, int textureTileSize) {
         this.physWorld = physWorld;
         this.tileSize = tileSize;

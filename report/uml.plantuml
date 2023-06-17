@@ -1,0 +1,513 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class BattleLevelRoom {
+  + BattleLevelRoom(Rectangle, EnemyGenerator, float): 
+  - entrances: Array<Vector2>
+  - spikes: Array<Vector2>
+  + onEnemyDeath(Enemy): void
+  - getDynamicTile(Vector2, Class<T>): T?
+  - onCleared(): void
+  + act(float): void
+  + onDestroy(): void
+  - dynamicTileApply(Vector2, Class<T>, DynamicTileAction<T>): void
+  + addEntrance(Vector2): void
+  + onPlayerEnter(Bob): void
+   entrances: Array<Vector2>
+   spikes: Array<Vector2>
+   entrancesState: State
+   spikesOpen: boolean
+}
+class Bob {
+  + Bob(World, Level, Vector2): 
+  - health: int
+  - attackTimeLeft: float
+  - onHeal(): void
+  + draw(Batch, float): void
+  + heal(int): void
+  - processContact(Object): boolean
+  - onIncreaseAttackSpeed(): void
+  - createBody(World): Body
+  + addObjectInRadius(Object): void
+  - createSprite(): Sprite
+  - onDamage(): void
+  - processActions(): void
+  + increaseAttackSpeed(float): void
+  + damage(int): void
+  + act(float): void
+  + removeObjectInRadius(Object): void
+   maxHealth: int
+   timePerAttack: float
+   attackTimeLeft: float
+   health: int
+}
+class Cell {
+  + Cell(Kind): 
+  - kind: Kind
+   kind: Kind
+}
+interface CellKindMapper << interface >> {
+  + processCell(Kind, int, int): Kind
+}
+class CellPos {
+  + CellPos(int, int): 
+  - x: int
+  - y: int
+  + hashCode(): int
+  + equals(Object): boolean
+   x: int
+   y: int
+}
+interface CellProcessor << interface >> {
+  + processCell(Cell, int, int): void
+}
+class ChestTile {
+  + ChestTile(LevelTilemap, CellPos, TiledMapTile, TiledMapTile): 
+  + interact(Bob): void
+}
+class DebugRender {
+  + DebugRender(): 
+}
+class DepthSortedStage {
+  + DepthSortedStage(Viewport): 
+  + DepthSortedStage(): 
+  + DepthSortedStage(Viewport, Batch): 
+  - verticalViewBounds: Vector2
+  + shaderSetVerticalViewBounds(): void
+  - createShader(): ShaderProgram
+  - init(): void
+  + draw(): void
+   verticalViewBounds: Vector2
+}
+class Dungeon {
+  + Dungeon(Level, Bob): 
+  - level: Level
+  - pendingTransition: boolean
+  - levelIndex: int
+  - bob: Bob
+  + moveToNextLevel(): void
+  - findContainingRoom(): LevelRoom?
+  + dispose(): void
+  - generateLevel(): void
+  + update(float): void
+  - updateRoom(): void
+   level: Level
+   levelIndex: int
+   pendingTransition: boolean
+   maxLevel: boolean
+   bob: Bob
+}
+class DynamicInteractableTile {
+  + DynamicInteractableTile(LevelTilemap, CellPos, TiledMapTile, Layer): 
+  + interact(Bob): void
+}
+class DynamicTile {
+  + DynamicTile(LevelTilemap, CellPos, TiledMapTile, Layer): 
+  - tilemap: LevelTilemap
+  - defaultTile: TiledMapTile
+  - physBody: Body
+  - cellPos: CellPos
+  - defaultLayer: Layer
+   physBody: Body
+   tilemap: LevelTilemap
+   defaultTile: TiledMapTile
+   cellPos: CellPos
+   defaultLayer: Layer
+}
+interface DynamicTileAction<T> << interface >> {
+  + apply(T): void
+}
+class Edge {
+  + Edge(Rectangle, boolean): 
+  - intersection: Rectangle
+  - isVertical: boolean
+   intersection: Rectangle
+   isVertical: boolean
+}
+class Enemy {
+  + Enemy(World, BattleLevelRoom, Vector2): 
+  + kill(): void
+  - createBody(World): Body
+  + act(float): void
+  - createSprite(): Sprite
+}
+class EnemyGenerator {
+  + EnemyGenerator(World, Stage): 
+  - dungeon: Dungeon
+  - getSpawnPos(Rectangle): Vector2
+  - createEnemy(BattleLevelRoom): Enemy
+  + generate(BattleLevelRoom): Result
+  - createHealthBouns(BattleLevelRoom): HealthBonus
+   dungeon: Dungeon
+}
+class Entity {
+  + Entity(World, Sprite, Body, Vector2, SpriteKind, Vector2): 
+  - sprite: Sprite
+  + draw(Batch, float): void
+  # positionChanged(): void
+  # setShaderSortHeight(Batch, float): void
+   sprite: Sprite
+}
+class EntranceTile {
+  + EntranceTile(LevelTilemap, CellPos, TiledMapTile, TiledMapTile, TiledMapTile): 
+  - state: State
+   state: State
+}
+class FinalLevelRoom {
+  + FinalLevelRoom(Rectangle, Vector2): 
+  - teleportPos: Vector2
+   teleportPos: Vector2
+}
+interface FloatRangeBinder << interface >> {
+   maxValue: float
+   value: float
+}
+class FreshmazeGame {
+  + FreshmazeGame(): 
+  + start(boolean): void
+  + create(): void
+  + dispose(): void
+}
+class GameScreen {
+  + GameScreen(FreshmazeGame, OrthographicCamera, Viewport, boolean): 
+  - createSkin(): Skin
+  - debugRenderAxes(): void
+  + render(float): void
+  + hide(): void
+  + dispose(): void
+  + show(): void
+  - createUI(): void
+  - victory(): void
+  - debugRenderBobCell(): void
+  - startGame(): void
+  - getInputMovementVec(int, int, int, int, float): Vector2
+  + pause(): void
+  - handleInput(float): void
+  - getInputAxisValue(int, int): float
+  - gameover(): void
+  + resize(int, int): void
+  + resume(): void
+  - addGameStartUI(): void
+}
+class Graph<VertexT, EdgeT> {
+  + Graph(): 
+  + contains(VertexT): boolean
+  + remove(VertexT): void
+  + add(VertexT, VertexT, EdgeT): void
+  + getConnections(VertexT): Map<VertexT, EdgeT>
+  + entrySet(): Set<Entry<VertexT, HashMap<VertexT, EdgeT>>>
+  + addDirected(VertexT, VertexT, EdgeT): void
+}
+class HealthBonus {
+  + HealthBonus(World, BattleLevelRoom, Vector2): 
+  - createBody(World): Body
+  + interact(Bob): void
+  + draw(Batch, float): void
+  - createShader(): ShaderProgram
+  - createSprite(): Sprite
+}
+class IsometricUtil {
+  + IsometricUtil(): 
+  + isoToCart(Vector2): Vector2
+  + cartToIso(Vector2): Vector2
+}
+enum Kind << enumeration >> {
+  + Kind(): 
+  + valueOf(String): Kind
+  + values(): Kind[]
+}
+enum Layer << enumeration >> {
+  - Layer(int): 
+  - index: int
+  + values(): Layer[]
+  + valueOf(String): Layer
+   index: int
+}
+class Level {
+  + Level(World, Stage): 
+  - MAX_LEVEL: int
+  - tilemap: LevelTilemap
+  - tilemapRenderer: SortedIsometricTiledMapRenderer
+  + render(OrthographicCamera, float, int[], boolean): void
+  + dispose(): void
+  + update(float): void
+  - debugRenderGrid(): void
+  - generateNodes(int): void
+  + generate(int): LevelRoom
+  - debugRenderGraph(): void
+  + debugRender(Camera, float, int): void
+  - debugRenderLeaves(): void
+  - debugRenderRooms(): void
+  - debugRenderHalls(): void
+   rooms: List<LevelRoom>
+   tilemap: LevelTilemap
+   MAX_LEVEL: int
+   tilemapRenderer: SortedIsometricTiledMapRenderer
+}
+class LevelBitmap {
+  + LevelBitmap(): 
+  - width: int
+  - height: int
+  - debugPrint(): void
+  - placeHalls(): void
+  + generate(LevelNodeGenerator): void
+  + getCell(int): Cell
+  - placeRooms(): void
+  - processRectangle(Rectangle, CellProcessor): void
+  - getDebugCellChar(Cell): char
+  + getCell(int, int): Cell
+  - processRectangleMap(Rectangle, CellKindMapper): void
+   width: int
+   height: int
+}
+class LevelGraph {
+  + LevelGraph(): 
+  - findIntersection(LevelNode, LevelNode): Edge?
+  - intersectExpandedNodes(LevelNode, LevelNode, Vector2, Rectangle): boolean
+  + entrySet(): Set<Entry<LevelNode, HashMap<LevelNode, Edge>>>
+  + generate(List<LevelNode>): void
+}
+class LevelNode {
+  + LevelNode(Rectangle, LevelNodeGenerationRules): 
+  - roomBounds: Rectangle
+  - bounds: Rectangle
+  - leftChild: LevelNode
+  - rightChild: LevelNode
+  + split(): boolean
+  + generateRoom(): void
+   splitVertical: boolean
+   bounds: Rectangle
+   roomBounds: Rectangle
+   leaf: boolean
+   leftChild: LevelNode
+   rightChild: LevelNode
+}
+class LevelNodeGenerationRules {
+  + LevelNodeGenerationRules(int, int, int, float, int): 
+  - roomGap: int
+  - minNodeSize: int
+  - maxNodeSize: int
+  - splitChance: float
+  - minRoomSize: int
+   maxNodeSize: int
+   minNodeSize: int
+   roomGap: int
+   minRoomSize: int
+   splitChance: float
+}
+class LevelNodeGenerator {
+  + LevelNodeGenerator(): 
+  - rooms: ArrayList<LevelRoom>
+  - finalRoom: LevelRoom
+  - levelSize: Vector2
+  - root: LevelNode
+  - graph: LevelGraph
+  - spawnRoom: LevelRoom
+  - halls: ArrayList<Rectangle>
+  - leaves: ArrayList<LevelNode>
+  - generateGraph(): void
+  ~ joinPointsWithHalls(Vector2, Vector2, int): ArrayList<Rectangle>
+  - generateNodeRecursive(LevelNode): void
+  ~ getRandomEdgeIntersectionPoint(Edge): Vector2
+  - generateRooms(EnemyGenerator, SpikeGenerator): void
+  - joinRoomsWithHalls(LevelNode, LevelNode, Vector2): ArrayList<Rectangle>
+  - generateNodes(): void
+  - createBattleRoom(LevelNode, EnemyGenerator, SpikeGenerator): BattleLevelRoom
+  - createFinalRoom(LevelNode): FinalLevelRoom
+  - createSpawnRoom(LevelNode): SpawnLevelRoom
+  - generateHalls(): void
+  + generate(Vector2, int, LevelNodeGenerationRules, EnemyGenerator, SpikeGenerator): void
+   finalRoom: LevelRoom
+   halls: List<Rectangle>
+   spawnRoom: LevelRoom
+   graph: LevelGraph
+   root: LevelNode
+   rooms: List<LevelRoom>
+   leaves: List<LevelNode>
+   levelSize: Vector2
+}
+class LevelRoom {
+  + LevelRoom(Rectangle): 
+  - level: Level
+  - bounds: Rectangle
+  + onPlayerExit(Bob): void
+  + onPlayerEnter(Bob): void
+  + act(float): void
+  + onDestroy(): void
+   level: Level
+   bounds: Rectangle
+}
+class LevelTilemap {
+  + LevelTilemap(World, String, float, int): 
+  - physWorld: World
+  - textureTileSize: int
+  - dungeon: Dungeon
+  - physBodies: Array<Body>
+  - tileSize: float
+  - tilemap: TiledMap
+  + cellPosToVec(Vector2): Vector2
+  + cellPosToVec(CellPos): Vector2
+  - placeStaticTile(CellPos, TiledMapTile, Layer): void
+  - createTilePhysBodyImpl(CellPos, TiledMapTile, boolean): Body
+  + dispose(): void
+  - rectangleToPhysPolygon(Rectangle): PolygonShape
+  - createLayer(int, int): TiledMapTileLayer
+  + generate(LevelBitmap): void
+  + createTilePhysBodySensor(CellPos, TiledMapTile): Body
+  - mapBitmapCellToTile(CellPos, Cell): void
+  + placeDynamicTile(DynamicTile): void
+  + placeTile(CellPos, TiledMapTile, Layer): void
+  + getDynamicTile(CellPos): DynamicTile
+  + vecToCellPosVec(Vector2): Vector2
+  + createTilePhysBody(CellPos, TiledMapTile): Body
+  + vecToCellPos(Vector2): CellPos
+   tileSize: float
+   textureTileSize: int
+   physBodies: Array<Body>
+   dungeon: Dungeon
+   physWorld: World
+   tilemap: TiledMap
+}
+enum LevelTransitionState << enumeration >> {
+  + LevelTransitionState(): 
+  + values(): LevelTransitionState[]
+  + valueOf(String): LevelTransitionState
+}
+class PhysActor {
+  + PhysActor(World, Body): 
+  - body: Body
+  - physWorld: World
+  - isDestroyed: boolean
+  + destroy(): void
+  - updatePosition(): void
+  + teleport(Vector2): void
+  + act(float): void
+  + remove(): boolean
+   physWorld: World
+   body: Body
+   isDestroyed: boolean
+}
+class RectIndicator {
+  + RectIndicator(FloatRangeBinder): 
+  - indicatorColor: Color
+  - backgroundColor: Color
+  + draw(Batch, float): void
+   backgroundColor: Color
+   indicatorColor: Color
+   normValue: float
+}
+class RectangleUtil {
+  + RectangleUtil(): 
+  + expand(Rectangle, Vector2): Rectangle
+  + containsExclusive(Rectangle, Vector2): boolean
+  + normalize(Rectangle): Rectangle
+  + getRandomPoint(Rectangle): Vector2
+  + shrink(Rectangle, Vector2): Rectangle
+}
+class Result {
+  + Result(Array<Enemy>, Array<Entity>): 
+}
+class ScreenTransition {
+  + ScreenTransition(float, float, boolean, TransitionCallback): 
+  + ScreenTransition(float, float, boolean): 
+  - isFrozen: boolean
+  - color: Color
+  + setIsFrozen(boolean): void
+  - createShader(): ShaderProgram
+  + act(float): void
+  + draw(Batch, float): void
+   color: Color
+   isFrozen: boolean
+}
+class SortedIsometricTiledMapRenderer {
+  + SortedIsometricTiledMapRenderer(TiledMap, float, Batch): 
+  + SortedIsometricTiledMapRenderer(TiledMap, float): 
+  + SortedIsometricTiledMapRenderer(TiledMap): 
+  + SortedIsometricTiledMapRenderer(TiledMap, Batch): 
+  - writeDepth: boolean
+  - init(): void
+  + renderTileLayer(TiledMapTileLayer): void
+  - translateScreenToIso(Vector2): Vector3
+  - createShader(): ShaderProgram
+   writeDepth: boolean
+}
+class SpawnLevelRoom {
+  + SpawnLevelRoom(Rectangle): 
+}
+class SpikeGenerator {
+  + SpikeGenerator(): 
+  - generateSpikesVertical(Rectangle, Array<Vector2>): void
+  - generateSpikesCheckerboard(Rectangle, Array<Vector2>): void
+  + generateSpikes(LevelRoom): Array<Vector2>
+  - generateSpikesHorizontal(Rectangle, Array<Vector2>): void
+}
+class SpikesTile {
+  + SpikesTile(LevelTilemap, CellPos, TiledMapTile): 
+  - isOpen: boolean
+  + onTouch(Bob): void
+   isOpen: boolean
+}
+enum SpriteKind << enumeration >> {
+  + SpriteKind(): 
+  + values(): SpriteKind[]
+  + valueOf(String): SpriteKind
+   renderMatrix: Matrix4
+}
+enum State << enumeration >> {
+  + State(): 
+  + valueOf(String): State
+  + values(): State[]
+}
+class TeleportTile {
+  + TeleportTile(LevelTilemap, CellPos, TiledMapTile, Dungeon): 
+  + interact(Bob): void
+}
+class TimeUtil {
+  + TimeUtil(): 
+  + time(): long
+  + init(): void
+  + timef(): float
+}
+interface TransitionCallback << interface >> {
+  + onComplete(): void
+}
+class WorldContactListener {
+  + WorldContactListener(): 
+  + endContact(Contact): void
+  + postSolve(Contact, ContactImpulse): void
+  + beginContact(Contact): void
+  + preSolve(Contact, Manifold): void
+}
+
+BattleLevelRoom                  -[#000082,plain]-^  LevelRoom                       
+Bob                              -[#000082,plain]-^  Entity                          
+Cell                             +-[#820000,plain]-  LevelBitmap                     
+CellKindMapper                   +-[#820000,plain]-  LevelBitmap                     
+CellPos                          +-[#820000,plain]-  LevelTilemap                    
+CellProcessor                    +-[#820000,plain]-  LevelBitmap                     
+ChestTile                        -[#000082,plain]-^  DynamicInteractableTile         
+DebugRender                      +-[#820000,plain]-  Level                           
+DynamicInteractableTile          -[#000082,plain]-^  DynamicTile                     
+DynamicTileAction                +-[#820000,plain]-  BattleLevelRoom                 
+DynamicTileAction                -[#595959,dashed]->  DynamicTile                     
+Edge                             +-[#820000,plain]-  LevelGraph                      
+Enemy                            -[#000082,plain]-^  Entity                          
+Entity                           -[#000082,plain]-^  PhysActor                       
+EntranceTile                     -[#000082,plain]-^  DynamicTile                     
+FinalLevelRoom                   -[#000082,plain]-^  LevelRoom                       
+FloatRangeBinder                 +-[#820000,plain]-  RectIndicator                   
+HealthBonus                      -[#000082,plain]-^  Entity                          
+Kind                             +-[#820000,plain]-  Cell                            
+Layer                            +-[#820000,plain]-  LevelTilemap                    
+LevelTransitionState             +-[#820000,plain]-  GameScreen                      
+Result                           +-[#820000,plain]-  EnemyGenerator                  
+SpawnLevelRoom                   -[#000082,plain]-^  LevelRoom                       
+SpikesTile                       -[#000082,plain]-^  DynamicTile                     
+SpriteKind                       +-[#820000,plain]-  Entity                          
+State                            +-[#820000,plain]-  EntranceTile                    
+TeleportTile                     -[#000082,plain]-^  DynamicInteractableTile         
+TransitionCallback               +-[#820000,plain]-  ScreenTransition                
+@enduml

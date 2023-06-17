@@ -1,0 +1,6 @@
+<map id="com.dar.freshmaze.entities.Bob" name="com.dar.freshmaze.entities.Bob">
+<area shape="rect" id="node1" title=" " alt="" coords="5,255,212,280"/>
+<area shape="rect" id="node2" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1Entity.html" title=" " alt="" coords="17,167,200,207"/>
+<area shape="rect" id="node3" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1PhysActor.html" title=" " alt="" coords="17,79,200,119"/>
+<area shape="rect" id="node4" title=" " alt="" coords="82,5,135,31"/>
+</map>

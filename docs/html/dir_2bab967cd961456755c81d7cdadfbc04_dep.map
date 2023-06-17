@@ -1,0 +1,6 @@
+<map id="core/src/com/dar/freshmaze/level/tilemap" name="core/src/com/dar/freshmaze/level/tilemap">
+<area shape="rect" id="node2" href="dir_4fd6614474133426201b8504db2e1cc6.html" title="rooms" alt="" coords="109,63,168,88"/>
+<area shape="rect" id="node3" href="dir_261ddb4133df61e86bee5105439779dd.html" title="tiles" alt="" coords="38,63,85,88"/>
+<area shape="rect" id="clust2" href="dir_2bab967cd961456755c81d7cdadfbc04.html" alt="" coords="27,52,267,99"/>
+<area shape="rect" id="clust1" href="dir_b5734f32c3e38437190bea528ef79b2e.html" title="level" alt="" coords="16,16,277,109"/>
+</map>

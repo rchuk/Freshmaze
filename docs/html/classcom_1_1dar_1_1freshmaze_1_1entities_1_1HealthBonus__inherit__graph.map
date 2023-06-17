@@ -1,0 +1,6 @@
+<map id="com.dar.freshmaze.entities.HealthBonus" name="com.dar.freshmaze.entities.HealthBonus">
+<area shape="rect" id="node1" title=" " alt="" coords="5,255,188,295"/>
+<area shape="rect" id="node2" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1Entity.html" title=" " alt="" coords="5,167,188,207"/>
+<area shape="rect" id="node3" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1PhysActor.html" title=" " alt="" coords="5,79,188,119"/>
+<area shape="rect" id="node4" title=" " alt="" coords="70,5,123,31"/>
+</map>

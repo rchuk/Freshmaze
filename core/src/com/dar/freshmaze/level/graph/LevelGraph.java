@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Class that represents the graph of the levels.
+ */
 public class LevelGraph {
     private static final float EXPAND_DELTA = 1.0f;
     private static final Vector2 EXPAND_HORIZONTAL = new Vector2(EXPAND_DELTA, 0.0f);
@@ -22,6 +25,10 @@ public class LevelGraph {
         return graph.entrySet();
     }
 
+    /**
+     * Generate level graph from leaves (list of level nodes)
+     * @param leaves the leaves
+     */
     public void generate(List<LevelNode> leaves) {
         graph = new Graph<>();
 

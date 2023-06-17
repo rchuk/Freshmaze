@@ -1,0 +1,5 @@
+<map id="com.dar.freshmaze.level.tilemap.tiles.ChestTile" name="com.dar.freshmaze.level.tilemap.tiles.ChestTile">
+<area shape="rect" id="node1" title=" " alt="" coords="5,181,248,221"/>
+<area shape="rect" id="node2" href="$classcom_1_1dar_1_1freshmaze_1_1level_1_1tilemap_1_1tiles_1_1DynamicInteractableTile.html" title=" " alt="" coords="5,93,248,133"/>
+<area shape="rect" id="node3" href="$classcom_1_1dar_1_1freshmaze_1_1level_1_1tilemap_1_1tiles_1_1DynamicTile.html" title=" " alt="" coords="5,5,248,45"/>
+</map>

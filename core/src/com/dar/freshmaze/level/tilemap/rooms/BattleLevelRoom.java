@@ -13,6 +13,9 @@ import com.dar.freshmaze.level.tilemap.tiles.EntranceTile;
 import com.dar.freshmaze.level.tilemap.tiles.DynamicTile;
 import com.dar.freshmaze.level.tilemap.tiles.SpikesTile;
 
+/**
+ * Battle room class
+ */
 public class BattleLevelRoom extends LevelRoom {
     private final Array<Vector2> entrances = new Array<>();
     private Array<Vector2> spikes;
@@ -43,6 +46,10 @@ public class BattleLevelRoom extends LevelRoom {
         return entrances;
     }
 
+    /**
+     * Add entrance to the room
+     * @param entrance
+     */
     public void addEntrance(Vector2 entrance) {
         entrances.add(entrance);
     }

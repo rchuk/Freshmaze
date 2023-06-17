@@ -1,0 +1,5 @@
+<map id="com.dar.freshmaze.level.tilemap.LevelTilemap" name="com.dar.freshmaze.level.tilemap.LevelTilemap">
+<area shape="rect" id="node1" title=" " alt="" coords="8,211,223,251"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,92,31"/>
+<area shape="rect" id="node3" title=" " alt="" coords="117,5,247,31"/>
+</map>

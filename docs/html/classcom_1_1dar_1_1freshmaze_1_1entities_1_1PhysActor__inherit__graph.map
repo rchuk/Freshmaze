@@ -1,0 +1,8 @@
+<map id="com.dar.freshmaze.entities.PhysActor" name="com.dar.freshmaze.entities.PhysActor">
+<area shape="rect" id="node1" title=" " alt="" coords="107,55,289,95"/>
+<area shape="rect" id="node3" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1Entity.html" title=" " alt="" coords="337,55,520,95"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,63,59,88"/>
+<area shape="rect" id="node4" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1Bob.html" title=" " alt="" coords="568,5,775,31"/>
+<area shape="rect" id="node5" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1Enemy.html" title=" " alt="" coords="580,55,763,95"/>
+<area shape="rect" id="node6" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1HealthBonus.html" title=" " alt="" coords="580,119,763,159"/>
+</map>

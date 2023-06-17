@@ -1,0 +1,10 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,127,59,152"/>
+<area shape="rect" id="node2" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1PhysActor.html" title=" " alt="" coords="111,55,294,95"/>
+<area shape="rect" id="node7" href="$classcom_1_1dar_1_1freshmaze_1_1indicator_1_1RectIndicator.html" title=" " alt="" coords="108,119,297,159"/>
+<area shape="rect" id="node8" href="$classcom_1_1dar_1_1freshmaze_1_1ui_1_1ScreenTransition.html" title=" " alt="" coords="107,183,299,223"/>
+<area shape="rect" id="node3" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1Entity.html" title=" " alt="" coords="347,55,529,95"/>
+<area shape="rect" id="node4" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1Bob.html" title=" " alt="" coords="577,5,784,31"/>
+<area shape="rect" id="node5" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1Enemy.html" title=" " alt="" coords="589,55,772,95"/>
+<area shape="rect" id="node6" href="$classcom_1_1dar_1_1freshmaze_1_1entities_1_1HealthBonus.html" title=" " alt="" coords="589,119,772,159"/>
+</map>

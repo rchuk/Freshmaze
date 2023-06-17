@@ -32,8 +32,8 @@ import com.dar.freshmaze.world.WorldContactListener;
 public class GameScreen implements Screen {
     private static final float CAMERA_ZOOM = 1.5f / 128.0f;
 
-    private static final float CAMERA_SPEED = 5.0f;
-    private static final float CAMERA_ZOOM_SPEED = 0.25f;
+    private static final float CAMERA_SPEED = 2.0f;
+    private static final float CAMERA_ZOOM_SPEED = 0.1f;
 
     private final FreshmazeGame game;
 
@@ -267,9 +267,9 @@ public class GameScreen implements Screen {
 
             if (enableFreeCamera) {
                 if (Gdx.input.isKeyPressed(Input.Keys.MINUS))
-                    camera.zoom += CAMERA_ZOOM_SPEED * dt;
+                    camera.zoom += 0.001;
                 else if (Gdx.input.isKeyPressed(Input.Keys.EQUALS))
-                    camera.zoom -= CAMERA_ZOOM_SPEED * dt;
+                    camera.zoom -= 0.001;
 
                 camera.zoom = Math.max(0.01f, camera.zoom);
 

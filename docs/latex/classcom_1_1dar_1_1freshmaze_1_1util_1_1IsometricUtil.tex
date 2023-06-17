@@ -1,0 +1,107 @@
+\hypertarget{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil}{}\doxysection{com.\+dar.\+freshmaze.\+util.\+Isometric\+Util Class Reference}
+\label{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil}\index{com.dar.freshmaze.util.IsometricUtil@{com.dar.freshmaze.util.IsometricUtil}}
+
+
+Collaboration diagram for com.\+dar.\+freshmaze.\+util.\+Isometric\+Util\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=287pt]{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Vector2 \mbox{\hyperlink{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil_a8d28219879bb0bd32ef20564029f47dc}{iso\+To\+Cart}} (Vector2 vec)
+\item 
+static Vector2 \mbox{\hyperlink{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil_a2a0bfed0bb9a84aaadede2018b160e49}{cart\+To\+Iso}} (Vector2 vec)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static final Matrix4 \mbox{\hyperlink{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil_a79d7ec883d36d863096c75f1a46c0278}{ISO\+\_\+\+TRANSFORMATION\+\_\+\+MATRIX}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class with various helper methods for woring with isometric coordinate system 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil_a2a0bfed0bb9a84aaadede2018b160e49}\label{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil_a2a0bfed0bb9a84aaadede2018b160e49}} 
+\index{com.dar.freshmaze.util.IsometricUtil@{com.dar.freshmaze.util.IsometricUtil}!cartToIso@{cartToIso}}
+\index{cartToIso@{cartToIso}!com.dar.freshmaze.util.IsometricUtil@{com.dar.freshmaze.util.IsometricUtil}}
+\doxysubsubsection{\texorpdfstring{cartToIso()}{cartToIso()}}
+{\footnotesize\ttfamily static Vector2 com.\+dar.\+freshmaze.\+util.\+Isometric\+Util.\+cart\+To\+Iso (\begin{DoxyParamCaption}\item[{Vector2}]{vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Converts vector from cartesian to isometric coordinate system.
+
+The original formula is the following\+: 
+\begin{DoxyPre}
+{\ttfamily \newlinereturn new Vector2(\newline     vec.x -\/ vec.y,\newline     0.5f * (vec.x + vec.y)\newline);\newline}
+\end{DoxyPre}
+ But we need to rotate it to match our tilemap. The result is\+: 
+\begin{DoxyPre}
+{\ttfamily \newline return new Vector2(\newline     vec.x + vec.y,\newline     0.5f * (vec.x -\/ vec.y)\newline );\newline }
+ \end{DoxyPre}
+
+
+NOTE\+: I have no idea where multiplication of both x and y by 0.\+5 comes from, it makes no sense. Fix it if possible
+
+
+\begin{DoxyParams}{Parameters}
+{\em vec} & vector in cartesian system \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vector in isometric system 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil_a8d28219879bb0bd32ef20564029f47dc}\label{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil_a8d28219879bb0bd32ef20564029f47dc}} 
+\index{com.dar.freshmaze.util.IsometricUtil@{com.dar.freshmaze.util.IsometricUtil}!isoToCart@{isoToCart}}
+\index{isoToCart@{isoToCart}!com.dar.freshmaze.util.IsometricUtil@{com.dar.freshmaze.util.IsometricUtil}}
+\doxysubsubsection{\texorpdfstring{isoToCart()}{isoToCart()}}
+{\footnotesize\ttfamily static Vector2 com.\+dar.\+freshmaze.\+util.\+Isometric\+Util.\+iso\+To\+Cart (\begin{DoxyParamCaption}\item[{Vector2}]{vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Converts vector from isometric to cartesian coordinate system.
+
+The original formula is the following\+: 
+\begin{DoxyPre}
+{\ttfamily \newlinereturn new Vector2(\newline     0.5f * (2.0f * vec.y + vec.x),\newline     0.5f * (2.0f * vec.y -\/ vec.x)\newline);\newline}
+\end{DoxyPre}
+ But we need to rotate it to match our tilemap. The result is\+: 
+\begin{DoxyPre}
+{\ttfamily \newline return new Vector2(\newline     0.5f * (-\/2.0f * vec.y + vec.x),\newline     0.5f * (2.0f * vec.y + vec.x)\newline );\newline }
+ \end{DoxyPre}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em vec} & vector in isometric system \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+vector in cartesian system 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil_a79d7ec883d36d863096c75f1a46c0278}\label{classcom_1_1dar_1_1freshmaze_1_1util_1_1IsometricUtil_a79d7ec883d36d863096c75f1a46c0278}} 
+\index{com.dar.freshmaze.util.IsometricUtil@{com.dar.freshmaze.util.IsometricUtil}!ISO\_TRANSFORMATION\_MATRIX@{ISO\_TRANSFORMATION\_MATRIX}}
+\index{ISO\_TRANSFORMATION\_MATRIX@{ISO\_TRANSFORMATION\_MATRIX}!com.dar.freshmaze.util.IsometricUtil@{com.dar.freshmaze.util.IsometricUtil}}
+\doxysubsubsection{\texorpdfstring{ISO\_TRANSFORMATION\_MATRIX}{ISO\_TRANSFORMATION\_MATRIX}}
+{\footnotesize\ttfamily final Matrix4 com.\+dar.\+freshmaze.\+util.\+Isometric\+Util.\+ISO\+\_\+\+TRANSFORMATION\+\_\+\+MATRIX\hspace{0.3cm}{\ttfamily [static]}}
+
+Matrix that can be used to transform coordinates to isometric for rendering (ot other purposes). Doesn\textquotesingle{}t need to be used if the sprites are already drawn as isometric.
+
+Can be used like\+: 
+\begin{DoxyPre}
+{\ttfamily game.batch.setTransformMatrix(IsometricUtil.ISO\_TRANSFORMATION\_MATRIX); }
+\end{DoxyPre}
+ or 
+\begin{DoxyPre}
+{\ttfamily physDebugRenderer.render(physWorld, camera.combined.mul(IsometricUtil.ISO\_TRANSFORMATION\_MATRIX)); }
+\end{DoxyPre}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/src/com/dar/freshmaze/util/Isometric\+Util.\+java\end{DoxyCompactItemize}

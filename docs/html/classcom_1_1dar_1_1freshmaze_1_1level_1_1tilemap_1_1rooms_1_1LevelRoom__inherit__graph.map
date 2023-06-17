@@ -1,0 +1,6 @@
+<map id="com.dar.freshmaze.level.tilemap.rooms.LevelRoom" name="com.dar.freshmaze.level.tilemap.rooms.LevelRoom">
+<area shape="rect" id="node1" title=" " alt="" coords="5,69,260,109"/>
+<area shape="rect" id="node2" href="$classcom_1_1dar_1_1freshmaze_1_1level_1_1tilemap_1_1rooms_1_1BattleLevelRoom.html" title=" " alt="" coords="308,5,563,45"/>
+<area shape="rect" id="node3" href="$classcom_1_1dar_1_1freshmaze_1_1level_1_1tilemap_1_1rooms_1_1FinalLevelRoom.html" title=" " alt="" coords="308,69,563,109"/>
+<area shape="rect" id="node4" href="$classcom_1_1dar_1_1freshmaze_1_1level_1_1tilemap_1_1rooms_1_1SpawnLevelRoom.html" title=" " alt="" coords="308,133,563,173"/>
+</map>

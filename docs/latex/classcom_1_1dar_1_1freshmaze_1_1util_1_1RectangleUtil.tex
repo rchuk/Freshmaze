@@ -1,0 +1,77 @@
+\hypertarget{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil}{}\doxysection{com.\+dar.\+freshmaze.\+util.\+Rectangle\+Util Class Reference}
+\label{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil}\index{com.dar.freshmaze.util.RectangleUtil@{com.dar.freshmaze.util.RectangleUtil}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_a0a69723a300d020a11889deaf31f1929}\label{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_a0a69723a300d020a11889deaf31f1929}} 
+static Vector2 {\bfseries get\+Random\+Point} (Rectangle rect)
+\item 
+static Rectangle \mbox{\hyperlink{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_ac408ae8a5ded7a71965586dd9032d993}{expand}} (Rectangle rect, Vector2 delta)
+\item 
+static Rectangle \mbox{\hyperlink{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_ac2893a001dac642704cf1a9b9b0092da}{shrink}} (Rectangle rect, Vector2 delta)
+\item 
+static Rectangle \mbox{\hyperlink{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_af6e619c164edd331677ca53c6c20beaa}{normalize}} (Rectangle rect)
+\item 
+\mbox{\Hypertarget{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_a0429085517cbebba28a03b83ea18f1d7}\label{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_a0429085517cbebba28a03b83ea18f1d7}} 
+static boolean {\bfseries contains\+Exclusive} (Rectangle rect, Vector2 point)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_ac408ae8a5ded7a71965586dd9032d993}\label{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_ac408ae8a5ded7a71965586dd9032d993}} 
+\index{com.dar.freshmaze.util.RectangleUtil@{com.dar.freshmaze.util.RectangleUtil}!expand@{expand}}
+\index{expand@{expand}!com.dar.freshmaze.util.RectangleUtil@{com.dar.freshmaze.util.RectangleUtil}}
+\doxysubsubsection{\texorpdfstring{expand()}{expand()}}
+{\footnotesize\ttfamily static Rectangle com.\+dar.\+freshmaze.\+util.\+Rectangle\+Util.\+expand (\begin{DoxyParamCaption}\item[{Rectangle}]{rect,  }\item[{Vector2}]{delta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Expands rectangle by delta in all directions
+
+
+\begin{DoxyParams}{Parameters}
+{\em rect} & rectangle to expand \\
+\hline
+{\em delta} & size by which to expand the rectangle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+rect 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_af6e619c164edd331677ca53c6c20beaa}\label{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_af6e619c164edd331677ca53c6c20beaa}} 
+\index{com.dar.freshmaze.util.RectangleUtil@{com.dar.freshmaze.util.RectangleUtil}!normalize@{normalize}}
+\index{normalize@{normalize}!com.dar.freshmaze.util.RectangleUtil@{com.dar.freshmaze.util.RectangleUtil}}
+\doxysubsubsection{\texorpdfstring{normalize()}{normalize()}}
+{\footnotesize\ttfamily static Rectangle com.\+dar.\+freshmaze.\+util.\+Rectangle\+Util.\+normalize (\begin{DoxyParamCaption}\item[{Rectangle}]{rect }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Normalizes a rectangle, in other words, makes sure it has strictly positive size and modifies its position accordingly
+
+
+\begin{DoxyParams}{Parameters}
+{\em rect} & rectangle to normalize \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+rect 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_ac2893a001dac642704cf1a9b9b0092da}\label{classcom_1_1dar_1_1freshmaze_1_1util_1_1RectangleUtil_ac2893a001dac642704cf1a9b9b0092da}} 
+\index{com.dar.freshmaze.util.RectangleUtil@{com.dar.freshmaze.util.RectangleUtil}!shrink@{shrink}}
+\index{shrink@{shrink}!com.dar.freshmaze.util.RectangleUtil@{com.dar.freshmaze.util.RectangleUtil}}
+\doxysubsubsection{\texorpdfstring{shrink()}{shrink()}}
+{\footnotesize\ttfamily static Rectangle com.\+dar.\+freshmaze.\+util.\+Rectangle\+Util.\+shrink (\begin{DoxyParamCaption}\item[{Rectangle}]{rect,  }\item[{Vector2}]{delta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Shrinks rectangle by delta in all directions
+
+
+\begin{DoxyParams}{Parameters}
+{\em rect} & rectangle to shrink \\
+\hline
+{\em delta} & size by which to shrink the rectangle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+rect 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+core/src/com/dar/freshmaze/util/Rectangle\+Util.\+java\end{DoxyCompactItemize}

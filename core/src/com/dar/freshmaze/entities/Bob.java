@@ -17,6 +17,10 @@ import com.dar.freshmaze.level.tilemap.tiles.DynamicInteractableTile;
 import com.dar.freshmaze.level.tilemap.tiles.SpikesTile;
 import com.dar.freshmaze.util.IsometricUtil;
 
+
+/**
+ * Class that represents Bob The Player.
+ */
 public class Bob extends Entity {
     private final Texture attackTexture = new Texture(Gdx.files.internal("iso_circle_marker.png"));
     public static final float MOVEMENT_SPEED = 4.0f;
@@ -86,6 +90,10 @@ public class Bob extends Entity {
         });
     }
 
+    /**
+     * Returns the attack time left
+     * @return attack time left
+     */
     public float getAttackTimeLeft() {
         return attackTimeLeft;
     }
@@ -94,18 +102,30 @@ public class Bob extends Entity {
         return 1.0f / attackSpeed;
     }
 
+    /**
+     * Damage the bob
+     * @param damage the delta for the health.
+     */
     public void damage(int damage) {
         setHealth(getHealth() - damage);
 
         onDamage();
     }
 
+    /**
+     * Heal the bob
+     * @param amount the delta for the heal
+     */
     public void heal(int amount) {
         setHealth(Math.min(getHealth() + amount, getMaxHealth()));
 
         onHeal();
     }
 
+    /**
+     * Increase the attack speed
+     * @param amount the amount to increase the attack speed
+     */
     public void increaseAttackSpeed(float amount) {
         attackSpeed = Math.min(attackSpeed + amount, maxAttackSpeed);
 
